@@ -24,6 +24,10 @@ interface BonusPointsStrategyInterface extends
 
     public function setName(?string $name): void;
 
+    public function getCalculatorConfiguration(): array;
+
+    public function setCalculatorConfiguration(array $calculatorConfiguration): void;
+
     public function getRules(): Collection;
 
     public function hasRules(): bool;
@@ -33,4 +37,8 @@ interface BonusPointsStrategyInterface extends
     public function addRule(BonusPointsStrategyRuleInterface $rule): void;
 
     public function removeRule(BonusPointsStrategyRuleInterface $rule): void;
+
+    public function getCalculatorType(): ?string;
+
+    public function setCalculatorType(?string $calculatorType): void;
 }

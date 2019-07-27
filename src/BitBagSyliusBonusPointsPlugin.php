@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin;
 
+use BitBag\SyliusBonusPointsPlugin\DependencyInjection\Compiler\RegisterBonusPointsStrategyCalculatorsPass;
 use BitBag\SyliusBonusPointsPlugin\DependencyInjection\Compiler\RegisterBonusPointsStrategyRuleCheckerPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,5 +19,6 @@ final class BitBagSyliusBonusPointsPlugin extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new RegisterBonusPointsStrategyRuleCheckerPass());
+        $container->addCompilerPass(new RegisterBonusPointsStrategyCalculatorsPass());
     }
 }

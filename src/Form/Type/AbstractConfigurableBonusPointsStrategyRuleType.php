@@ -70,7 +70,7 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
 
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
-        $form->add('configuration', $configurationType, [
+        $form->add('configuratfion', $configurationType, [
             'label' => false,
         ]);
     }

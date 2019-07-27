@@ -10,6 +10,8 @@
         <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyType">
             <argument>%bitbag_sylius_bonus_points.model.bonus_points_strategy.class%</argument>
             <argument>%bitbag.form.type.validation_groups%</argument>
+            <argument type="service" id="bitbag_sylius_bonus_points.registry.bonus_points_strategy_calculator" />
+            <argument type="service" id="bitbag_sylius_bonus_points.form_registry.bonus_points_strategy_calculator" />
             <tag name="form.type" />
         </service>
 
@@ -22,6 +24,15 @@
 
         <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_rule_choice" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyRuleChoiceType">
             <argument>%bitbag.bonus_points_strategy_rules%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_calculator_choice" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyCalculatorChoiceType">
+            <argument>%bitbag.bonus_points_strategy_calculators%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form.type.channel_based_bonus_points_strategy_calculator.channel_based_per_order_item_percentage" class="BitBag\SyliusBonusPointsPlugin\Form\Type\Calculator\ChannelBasedPerOrderItemPercentageConfigurationType">
             <tag name="form.type" />
         </service>
 

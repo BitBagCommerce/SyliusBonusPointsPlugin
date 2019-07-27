@@ -6,5 +6,6 @@
         <import resource="services/form.xml"/>
         <import resource="services/menu.xml"/>
         <import resource="services/event_listener.xml"/>
+        <import resource="services/calculators.xml"/>
     </imports>
 </container>

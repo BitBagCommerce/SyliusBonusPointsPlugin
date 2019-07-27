@@ -9,3 +9,7 @@ bitbag_sylius_bonus_points:
         edit_bonus_points_strategy: Edit bonus points strategy
         new_bonus_points_strategy: New bonus points strategy
         enabled: Enabled
+        point_amount: Point amount
+        calculator_type: Calculator type
+        percent_to_calculate_points: Percent to calculate points
+        per_order_item_percentage: Per order item percentage

@@ -23,8 +23,11 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
     /** @var string */
     protected $name;
 
-    /** @var int */
-    protected $pointAmount;
+    /** @var string|null */
+    protected $calculatorType;
+
+    /** @var array */
+    protected $calculatorConfiguration = [];
 
     /** @var Collection|BonusPointsStrategyRuleInterface[] */
     protected $rules;
@@ -58,6 +61,26 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    public function getCalculatorType(): ?string
+    {
+        return $this->calculatorType;
+    }
+
+    public function setCalculatorType(?string $calculatorType): void
+    {
+        $this->calculatorType = $calculatorType;
+    }
+
+    public function getCalculatorConfiguration(): array
+    {
+        return $this->calculatorConfiguration;
+    }
+
+    public function setCalculatorConfiguration(array $calculatorConfiguration): void
+    {
+        $this->calculatorConfiguration = $calculatorConfiguration;
     }
 
     public function getRules(): Collection

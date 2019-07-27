@@ -5,6 +5,7 @@
         <service id="bitbag_sylius_bonus_points.block_event_listener.admin.layout.javascripts" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument type="string">@BitBagSyliusBonusPointsPlugin/Admin/_javascripts.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.bitbag_sylius_bonus_points.admin.bonus_points_strategy.create.javascripts" method="onBlockEvent" />
+            <tag name="kernel.event_listener" event="sonata.block.event.bitbag_sylius_bonus_points.admin.bonus_points_strategy.update.javascripts" method="onBlockEvent" />
         </service>
     </services>
 </container>

@@ -24,7 +24,7 @@ final class RegisterBonusPointsStrategyRuleCheckerPass implements CompilerPassIn
 
         $bonusPointsStrategyRuleTypeToLabelMap = [];
 
-        foreach ($container->findTaggedServiceIds('bitbag_sylius_bonus_points.bonus_points_strategy_rule_checker') as $id => $attributes) {
+        foreach ($container->findTaggedServiceIds('bitbag.bonus_points_strategy_rule_checker') as $id => $attributes) {
             if (!isset($attributes[0]['type'], $attributes[0]['label'], $attributes[0]['form_type'])) {
                 throw new \InvalidArgumentException(sprintf('Tagged rule checker %s id needs to have `type`, `form_type`, and `label` attributes', $id));
             }

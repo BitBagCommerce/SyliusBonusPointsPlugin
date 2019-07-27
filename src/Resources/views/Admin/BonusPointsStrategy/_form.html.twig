@@ -9,13 +9,31 @@
             {{ form_row(form.enabled) }}
         </div>
     </div>
+    <div class="column">
+        <div class="ui segment">
+            {{ form_row(form.calculatorType) }}
+            {% for name, calculatorConfigurationPrototype in form.vars.prototypes %}
+                <div id="{{ form.calculatorType.vars.id }}_{{ name }}" data-container=".configuration"
+                     data-prototype="{{ form_widget(calculatorConfigurationPrototype)|e }}">
+                </div>
+            {% endfor %}
+            <div class="ui segment configuration">
+                {% if form.configuration is defined %}
+                    {% for field in form.calculatorConfiguration %}
+                        {{ form_row(field) }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
-<div class="ui segment">
-    <h4 class="ui dividing header">{{ 'sylius.ui.configuration'|trans }}</h4>
+<div class="ui two column stackable grid">
+    <div class="column">
+        <div class="ui segment" id="rules">
+            <h4 class="ui dividing header">{{ 'sylius.ui.configuration'|trans }}</h4>
 
-    <div class="ui two column stackable grid">
-        <div class="column" id="rules">
             {{ form_row(form.rules) }}
+
         </div>
     </div>
 </div>

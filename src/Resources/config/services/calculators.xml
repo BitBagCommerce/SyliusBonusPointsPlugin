@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag_sylius_bonus_points.registry.bonus_points_strategy_calculator" class="Sylius\Component\Registry\ServiceRegistry">
+            <argument>BitBag\SyliusBonusPointsPlugin\Calculator\BonusPointsStrategyCalculatorInterface</argument>
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form_registry.bonus_points_strategy_calculator" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
+
+        <service id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator.per_order_item_percentage" class="BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderItemPercentageCalculator">
+            <tag name="bitbag.bonus_points_strategy_calculator" calculator="per_order_item_percentage"
+                 form-type="BitBag\SyliusBonusPointsPlugin\Form\Type\Calculator\ChannelBasedPerOrderItemPercentageConfigurationType"
+                 label="bitbag_sylius_bonus_points.ui.per_order_item_percentage" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator" class="BitBag\SyliusBonusPointsPlugin\Calculator\DelegatingBonusPointsStrategyCalculator">
+            <argument type="service" id="bitbag_sylius_bonus_points.registry.bonus_points_strategy_calculator"/>
+        </service>
+    </services>
+</container>
