@@ -1,0 +1,3 @@
+imports:
+    - { resource: resources/bonus_points_strategy.yml }
+    - { resource: resources/bonus_points_strategy_rule.yml }

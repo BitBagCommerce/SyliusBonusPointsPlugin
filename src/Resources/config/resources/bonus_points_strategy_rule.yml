@@ -1,0 +1,7 @@
+sylius_resource:
+    resources:
+        bitbag_sylius_bonus_points.bonus_points_strategy_rule:
+            driver: doctrine/orm
+            classes:
+                model: BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRule
+                interface: BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRuleInterface

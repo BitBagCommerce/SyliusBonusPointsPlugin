@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: BitBag\SyliusBonusPointsPlugin
+        psr4_prefix: BitBag\SyliusBonusPointsPlugin

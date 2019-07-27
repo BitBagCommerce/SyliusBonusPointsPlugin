@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag_sylius_bonus_points.registry_bonus_points_strategy_rule_checker" class="Sylius\Component\Registry\ServiceRegistry">
+            <argument type="string">BitBag\SyliusBonusPointsPlugin\Checker\Rule\BonusPointsStrategyRuleCheckerInterface</argument>
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form_registry.bonus_points_strategy_rule_checker" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
+
+        <service id="bitbag_sylius_bonus_points.bonus_points_strategy_rule_checker.has_taxon" class="BitBag\SyliusBonusPointsPlugin\Checker\Rule\HasTaxonRuleChecker">
+            <argument type="service" id="sylius.repository.taxon" />
+            <tag name="bitbag_sylius_bonus_points.bonus_points_strategy_rule_checker" type="has_taxon" label="bitbag_sylius_bonus_points.ui.has_taxon" form-type="BitBag\SyliusBonusPointsPlugin\Form\Type\Rule\HasTaxonConfigurationType" />
+        </service>
+    </services>
+</container>

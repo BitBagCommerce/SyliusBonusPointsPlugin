@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/config.yml" }

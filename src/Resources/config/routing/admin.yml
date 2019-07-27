@@ -1,0 +1,13 @@
+bitbag_sylius_bonus_points_plugin_admin_bonus_points_strategy:
+    resource: |
+        section: admin
+        alias: bitbag_sylius_bonus_points.bonus_points_strategy
+        templates: "@SyliusAdmin\\Crud"
+        permission: true
+        redirect: update
+        grid: bitbag_sylius_bonus_points_admin_bonus_points_strategy
+        vars:
+            all:
+                templates:
+                    form: "@BitBagSyliusBonusPointsPlugin/Admin/BonusPointsStrategy/_form.html.twig"
+    type: sylius.resource

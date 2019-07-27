@@ -1,0 +1,2 @@
+imports:
+    - { resource: grids/bonus_points_strategy.yml }

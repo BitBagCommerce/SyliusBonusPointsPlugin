@@ -1,0 +1,30 @@
+sylius_grid:
+    grids:
+        bitbag_sylius_bonus_points_admin_bonus_points_strategy:
+            driver:
+              options:
+                class: "%bitbag_sylius_bonus_points.model.bonus_points_strategy.class%"
+            fields:
+                code:
+                    type: string
+                    label: bitbag_sylius_bonus_points.ui.code
+                name:
+                    type: string
+                    label: bitbag_sylius_bonus_points.ui.name
+                enabled:
+                    type: twig
+                    label: bitbag_sylius_bonus_points.ui.enabled
+                    options:
+                        template: SyliusUiBundle:Grid/Field:enabled.html.twig
+            filters:
+                name:
+                    type: string
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

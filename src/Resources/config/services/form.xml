@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="bitbag.form.type.validation_groups" type="collection">
+            <parameter>bitbag_sylius_bonus_points</parameter>
+        </parameter>
+    </parameters>
+    <services>
+        <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyType">
+            <argument>%bitbag_sylius_bonus_points.model.bonus_points_strategy.class%</argument>
+            <argument>%bitbag.form.type.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_rule" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyRuleType">
+            <argument>%bitbag_sylius_bonus_points.model.bonus_points_strategy_rule.class%</argument>
+            <argument>%bitbag.form.type.validation_groups%</argument>
+            <argument type="service" id="bitbag_sylius_bonus_points.form_registry.bonus_points_strategy_rule_checker" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_rule_choice" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyRuleChoiceType">
+            <argument>%bitbag.bonus_points_strategy_rules%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_rule_collection" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyRuleCollectionType">
+            <argument type="service" id="bitbag_sylius_bonus_points.registry_bonus_points_strategy_rule_checker" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.form.type.rule.has_taxon_configuration" class="BitBag\SyliusBonusPointsPlugin\Form\Type\Rule\HasTaxonConfigurationType">
+            <argument type="service" id="sylius.form.type.data_transformer.taxons_to_codes" />
+            <tag name="form.type" />
+        </service>
+    </services>
+</container>

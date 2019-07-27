@@ -1,0 +1,11 @@
+bitbag_sylius_bonus_points:
+    ui:
+        rules: Rules
+        type: Type
+        has_taxon: Has taxon
+        name: Name
+        code: Code
+        bonus_points_strategies: Bonus points strategies
+        edit_bonus_points_strategy: Edit bonus points strategy
+        new_bonus_points_strategy: New bonus points strategy
+        enabled: Enabled

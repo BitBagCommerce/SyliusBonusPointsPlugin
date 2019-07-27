@@ -1,0 +1,21 @@
+{% form_theme form '@BitBagSyliusBonusPointsPlugin/Admin/Form/theme.html.twig' %}
+
+<div class="ui two column stackable grid">
+    <div class="column">
+        {{ form_errors(form) }}
+        <div class="ui segment">
+            {{ form_row(form.code) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.enabled) }}
+        </div>
+    </div>
+</div>
+<div class="ui segment">
+    <h4 class="ui dividing header">{{ 'sylius.ui.configuration'|trans }}</h4>
+
+    <div class="ui two column stackable grid">
+        <div class="column" id="rules">
+            {{ form_row(form.rules) }}
+        </div>
+    </div>
+</div>
