@@ -1,0 +1,8 @@
+winzou_state_machine:
+    sylius_payment:
+        callbacks:
+            after:
+                bitbag_assign_bonus_points:
+                    on: ["complete"]
+                    do: ["@bitbag_sylius_bonus_points.bonus_points_assigner", "assign"]
+                    args: ["object.getOrder()"]

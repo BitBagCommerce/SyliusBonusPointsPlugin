@@ -13,3 +13,6 @@ bitbag_sylius_bonus_points:
         calculator_type: Calculator type
         percent_to_calculate_points: Percent to calculate points
         per_order_item_percentage: Per order item percentage
+        bonus_points: Bonus points
+        apply_points: Apply points
+        bonus_points_total: Bonus points total

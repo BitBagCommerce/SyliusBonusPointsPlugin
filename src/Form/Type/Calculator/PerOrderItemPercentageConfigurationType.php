@@ -25,14 +25,6 @@ final class PerOrderItemPercentageConfigurationType extends AbstractType
                     new Type(['type' => 'integer', 'groups' => ['sylius']]),
                 ],
             ])
-            ->add('pointAmount', MoneyType::class, [
-                'label' => 'bitbag_sylius_bonus_points.ui.point_amount',
-                'constraints' => [
-                    new NotBlank(['groups' => ['bitbag_sylius_bonus_points']]),
-                    new Type(['type' => 'integer', 'groups' => ['bitbag_sylius_bonus_points']]),
-                ],
-                'currency' => $options['currency'],
-            ])
         ;
     }
 

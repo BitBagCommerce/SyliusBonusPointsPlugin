@@ -1,0 +1,41 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% set bonusPointsAdjustment = constant('BitBag\\SyliusBonusPointsPlugin\\Entity\\AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT') %}
+
+{% set bonusPointsTotal = order.getAdjustmentsTotal(bonusPointsAdjustment) %}
+
+<tr>
+    <th colspan="4" class="right aligned" id="subtotal">
+        {{ 'sylius.ui.subtotal'|trans }}: {{ money.format(order.itemsTotal, order.currencyCode) }}
+    </th>
+</tr>
+<tr>
+    {% include '@SyliusShop/Common/Order/Table/_shipping.html.twig' with {'order': order} %}
+</tr>
+<tr>
+    <td colspan="4" class="right aligned" id="tax-total">
+        {{ 'sylius.ui.tax_total'|trans }}: {{ money.format(order.taxTotal, order.currencyCode) }}
+    </td>
+</tr>
+<tr>
+    {% include '@SyliusShop/Common/Order/Table/_promotion.html.twig' with {'order': order} %}
+</tr>
+{% if bonusPointsTotal %}
+    <tr>
+        <td colspan="4" class="right aligned" id="bitbag-bonus-points-total">
+            {{ 'bitbag_sylius_bonus_points.ui.bonus_points_total'|trans }}: {{ money.format(bonusPointsTotal, order.currencyCode) }}
+        </td>
+    </tr>
+{% endif %}
+<tr>
+    <td colspan="4" class="right aligned" style="font-size: 1.5em;" id="total">
+        {{ 'sylius.ui.total'|trans }}: {{ money.format(order.total, order.currencyCode) }}
+    </td>
+</tr>
+{% if order.currencyCode is not same as(sylius.currencyCode) %}
+    <tr>
+        <td colspan="4" class="right aligned" id="base-total">
+            {{ 'sylius.ui.total_in_base_currency'|trans }}: {{ money.format(order.total, order.currencyCode) }}
+        </td>
+    </tr>
+{% endif %}

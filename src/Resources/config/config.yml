@@ -2,3 +2,4 @@ imports:
     - { resource: resources.yml }
     - { resource: services.xml }
     - { resource: grids.yml }
+    - { resource: state_machine.yml }

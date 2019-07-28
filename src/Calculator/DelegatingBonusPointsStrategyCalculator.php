@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\Calculator;
 
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPointsStrategyCalculatorInterface
@@ -18,11 +17,19 @@ final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPo
         $this->registry = $registry;
     }
 
-    public function calculate(OrderInterface $order, BonusPointsStrategyInterface $bonusPointsStrategy): int
+    public function calculate($subject, BonusPointsStrategyInterface $bonusPointsStrategy): int
     {
         /** @var BonusPointsStrategyCalculatorInterface $calculator */
         $calculator = $this->registry->get($bonusPointsStrategy->getCalculatorType());
 
-        return $calculator->calculate($order, $bonusPointsStrategy->getCalculatorConfiguration());
+        return $calculator->calculate($subject, $bonusPointsStrategy->getCalculatorConfiguration());
+    }
+
+    public function isPerOrderItem(BonusPointsStrategyInterface $bonusPointsStrategy): bool
+    {
+        /** @var BonusPointsStrategyCalculatorInterface $calculator */
+        $calculator = $this->registry->get($bonusPointsStrategy->getCalculatorType());
+
+        return $calculator->isPerOrderItem();
     }
 }

@@ -45,5 +45,10 @@
             <argument type="service" id="sylius.form.type.data_transformer.taxons_to_codes" />
             <tag name="form.type" />
         </service>
+
+        <service id="bitbag_sylius_bonus_points.form.extension.type.cart" class="BitBag\SyliusBonusPointsPlugin\Form\Extension\CartTypeExtension">
+            <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points" />
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\OrderBundle\Form\Type\CartType" />
+        </service>
     </services>
 </container>

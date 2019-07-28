@@ -6,3 +6,4 @@ sylius_resource:
                 model: BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategy
                 interface: BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface
                 form: BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyType
+                repository: BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepository

@@ -1,0 +1,7 @@
+sylius_resource:
+    resources:
+        bitbag_sylius_bonus_points.customer_bonus_points:
+            driver: doctrine/orm
+            classes:
+                model: BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPoints
+                interface: BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface

@@ -54,25 +54,24 @@ final class BonusPointsStrategyType extends AbstractResourceType
             ])
             ->addEventSubscriber(new AddCodeFormSubscriber())
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $method = $event->getData();
+                $data = $event->getData();
 
-                if (null === $method || null === $method->getId()) {
+                if (null === $data || null === $data->getId()) {
                     return;
                 }
 
-                $this->addConfigurationField($event->getForm(), $method->getCalculator());
+                $this->addConfigurationField($event->getForm(), $data->getCalculatorType());
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $data = $event->getData();
 
-                if (empty($data) || !array_key_exists('calculator', $data)) {
+                if (empty($data) || !array_key_exists('calculatorType', $data)) {
                     return;
                 }
 
-                $this->addConfigurationField($event->getForm(), $data['calculator']);
+                $this->addConfigurationField($event->getForm(), $data['calculatorType']);
             })
         ;
-
 
         $prototypes = [];
 
@@ -84,7 +83,7 @@ final class BonusPointsStrategyType extends AbstractResourceType
                 continue;
             }
 
-            $form = $builder->create('configuration', $this->formTypeRegistry->get($calculatorType, 'default'));
+            $form = $builder->create('calculatorConfiguration', $this->formTypeRegistry->get($calculatorType, 'default'));
 
             $prototypes['calculators'][$name] = $form->getForm();
         }
@@ -109,6 +108,7 @@ final class BonusPointsStrategyType extends AbstractResourceType
         $calculator = $this->calculatorRegistry->get($calculatorName);
 
         $calculatorType = $calculator->getType();
+
         if (!$this->formTypeRegistry->has($calculatorType, 'default')) {
             return;
         }

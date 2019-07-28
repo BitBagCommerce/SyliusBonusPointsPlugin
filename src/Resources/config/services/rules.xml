@@ -13,7 +13,7 @@
             <tag name="bitbag.bonus_points_strategy_rule_checker" type="has_taxon" label="bitbag_sylius_bonus_points.ui.has_taxon" form-type="BitBag\SyliusBonusPointsPlugin\Form\Type\Rule\HasTaxonConfigurationType" />
         </service>
 
-        <service id="bitbag_sylius_bonus_points.bonus_points_strateg_rules_eligibility_checker" class="BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyRulesEligibilityChecker">
+        <service id="bitbag_sylius_bonus_points.bonus_points_strategy_rules_eligibility_checker" class="BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyRulesEligibilityChecker">
             <argument type="service" id="bitbag_sylius_bonus_points.registry_bonus_points_strategy_rule_checker" />
         </service>
     </services>

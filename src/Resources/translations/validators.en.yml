@@ -1,0 +1,4 @@
+bitbag_sylius_bonus_points:
+    order:
+        bonus_points:
+            not_available: You do not have enough bonus points.

@@ -8,4 +8,39 @@
         <import resource="services/event_listener.xml"/>
         <import resource="services/calculators.xml"/>
     </imports>
+
+    <services>
+        <service id="bitbag_sylius_bonus_points.bonus_points_assigner" class="BitBag\SyliusBonusPointsPlugin\Assigner\BonusPointsAssigner" public="true">
+            <argument type="service" id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator" />
+            <argument type="service" id="bitbag_sylius_bonus_points.bonus_points_strategy_rules_eligibility_checker" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points_strategy" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.factory.bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.manager.bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.customer_bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.factory.customer_bonus_points" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.context.customer_bonus_points" class="BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContext">
+            <argument type="service" id="sylius.context.customer" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.customer_bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.factory.customer_bonus_points" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.order_processing.order_bonus_points" class="BitBag\SyliusBonusPointsPlugin\OrderProcessing\OrderBonusPointsProcessor">
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
+            <argument type="service" id="sylius.factory.adjustment" />
+            <tag name="sylius.order_processor" priority="0"/>
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.resolver.bonus_points" class="BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver">
+            <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points" />
+        </service>
+
+        <service id="bitbag_sylius_bonus_points.validator.bonus_points_availability" class="BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailabilityValidator">
+            <argument type="service" id="bitbag_sylius_bonus_points.resolver.bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
+            <tag name="validator.constraint_validator" alias="bitbag_bonus_points_availability" />
+        </service>
+    </services>
 </container>
