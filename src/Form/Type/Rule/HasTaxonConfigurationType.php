@@ -8,6 +8,7 @@ use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class HasTaxonConfigurationType extends AbstractType
 {
@@ -25,6 +26,9 @@ final class HasTaxonConfigurationType extends AbstractType
             ->add('taxons', TaxonAutocompleteChoiceType::class, [
                 'label' => 'sylius.form.promotion_rule.has_taxon.taxons',
                 'multiple' => true,
+                'constraints' => [
+                    new NotBlank(['groups' => ['bitbag_sylius_bonus_points']]),
+                ],
             ])
         ;
 

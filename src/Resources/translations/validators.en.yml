@@ -2,3 +2,12 @@ bitbag_sylius_bonus_points:
     order:
         bonus_points:
             not_available: You do not have enough bonus points.
+    bonus_points_strategy:
+        name:
+            not_blank: Name cannot be blank.
+            min_length: Name must be at least {{ limit }} characters long.
+            max_length: Name can not be longer than {{ limit }} characters.
+        code:
+            not_blank: Code cannot be blank.
+            regex: Code can only be comprised of letters, numbers, dashes and underscores.
+            unique: Code must be unique.
