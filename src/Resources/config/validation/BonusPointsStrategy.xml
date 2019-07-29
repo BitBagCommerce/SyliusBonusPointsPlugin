@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategy">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">code</option>
+            <option name="message">bitbag_sylius_bonus_points.bonus_points_strategy.code.unique</option>
+            <option name="groups">bitbag_sylius_bonus_points</option>
+        </constraint>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">bitbag_sylius_bonus_points.bonus_points_strategy.name.not_blank</option>
+                <option name="groups">bitbag_sylius_bonus_points</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">255</option>
+                <option name="minMessage">bitbag_sylius_bonus_points.bonus_points_strategy.name.min_length</option>
+                <option name="maxMessage">bitbag_sylius_bonus_points.bonus_points_strategy.name.max_length</option>
+                <option name="groups">bitbag_sylius_bonus_points</option>
+            </constraint>
+        </property>
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="message">bitbag_sylius_bonus_points.bonus_points_strategy.code.not_blank</option>
+                <option name="groups">bitbag_sylius_bonus_points</option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="message">bitbag_sylius_bonus_points.bonus_points_strategy.code.regex</option>
+                <option name="pattern">/^[\w-]*$/</option>
+                <option name="groups">bitbag_sylius_bonus_points</option>
+            </constraint>
+        </property>
+        <property name="rules">
+            <constraint name="Valid" />
+        </property>
+        <property name="calculatorConfiguration">
+            <constraint name="Valid" />
+        </property>
+    </class>
+</constraint-mapping>
