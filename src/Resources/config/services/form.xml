@@ -48,6 +48,8 @@
 
         <service id="bitbag_sylius_bonus_points.form.extension.type.cart" class="BitBag\SyliusBonusPointsPlugin\Form\Extension\CartTypeExtension">
             <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.resolver.bonus_points" />
+            <argument type="service" id="sylius.context.cart" />
             <tag name="form.type_extension" extended-type="Sylius\Bundle\OrderBundle\Form\Type\CartType" />
         </service>
     </services>

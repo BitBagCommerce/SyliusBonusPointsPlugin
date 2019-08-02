@@ -21,4 +21,8 @@ interface BonusPointsInterface extends ResourceInterface, TimestampableInterface
     public function isUsed(): bool;
 
     public function setIsUsed(bool $isUsed): void;
+
+    public function getExpiresAt(): ?\DateTimeInterface;
+
+    public function setExpiresAt(?\DateTimeInterface $expiresAt): void;
 }

@@ -32,7 +32,7 @@ final class BonusPointsAvailabilityValidator extends ConstraintValidator
         Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
         Assert::isInstanceOf($constraint, BonusPointsAvailability::class);
 
-        $points = null !== $order->getBonusPoints() ? intval($order->getBonusPoints() * 100) : null;
+        $points = null !== $order->getBonusPoints() ? intval($order->getBonusPoints()) : null;
 
         if (null === $points) {
             /** @var BonusPointsInterface $bonusPoints */

@@ -28,9 +28,7 @@
 
             {% include '@SyliusShop/Cart/Summary/_coupon.html.twig' with {'form': form.promotionCoupon} %}
 
-            {% include '@BitBagSyliusBonusPointsPlugin/Shop/Cart/_bonusPoints.html.twig' with {'form': form} %}
-
-            {{ form_row(form.bonusPoints) }}
+            {% include '@BitBagSyliusBonusPointsPlugin/Shop/Cart/_bonusPoints.html.twig' with {'form': form, 'cart': cart} %}
 
             {{ sonata_block_render_event('sylius.shop.cart.summary.after_coupon', {'cart': cart, 'form': form}) }}
         {% endif %}

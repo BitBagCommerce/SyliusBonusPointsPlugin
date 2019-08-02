@@ -24,6 +24,9 @@ class BonusPoints implements BonusPointsInterface
     /** @var bool */
     protected $isUsed = false;
 
+    /** @var \DateTimeInterface|null */
+    protected $expiresAt;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -62,5 +65,15 @@ class BonusPoints implements BonusPointsInterface
     public function setIsUsed(bool $isUsed): void
     {
         $this->isUsed = $isUsed;
+    }
+
+    public function getExpiresAt(): ?\DateTimeInterface
+    {
+        return $this->expiresAt;
+    }
+
+    public function setExpiresAt(?\DateTimeInterface $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
     }
 }

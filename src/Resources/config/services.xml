@@ -7,6 +7,7 @@
         <import resource="services/menu.xml"/>
         <import resource="services/event_listener.xml"/>
         <import resource="services/calculators.xml"/>
+        <import resource="services/twig.xml"/>
     </imports>
 
     <services>

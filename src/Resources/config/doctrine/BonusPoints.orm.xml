@@ -10,6 +10,7 @@
 
         <field name="points" type="integer"/>
         <field name="isUsed" column="is_used" type="boolean"/>
+        <field name="expiresAt" column="expires_at" type="datetime" nullable="true"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

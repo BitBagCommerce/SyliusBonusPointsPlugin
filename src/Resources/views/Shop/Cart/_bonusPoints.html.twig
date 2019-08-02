@@ -1,5 +1,8 @@
+{% form_theme form '@BitBagSyliusBonusPointsPlugin/Shop/Form/theme.html.twig' %}
+
 {% if form.bonusPoints is defined %}
     <div id="bitbag-bonus-points">
+        <p>{{ 'bitbag_sylius_bonus_points.ui.you_have_bonus_points_available'|trans }}: {{ (bitbag_active_bonus_points() / 100) }}</p>
         <div class="ui coupon action input">
             {{ form_widget(form.bonusPoints, {'attr': {'placeholder': 'bitbag_sylius_bonus_points.ui.bonus_points'|trans~'...'}}) }}
             <button type="submit" id="sylius-save" class="ui teal icon labeled button"><i class="ticket icon"></i> {{ 'bitbag_sylius_bonus_points.ui.apply_points'|trans }}</button>

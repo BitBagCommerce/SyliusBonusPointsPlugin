@@ -102,6 +102,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
         $bonusPoints->setOrder($order);
         $bonusPoints->setPoints($bonusPointsTotal);
         $bonusPoints->setIsUsed(false);
+        $bonusPoints->setExpiresAt((new \DateTime())->modify('+1 year'));
 
         $this->getCustomerBonusPoints($order->getCustomer())->addBonusPoints($bonusPoints);
 

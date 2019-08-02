@@ -30,9 +30,7 @@ final class BonusPointsResolver implements BonusPointsResolverInterface
 
         /** @var BonusPointsInterface $bonusPoints */
         foreach ($customerBonusPoints->getBonusPoints() as $bonusPoints) {
-            $createdAtClone = clone $bonusPoints->getCreatedAt();
-
-            if ($createdAtClone->modify('+1 year') >= (new \DateTime())) {
+            if ($bonusPoints->getExpiresAt() >= (new \DateTime())) {
                 $bonusPointsTotal += $bonusPoints->getPoints();
             }
         }
