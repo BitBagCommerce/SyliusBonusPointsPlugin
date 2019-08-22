@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 
 final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalculatorInterface
 {
-    public function calculate($subject, array $configuration): int
+    public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
         /** @var OrderItemInterface $subject */
         Assert::isInstanceOf($subject, OrderItemInterface::class);
@@ -20,7 +20,13 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
 
         $configuration = $configuration[$order->getChannel()->getCode()];
 
-        return intval($subject->getTotal() * $configuration['percentToCalculatePoints']);
+        $total = $subject->getTotal();
+
+        if ($amountToDeduct < 0) {
+            $total += $amountToDeduct;
+        }
+
+        return intval(round($total * $configuration['percentToCalculatePoints']));
     }
 
     public function isPerOrderItem(): bool

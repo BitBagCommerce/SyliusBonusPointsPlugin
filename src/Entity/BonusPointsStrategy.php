@@ -32,6 +32,9 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
     /** @var Collection|BonusPointsStrategyRuleInterface[] */
     protected $rules;
 
+    /** @var bool */
+    protected $isDeductBonusPoints = false;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -110,5 +113,15 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
     {
         $rule->setBonusPointsStrategy(null);
         $this->rules->removeElement($rule);
+    }
+
+    public function isDeductBonusPoints(): bool
+    {
+        return $this->isDeductBonusPoints;
+    }
+
+    public function setIsDeductBonusPoints(bool $isDeductBonusPoints): void
+    {
+        $this->isDeductBonusPoints = $isDeductBonusPoints;
     }
 }

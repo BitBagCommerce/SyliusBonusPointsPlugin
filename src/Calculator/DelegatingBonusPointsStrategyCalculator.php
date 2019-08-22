@@ -17,12 +17,12 @@ final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPo
         $this->registry = $registry;
     }
 
-    public function calculate($subject, BonusPointsStrategyInterface $bonusPointsStrategy): int
+    public function calculate($subject, BonusPointsStrategyInterface $bonusPointsStrategy, int $amountToDeduct = 0): int
     {
         /** @var BonusPointsStrategyCalculatorInterface $calculator */
         $calculator = $this->registry->get($bonusPointsStrategy->getCalculatorType());
 
-        return $calculator->calculate($subject, $bonusPointsStrategy->getCalculatorConfiguration());
+        return $calculator->calculate($subject, $bonusPointsStrategy->getCalculatorConfiguration(), $amountToDeduct);
     }
 
     public function isPerOrderItem(BonusPointsStrategyInterface $bonusPointsStrategy): bool

@@ -20,6 +20,7 @@
             <argument type="service" id="bitbag_sylius_bonus_points.manager.bonus_points" />
             <argument type="service" id="bitbag_sylius_bonus_points.repository.customer_bonus_points" />
             <argument type="service" id="bitbag_sylius_bonus_points.factory.customer_bonus_points" />
+            <argument type="service" id="sylius.proportional_integer_distributor" />
         </service>
 
         <service id="bitbag_sylius_bonus_points.context.customer_bonus_points" class="BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContext">

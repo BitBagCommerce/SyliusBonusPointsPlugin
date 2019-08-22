@@ -46,6 +46,9 @@ final class BonusPointsStrategyType extends AbstractResourceType
             ->add('enabled', CheckboxType::class, [
                 'label' => 'bitbag_sylius_bonus_points.ui.enabled',
             ])
+            ->add('isDeductBonusPoints', CheckboxType::class, [
+                'label' => 'bitbag_sylius_bonus_points.ui.is_deduct_bonus_points',
+            ])
             ->add('rules', BonusPointsStrategyRuleCollectionType::class, [
                 'label' => 'bitbag_sylius_bonus_points.ui.rules',
             ])

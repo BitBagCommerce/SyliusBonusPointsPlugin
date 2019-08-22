@@ -13,6 +13,7 @@
         <field name="calculatorType" column="calculator_type" type="string"/>
         <field name="calculatorConfiguration" column="calculator_configuration" type="array"/>
         <field name="enabled" type="boolean"/>
+        <field name="isDeductBonusPoints" column="is_deduct_bonus_points" type="boolean"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

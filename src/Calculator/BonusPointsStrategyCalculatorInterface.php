@@ -6,7 +6,7 @@ namespace BitBag\SyliusBonusPointsPlugin\Calculator;
 
 interface BonusPointsStrategyCalculatorInterface
 {
-    public function calculate($subject, array $configuration): int;
+    public function calculate($subject, array $configuration, int $amountToDeduct = 0): int;
 
     public function isPerOrderItem(): bool;
 

@@ -8,7 +8,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 
 interface DelegatingBonusPointsStrategyCalculatorInterface
 {
-    public function calculate($subject, BonusPointsStrategyInterface $bonusPointsStrategy): int;
+    public function calculate($subject, BonusPointsStrategyInterface $bonusPointsStrategy, int $amountToDeduct): int;
 
     public function isPerOrderItem(BonusPointsStrategyInterface $bonusPointsStrategy): bool;
 }

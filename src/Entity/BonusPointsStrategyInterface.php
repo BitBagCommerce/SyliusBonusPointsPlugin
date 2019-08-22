@@ -41,4 +41,8 @@ interface BonusPointsStrategyInterface extends
     public function getCalculatorType(): ?string;
 
     public function setCalculatorType(?string $calculatorType): void;
+
+    public function isDeductBonusPoints(): bool;
+
+    public function setIsDeductBonusPoints(bool $isDeductBonusPoints): void;
 }

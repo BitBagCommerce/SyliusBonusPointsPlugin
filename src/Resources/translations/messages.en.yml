@@ -17,3 +17,4 @@ bitbag_sylius_bonus_points:
         apply_points: Apply points
         bonus_points_total: Bonus points total
         you_have_bonus_points_available: You have bonus points available
+        is_deduct_bonus_points: Is deduct bonus points

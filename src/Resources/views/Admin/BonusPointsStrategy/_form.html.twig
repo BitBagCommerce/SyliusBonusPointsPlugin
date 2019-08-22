@@ -12,6 +12,7 @@
     <div class="column">
         <div class="ui segment">
             {{ form_row(form.calculatorType) }}
+            {{ form_row(form.isDeductBonusPoints) }}
             {% for name, calculatorConfigurationPrototype in form.vars.prototypes %}
                 <div id="{{ form.calculatorType.vars.id }}_{{ name }}" data-container=".configuration"
                      data-prototype="{{ form_widget(calculatorConfigurationPrototype)|e }}">
