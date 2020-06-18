@@ -36,7 +36,8 @@
         </service>
 
         <service id="bitbag_sylius_bonus_points.resolver.bonus_points" class="BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver">
-            <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
+            <argument type="service" id="sylius.context.customer" />
         </service>
 
         <service id="bitbag_sylius_bonus_points.validator.bonus_points_availability" class="BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailabilityValidator">
