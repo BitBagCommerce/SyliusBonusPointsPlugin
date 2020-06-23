@@ -33,6 +33,10 @@ final class BonusPointsResolver implements BonusPointsResolverInterface
             $customer = $this->customerContext->getCustomer();
         }
 
+        if (null === $customer) {
+            return 0;
+        }
+
         $this->currentBonusPoints = [];
         $customerPoints = $this->bonusPointsRepo->findAllCustomerPointsMovements($customer);
 
