@@ -17,23 +17,23 @@
             </thead>
             <tbody>
                 {% for key, item in cart.items %}
-                    {% include '@SyliusShop/Cart/Summary/_item.html.twig' with {'item': item, 'form': form.items[key]} %}
+                    {% include '@SyliusShop/Cart/Summary/_item.html.twig' with {'item': item, 'form': form.items[key], 'main_form': form.vars.id, 'loop_index': loop.index} %}
                 {% endfor %}
             </tbody>
         </table>
-        {% if form.promotionCoupon is defined %}
-            <div class="ui hidden divider"></div>
-
-            {{ sonata_block_render_event('sylius.shop.cart.summary.before_coupon', {'cart': cart, 'form': form}) }}
-
-            {% include '@SyliusShop/Cart/Summary/_coupon.html.twig' with {'form': form.promotionCoupon} %}
-
-            {% include '@BitBagSyliusBonusPointsPlugin/Shop/Cart/_bonusPoints.html.twig' with {'form': form, 'cart': cart} %}
-
-            {{ sonata_block_render_event('sylius.shop.cart.summary.after_coupon', {'cart': cart, 'form': form}) }}
-        {% endif %}
+    {% if form.promotionCoupon is defined %}
         <div class="ui hidden divider"></div>
-        {% include '@SyliusShop/Cart/Summary/_update.html.twig' %}
-        {{ form_row(form._token) }}
+
+        {{ sonata_block_render_event('sylius.shop.cart.summary.before_coupon', {'cart': cart, 'form': form}) }}
+
+        {{ sylius_template_event('sylius.shop.cart.coupon', {'cart': cart, 'form': form, 'main_form': form.vars.id}) }}
+
+        {% include '@BitBagSyliusBonusPointsPlugin/Shop/Cart/_bonusPoints.html.twig' with {'form': form, 'cart': cart} %}
+
+        {{ sonata_block_render_event('sylius.shop.cart.summary.after_coupon', {'cart': cart, 'form': form}) }}
+    {% endif %}
+    <div class="ui hidden divider"></div>
+    {% include '@SyliusShop/Cart/Summary/_update.html.twig' with {'main_form': form.vars.id} %}
+    {{ form_row(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}
 </div>
