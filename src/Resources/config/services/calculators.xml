@@ -8,6 +8,12 @@
 
         <service id="bitbag_sylius_bonus_points.form_registry.bonus_points_strategy_calculator" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
 
+        <service id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator.per_order_price" class="BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator">
+            <tag name="bitbag.bonus_points_strategy_calculator" calculator="per_order_price"
+                 form-type="BitBag\SyliusBonusPointsPlugin\Form\Type\Calculator\PerOrderPriceConfigurationType"
+                 label="bitbag_sylius_bonus_points.ui.per_order_price" />
+        </service>
+
         <service id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator.per_order_item_percentage" class="BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderItemPercentageCalculator">
             <tag name="bitbag.bonus_points_strategy_calculator" calculator="per_order_item_percentage"
                  form-type="BitBag\SyliusBonusPointsPlugin\Form\Type\Calculator\ChannelBasedPerOrderItemPercentageConfigurationType"

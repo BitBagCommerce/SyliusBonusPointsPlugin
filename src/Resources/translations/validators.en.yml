@@ -11,3 +11,6 @@ bitbag_sylius_bonus_points:
             not_blank: Code cannot be blank.
             regex: Code can only be comprised of letters, numbers, dashes and underscores.
             unique: Code must be unique.
+    cart:
+        bonus_points:
+            invalid_number: This number must be greater than 100 and divisible by 100!

@@ -36,6 +36,11 @@
             <tag name="form.type" />
         </service>
 
+        <service id="bitbag_sylius_bonus_points.form.type.calculator.per_order_price" class="BitBag\SyliusBonusPointsPlugin\Form\Type\Calculator\PerOrderPriceConfigurationType">
+            <argument type="service" id="sylius.context.channel" />
+            <tag name="form.type" />
+        </service>
+
         <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_rule_collection" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyRuleCollectionType">
             <argument type="service" id="bitbag_sylius_bonus_points.registry_bonus_points_strategy_rule_checker" />
             <tag name="form.type" />
