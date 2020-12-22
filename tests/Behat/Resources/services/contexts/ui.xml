@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <defaults public="true" />
+
+        <service id="bitbag_sylius_bonus_points_plugin.behat.context.ui.admin.bonus_points_strategy"
+                 class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Ui\Admin\BonusPointsStrategyContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="sylius.behat.current_page_resolver" />
+            <argument type="service" id="sylius.behat.notification_checker" />
+            <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.index" />
+            <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.create" />
+            <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.update" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points_strategy" />
+        </service>
+    </services>
+</container>

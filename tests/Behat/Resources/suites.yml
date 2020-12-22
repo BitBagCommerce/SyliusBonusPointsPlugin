@@ -1,2 +1,2 @@
-# Put your Behat suites definitions here
-
+imports:
+  - suites/ui/managing_bonus_points_strategy.yaml
