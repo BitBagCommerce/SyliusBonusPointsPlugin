@@ -97,6 +97,8 @@ final class BonusPointsStrategyContext implements Context
     private function createBonusPointsStrategyRule(BonusPointsStrategyInterface $bonusPointsStrategy, string $ruleType, string $taxonName)
     {
         $ruleType = str_replace(' ', '_', strtolower($ruleType));
+        $taxonName = strtolower($taxonName);
+
         $configurationTaxons = [];
         $taxons = $this->taxonRepository->findBy(['code' => $taxonName]);
 

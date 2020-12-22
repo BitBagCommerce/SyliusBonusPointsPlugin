@@ -1,2 +1,3 @@
 imports:
   - suites/ui/managing_bonus_points_strategy.yaml
+  - suites/ui/collecting_bonus_points.yaml

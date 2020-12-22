@@ -18,5 +18,9 @@
             <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.update" />
             <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points_strategy" />
         </service>
+
+        <service id="bitbag_sylius_bonus_points_plugin.behat.context.ui.shop.cart" class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Ui\Shop\CartContext">
+            <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.shop.cart.summary" />
+        </service>
     </services>
 </container>
