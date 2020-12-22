@@ -24,17 +24,14 @@ final class BonusPointsApplyValidator extends ConstraintValidator
         $this->bonusPointsResolver = $bonusPointsStrategyRepository;
     }
 
-    public function validate($order, Constraint $constraint): void
+    public function validate($bonusPoints, Constraint $constraint): void
     {
-        /** @var BonusPointsAwareInterface $order */
-        Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
-
         $bonusPointsStrategies = $this->bonusPointsResolver->findAll();
 
         /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
         foreach ($bonusPointsStrategies as $bonusPointsStrategy) {
             if ($bonusPointsStrategy->getCalculatorType() === 'per_order_price') {
-                if ($order->getBonusPoints() % 100 !== 0) {
+                if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
                     $this->context->buildViolation($constraint->message)->setTranslationDomain('validators')->addViolation();
                 }
             }

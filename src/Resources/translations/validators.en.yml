@@ -13,4 +13,4 @@ bitbag_sylius_bonus_points:
             unique: Code must be unique.
     cart:
         bonus_points:
-            invalid_number: This number must be greater than 100 and divisible by 100!
+            invalid_number: This number must be natural number, greater than or equal to 1.
