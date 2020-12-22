@@ -6,12 +6,55 @@ namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrat
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
+use Sylius\Behat\Service\AutocompleteHelper;
 use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ChecksCodeImmutabilityTrait;
 use Webmozart\Assert\Assert;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
     use ChecksCodeImmutabilityTrait;
+
+    public function fillField(string $field, string $value): void
+    {
+        $this->getDocument()->fillField($field, $value);
+    }
+
+    public function addRule(string $ruleName): void
+    {
+        $count = count($this->getCollectionItems('rules'));
+
+        $this->getDocument()->clickLink('Add');
+
+        $this->getDocument()->waitFor(5, function () use ($count) {
+            return $count + 1 === count($this->getCollectionItems('rules'));
+        });
+
+        $this->selectRuleOption('Type', $ruleName);
+    }
+
+    public function selectRuleOption(string $option, string $value, bool $multiple = false): void
+    {
+        $this->getLastCollectionItem('rules')->find('named', ['select', $option])->selectOption($value, $multiple);
+    }
+
+    public function selectAutocompleteRuleOption(string $option, $value, bool $multiple = false): void
+    {
+        $option = strtolower(str_replace(' ', '_', $option));
+
+        $ruleAutocomplete = $this
+            ->getLastCollectionItem('rules')
+            ->find('css', sprintf('input[type="hidden"][name*="[%s]"]', $option))
+            ->getParent()
+        ;
+
+        if ($multiple && is_array($value)) {
+            AutocompleteHelper::chooseValues($this->getSession(), $ruleAutocomplete, $value);
+
+            return;
+        }
+
+        AutocompleteHelper::chooseValue($this->getSession(), $ruleAutocomplete, $value);
+    }
 
     public function fillName(string $name): void
     {
@@ -36,7 +79,7 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     protected function getDefinedElements(): array
     {
         return [
-            'rules' => '#bitbag_sylius_blacklist_plugin_automatic_blacklisting_configuration_rules',
+            'rules' => '#bonus_points_strategy_rules',
         ];
     }
 

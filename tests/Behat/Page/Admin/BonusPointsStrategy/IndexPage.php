@@ -11,7 +11,7 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
 {
     use ContainsEmptyListTrait;
 
-    public function deleteAutomaticBlacklistingConfiguration(string $name): void
+    public function deleteBonusPointsStrategy(string $name): void
     {
         $this->deleteResourceOnPage(['name' => $name]);
     }

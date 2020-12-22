@@ -9,5 +9,5 @@ use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ContainsEmptyListInterf
 
 interface IndexPageInterface extends BaseIndexPageInterface, ContainsEmptyListInterface
 {
-    public function deleteAutomaticBlacklistingConfiguration(string $name): void;
+    public function deleteBonusPointsStrategy(string $name): void;
 }

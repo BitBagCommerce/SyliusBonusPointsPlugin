@@ -66,7 +66,7 @@ final class BonusPointsStrategyContext implements Context
     }
 
     /**
-     * @When I go to update configuration :code bonus points strategy page
+     * @When I go to update bonus points strategy :code page
      */
     public function iGoToUpdateBonusPointsStrategyPage(string $code): void
     {
@@ -76,13 +76,13 @@ final class BonusPointsStrategyContext implements Context
     }
 
     /**
-     * @When I delete a :code bonus points strategy
+     * @When I delete a :name bonus points strategy
      */
-    public function iDeleteABonusPointsStrategy(string $code): void
+    public function iDeleteABonusPointsStrategy(string $name): void
     {
         $this->indexPage->open();
 
-        $this->resolveCurrentPage()->deleteAutomaticBlacklistingConfiguration($code);
+        $this->resolveCurrentPage()->deleteBonusPointsStrategy($name);
     }
 
     /**
@@ -166,35 +166,35 @@ final class BonusPointsStrategyContext implements Context
     }
 
     /**
-     * @Then I should be notified that the automatic blacklisting configuration has been successfully deleted
+     * @Then I should be notified that the bonus points strategy has been successfully deleted
      */
-    public function iShouldBeNotifiedThatTheAutomaticBlacklistingConfigurationSuccessfullyHasBeenDeleted(): void
+    public function iShouldBeNotifiedThatTheBonusPointsStrategySuccessfullyHasBeenDeleted(): void
     {
         $this->notificationChecker->checkNotification(
-            'Automatic blacklisting configuration has been successfully deleted.',
+            'Bonus points strategy has been successfully deleted.',
             NotificationType::success()
         );
     }
 
     /**
-     * @Then I should be notified that the automatic blacklisting configuration has been successfully updated
+     * @Then I should be notified that the bonus points strategy has been successfully updated
      */
     public function iShouldBeNotifiedThatTheAutomaticBlacklistingConfigurationSuccessfullyHasBeenUpdated(): void
     {
         $this->notificationChecker->checkNotification(
-            'Automatic blacklisting configuration has been successfully updated.',
+            'Bonus points strategy has been successfully updated.',
             NotificationType::success()
         );
     }
 
     /**
-     * @Then :configurationName should no longer exist in the automatic blacklisting configuration registry
+     * @Then :name should no longer exist in the bonus points strategy registry
      */
-    public function bonusPointsStrategyShouldNotExistInTheRegistry(string $configurationName): void
+    public function bonusPointsStrategyShouldNotExistInTheRegistry(string $name): void
     {
         $this->indexPage->open();
 
-        Assert::false($this->indexPage->isSingleResourceOnPage(['name' => $configurationName]));
+        Assert::false($this->indexPage->isSingleResourceOnPage(['name' => $name]));
     }
 
     /**

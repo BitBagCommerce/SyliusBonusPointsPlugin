@@ -9,6 +9,14 @@ use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ChecksCodeImmutabilityI
 
 interface UpdatePageInterface extends BaseUpdatePageInterface, ChecksCodeImmutabilityInterface
 {
+    public function fillField(string $field, string $name): void;
+
+    public function addRule(string $ruleName): void;
+
+    public function selectRuleOption(string $option, string $value, bool $multiple = false): void;
+
+    public function selectAutocompleteRuleOption(string $option, $value, bool $multiple = false): void;
+
     public function fillName(string $name): void;
 
     public function disable(): void;
