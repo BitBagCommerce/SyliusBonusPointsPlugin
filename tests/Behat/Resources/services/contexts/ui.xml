@@ -22,5 +22,9 @@
         <service id="bitbag_sylius_bonus_points_plugin.behat.context.ui.shop.cart" class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Ui\Shop\CartContext">
             <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.shop.cart.summary" />
         </service>
+
+        <service id="bitbag_sylius_bonus_points_plugin.behat.context.ui.shop.checkout_complete" class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Ui\Shop\CheckoutCompleteContext">
+            <argument type="service" id="bitbag_sylius_bonus_points_plugin.behat.page.shop.checkout.complete" />
+        </service>
     </services>
 </container>

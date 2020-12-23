@@ -22,7 +22,7 @@ Feature: Collecting bonus points
         And I mark this order as paid
 
     @ui @javascript
-    Scenario: Successfully using of awarded bonus points
+    Scenario: Successfully using of awarded bonus points with "per order price" calculator
         When I am logged in as "francis@underwood.com"
         And the store has a product "PHP Watch" priced at "$12.54"
         And this product belongs to "Watches"
@@ -32,10 +32,10 @@ Feature: Collecting bonus points
         Then I specified the billing address
         And I proceed with "DHL" shipping method and "Offline" payment
         Then I should be on the checkout summary step
-        And my order total should be "$11.54"
+        And I should see that price of my order is equal to "$11.54"
 
     @ui @javascript
-    Scenario: Unsuccessfully using of awarded bonus points
+    Scenario: Unsuccessfully using of awarded bonus points with "per order price" calculator
         When I am logged in as "francis@underwood.com"
         And the store has a product "PHP Watch" priced at "$12.54"
         And this product belongs to "Watches"

@@ -34,7 +34,7 @@ final class CartContext implements Context
     {
         $availableBonusPoints = $this->cartPage->getNumberOfAvailableBonusPoints();
 
-        Assert::same($points, $availableBonusPoints);
+        Assert::same($availableBonusPoints, $points);
     }
 
     /**
@@ -43,6 +43,14 @@ final class CartContext implements Context
     public function iWantToUseBonusPoint(string $points)
     {
         $this->cartPage->applyPoints($points);
+    }
+
+    /**
+     * @Then I should be notified that I do not have enough bonus points
+     */
+    public function iShouldBeNotifiedThatIDoNotHaveEnoughBonusPoints()
+    {
+        Assert::true($this->cartPage->containsErrorWithMessage(sprintf('You do not have enough bonus points.')));
     }
 
     /**

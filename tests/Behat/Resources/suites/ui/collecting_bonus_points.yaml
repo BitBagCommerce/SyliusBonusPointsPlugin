@@ -66,5 +66,6 @@ default:
                 - bitbag_sylius_bonus_points_plugin.behat.context.ui.admin.bonus_points_strategy
                 - bitbag_sylius_bonus_points_plugin.behat.context.setup.bonus_points_strategy
                 - bitbag_sylius_bonus_points_plugin.behat.context.ui.shop.cart
+                - bitbag_sylius_bonus_points_plugin.behat.context.ui.shop.checkout_complete
             filters:
                 tags: "@collecting_bonus_points && @ui"

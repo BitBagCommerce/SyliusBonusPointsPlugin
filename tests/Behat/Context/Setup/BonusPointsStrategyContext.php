@@ -10,6 +10,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRuleInterface;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Behat\Service\SharedStorageInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
@@ -114,5 +115,28 @@ final class BonusPointsStrategyContext implements Context
         $bonusPointsStrategy->addRule($rule);
 
         $this->objectManager->persist($rule);
+    }
+
+    /**
+     * @Given I change bonus points strategy :code calculator type on :calculatorType with :percent percent to calculate points
+     */
+    public function iChangeBonusPointsStrategyCalculatorTypeOn(string $code, string $calculatorType, string $percent)
+    {
+        /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
+        $bonusPointsStrategy = $this->bonusPointsStrategyRepository->findOneBy(['code' => $code]);
+
+        $calculatorType = str_replace(' ', '_', strtolower($calculatorType));
+
+        $configuration = [];
+
+        /** @var ChannelInterface $channel */
+        $channel = $this->sharedStorage->get('channel');
+        $configuration[$channel->getCode()] = ['percentToCalculatePoints' => (\intval($percent) / 100)];
+
+        $bonusPointsStrategy->setCalculatorType($calculatorType);
+        $bonusPointsStrategy->setCalculatorConfiguration($configuration);
+
+        $this->objectManager->persist($bonusPointsStrategy);
+        $this->objectManager->flush();
     }
 }
