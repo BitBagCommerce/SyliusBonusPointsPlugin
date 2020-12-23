@@ -17,16 +17,16 @@ use Webmozart\Assert\Assert;
 final class BonusPointsApplyValidator extends ConstraintValidator
 {
     /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsResolver;
+    private $bonusPointsStrategyRepository;
 
     public function __construct(BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository)
     {
-        $this->bonusPointsResolver = $bonusPointsStrategyRepository;
+        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
     }
 
     public function validate($bonusPoints, Constraint $constraint): void
     {
-        $bonusPointsStrategies = $this->bonusPointsResolver->findAll();
+        $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findAll();
 
         /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
         foreach ($bonusPointsStrategies as $bonusPointsStrategy) {
