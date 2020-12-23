@@ -17,30 +17,25 @@ Feature: Collecting bonus points
         And there is a customer "francis@underwood.com" that placed an order "#00000022"
         And the customer bought a single "BitBag Watch"
         And the customer chose "DHL" shipping method to "United States" with "Offline" payment
-        Given I am logged in as an administrator
+        Then I am logged in as an administrator
         And I change bonus points strategy "bitbag-bonus-points-strategy" calculator type on "Per order item percentage" with "10" percent to calculate points
         And I view the summary of the order "#00000022"
         And I mark this order as paid
-
-    @ui @javascript
-    Scenario: Successfully using of awarded bonus points with "per order item percentage" calculator
         Then I am logged in as "francis@underwood.com"
         And the store has a product "PHP Watch" priced at "$12.54"
         And this product belongs to "Watches"
-        When I add this product to the cart
-        Then I should see that I have "6.03" bonus points
+        And I add this product to the cart
+        And I should see that I have "6.03" bonus points
+
+    @ui @javascript
+    Scenario: Successfully using of awarded bonus points with "per order item percentage" calculator
         Then I want to use "0.54" bonus points
         Then I specified the billing address
-        And I proceed with "DHL" shipping method and "Offline" payment
+        Then I proceed with "DHL" shipping method and "Offline" payment
         Then I should be on the checkout summary step
         And I should see that price of my order is equal to "$12.00"
 
     @ui @javascript
     Scenario: Successfully using of awarded bonus points with "per order item percentage" calculator
-        Then I am logged in as "francis@underwood.com"
-        And the store has a product "PHP Watch" priced at "$12.54"
-        And this product belongs to "Watches"
-        When I add this product to the cart
-        Then I should see that I have "6.03" bonus points
         Then I want to use "6.50" bonus points
-        Then I should be notified that I do not have enough bonus points
+        And I should be notified that I do not have enough bonus points

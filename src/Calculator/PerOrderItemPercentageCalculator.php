@@ -10,6 +10,9 @@ use Webmozart\Assert\Assert;
 
 final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalculatorInterface
 {
+    /** @var string */
+    public const TYPE = 'per_order_item_percentage';
+
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
         /** @var OrderItemInterface $subject */
@@ -36,6 +39,6 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
 
     public function getType(): string
     {
-        return 'per_order_item_percentage';
+        return self::TYPE;
     }
 }

@@ -10,6 +10,9 @@ use Webmozart\Assert\Assert;
 
 final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInterface
 {
+    /** @var string */
+    public const TYPE = 'per_order_price';
+
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
         /** @var OrderItemInterface $subject */
@@ -32,6 +35,6 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
 
     public function getType(): string
     {
-        return 'per_order_price';
+        return self::TYPE;
     }
 }

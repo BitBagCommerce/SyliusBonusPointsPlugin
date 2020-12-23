@@ -88,7 +88,7 @@ final class BonusPointsStrategyContext implements Context
     /**
      * @Then I fill with :value field :fieldName
      */
-    public function iFillWithField(string $value, string $fieldName)
+    public function iFillWithField(string $value, string $fieldName): void
     {
         $this->resolveCurrentPage()->fillField($fieldName, $value);
     }
@@ -208,6 +208,14 @@ final class BonusPointsStrategyContext implements Context
     }
 
     /**
+     * @Given I change last rule count with :count
+     */
+    public function iChangeLastRuleCountWith(string $count): void
+    {
+        $this->resolveCurrentPage()->fillRuleOption('Count', $count);
+    }
+
+    /**
      * @return IndexPageInterface|CreatePageInterface|UpdatePageInterface|SymfonyPageInterface
      */
     private function resolveCurrentPage(): SymfonyPageInterface
@@ -217,13 +225,5 @@ final class BonusPointsStrategyContext implements Context
             $this->createPage,
             $this->updatePage,
         ]);
-    }
-
-    /**
-     * @Given I change last rule count with :count
-     */
-    public function iChangeLastRuleCountWith(string $count): void
-    {
-        $this->resolveCurrentPage()->fillRuleOption('Count', $count);
     }
 }

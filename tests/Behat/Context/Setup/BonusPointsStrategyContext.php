@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRuleInterface;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
@@ -71,12 +72,35 @@ final class BonusPointsStrategyContext implements Context
     /**
      * @Given the bonus points strategy :code admits :points points per one currency
      */
-    public function theAdmitsPointsPerOneCurrency(string $code, string $points)
+    public function theAdmitsPointsPerOneCurrency(string $code, string $points): void
     {
         /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
         $bonusPointsStrategy = $this->bonusPointsStrategyRepository->findOneBy(['code' => $code]);
 
         $bonusPointsStrategy->setCalculatorConfiguration(['numberOfPointsEarnedPerOneCurrency' => $points]);
+
+        $this->objectManager->persist($bonusPointsStrategy);
+        $this->objectManager->flush();
+    }
+
+    /**
+     * @Given I change bonus points strategy :code calculator type on :calculatorType with :percent percent to calculate points
+     */
+    public function iChangeBonusPointsStrategyCalculatorTypeOn(string $code, string $calculatorType, string $percent): void
+    {
+        /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
+        $bonusPointsStrategy = $this->bonusPointsStrategyRepository->findOneBy(['code' => $code]);
+
+        $calculatorType = str_replace(' ', '_', strtolower($calculatorType));
+
+        $configuration = [];
+
+        /** @var ChannelInterface $channel */
+        $channel = $this->sharedStorage->get('channel');
+        $configuration[$channel->getCode()] = ['percentToCalculatePoints' => (\intval($percent) / 100)];
+
+        $bonusPointsStrategy->setCalculatorType($calculatorType);
+        $bonusPointsStrategy->setCalculatorConfiguration($configuration);
 
         $this->objectManager->persist($bonusPointsStrategy);
         $this->objectManager->flush();
@@ -90,12 +114,12 @@ final class BonusPointsStrategyContext implements Context
         $bonusPointsStrategy->setCode($code);
         $bonusPointsStrategy->setName($name);
         $bonusPointsStrategy->enable();
-        $bonusPointsStrategy->setCalculatorType('per_order_price');
+        $bonusPointsStrategy->setCalculatorType(PerOrderPriceCalculator::TYPE);
 
         return $bonusPointsStrategy;
     }
 
-    private function createBonusPointsStrategyRule(BonusPointsStrategyInterface $bonusPointsStrategy, string $ruleType, string $taxonName)
+    private function createBonusPointsStrategyRule(BonusPointsStrategyInterface $bonusPointsStrategy, string $ruleType, string $taxonName): void
     {
         $ruleType = str_replace(' ', '_', strtolower($ruleType));
         $taxonName = strtolower($taxonName);
@@ -115,28 +139,5 @@ final class BonusPointsStrategyContext implements Context
         $bonusPointsStrategy->addRule($rule);
 
         $this->objectManager->persist($rule);
-    }
-
-    /**
-     * @Given I change bonus points strategy :code calculator type on :calculatorType with :percent percent to calculate points
-     */
-    public function iChangeBonusPointsStrategyCalculatorTypeOn(string $code, string $calculatorType, string $percent)
-    {
-        /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
-        $bonusPointsStrategy = $this->bonusPointsStrategyRepository->findOneBy(['code' => $code]);
-
-        $calculatorType = str_replace(' ', '_', strtolower($calculatorType));
-
-        $configuration = [];
-
-        /** @var ChannelInterface $channel */
-        $channel = $this->sharedStorage->get('channel');
-        $configuration[$channel->getCode()] = ['percentToCalculatePoints' => (\intval($percent) / 100)];
-
-        $bonusPointsStrategy->setCalculatorType($calculatorType);
-        $bonusPointsStrategy->setCalculatorConfiguration($configuration);
-
-        $this->objectManager->persist($bonusPointsStrategy);
-        $this->objectManager->flush();
     }
 }

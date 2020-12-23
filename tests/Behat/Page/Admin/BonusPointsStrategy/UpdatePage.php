@@ -7,13 +7,10 @@ namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrat
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
 use Sylius\Behat\Service\AutocompleteHelper;
-use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ChecksCodeImmutabilityTrait;
 use Webmozart\Assert\Assert;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
-    use ChecksCodeImmutabilityTrait;
-
     public function fillField(string $field, string $value): void
     {
         $this->getDocument()->fillField($field, $value);

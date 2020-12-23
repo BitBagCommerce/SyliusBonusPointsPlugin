@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Ui\Shop;
 
-use _HumbugBox01d8f9a04075\Webmozart\Assert\Assert;
 use Behat\Behat\Context\Context;
 use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Shop\Checkout\CompletePageInterface;
+use Webmozart\Assert\Assert;
 
 final class CheckoutCompleteContext implements Context
 {

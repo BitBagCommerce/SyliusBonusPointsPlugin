@@ -20,14 +20,14 @@ Feature: Collecting bonus points
         Given I am logged in as an administrator
         And I view the summary of the order "#00000022"
         And I mark this order as paid
-
-    @ui @javascript
-    Scenario: Successfully using of awarded bonus points with "per order price" calculator
-        When I am logged in as "francis@underwood.com"
+        Then I am logged in as "francis@underwood.com"
         And the store has a product "PHP Watch" priced at "$12.54"
         And this product belongs to "Watches"
         When I add this product to the cart
         Then I should see that I have "1.20" bonus points
+
+    @ui @javascript
+    Scenario: Successfully using of awarded bonus points with "per order price" calculator
         Then I want to use "1" bonus points
         Then I specified the billing address
         And I proceed with "DHL" shipping method and "Offline" payment
@@ -36,10 +36,5 @@ Feature: Collecting bonus points
 
     @ui @javascript
     Scenario: Unsuccessfully using of awarded bonus points with "per order price" calculator
-        When I am logged in as "francis@underwood.com"
-        And the store has a product "PHP Watch" priced at "$12.54"
-        And this product belongs to "Watches"
-        When I add this product to the cart
-        Then I should see that I have "1.20" bonus points
         Then I want to use "0.32" bonus points
         Then I should be notified that this number must be natural number, greater than or equal to 1

@@ -10,8 +10,6 @@ default:
 
                 - sylius.behat.context.transform.taxon
 
-                - sylius.behat.context.api.admin.managing_taxons
-
                 - bitbag_sylius_bonus_points_plugin.behat.context.ui.admin.bonus_points_strategy
                 - bitbag_sylius_bonus_points_plugin.behat.context.setup.bonus_points_strategy
             filters:

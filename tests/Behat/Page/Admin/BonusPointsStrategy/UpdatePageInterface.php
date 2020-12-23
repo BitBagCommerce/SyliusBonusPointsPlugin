@@ -7,7 +7,7 @@ namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrat
 use Sylius\Behat\Page\Admin\Crud\UpdatePageInterface as BaseUpdatePageInterface;
 use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ChecksCodeImmutabilityInterface;
 
-interface UpdatePageInterface extends BaseUpdatePageInterface, ChecksCodeImmutabilityInterface
+interface UpdatePageInterface extends BaseUpdatePageInterface
 {
     public function fillField(string $field, string $name): void;
 
