@@ -140,4 +140,27 @@ final class BonusPointsStrategyContext implements Context
 
         $this->objectManager->persist($rule);
     }
+
+    /**
+     * @Given I change bonus points strategy :code calculator type on :calculatorType with :percent percent to calculate points
+     */
+    public function iChangeBonusPointsStrategyCalculatorTypeOn(string $code, string $calculatorType, string $percent)
+    {
+        /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
+        $bonusPointsStrategy = $this->bonusPointsStrategyRepository->findOneBy(['code' => $code]);
+
+        $calculatorType = str_replace(' ', '_', strtolower($calculatorType));
+
+        $configuration = [];
+
+        /** @var ChannelInterface $channel */
+        $channel = $this->sharedStorage->get('channel');
+        $configuration[$channel->getCode()] = ['percentToCalculatePoints' => (\intval($percent) / 100)];
+
+        $bonusPointsStrategy->setCalculatorType($calculatorType);
+        $bonusPointsStrategy->setCalculatorConfiguration($configuration);
+
+        $this->objectManager->persist($bonusPointsStrategy);
+        $this->objectManager->flush();
+    }
 }
