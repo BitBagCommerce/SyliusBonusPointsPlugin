@@ -31,20 +31,17 @@ final class BonusPointsStrategyRulesEligibilityCheckerSpec extends ObjectBehavio
         $this->shouldHaveType(BonusPointsStrategyEligibilityCheckerInterface::class);
     }
 
-    function it_checks(
+    function it_returns_false(
         OrderItemInterface $orderItem,
         BonusPointsStrategyInterface $bonusPointsStrategy,
         ServiceRegistryInterface $ruleRegistry,
         BonusPointsStrategyRuleInterface $bonusPointsStrategyRule,
         BonusPointsStrategyRuleCheckerInterface $checker
     ): void {
-        $bonusPointsStrategyRules = new ArrayCollection();
-        $bonusPointsStrategyRules->add($bonusPointsStrategyRule);
-
         $ruleConfiguration = ['taxons' => ['t-shirts']];
 
         $bonusPointsStrategy->hasRules()->willReturn(true);
-        $bonusPointsStrategy->getRules()->willReturn($bonusPointsStrategyRules);
+        $bonusPointsStrategy->getRules()->willReturn(new ArrayCollection([$bonusPointsStrategyRule->getWrappedObject()]));
         $bonusPointsStrategyRule->getType()->willReturn('has_taxon');
         $ruleRegistry->get('has_taxon')->willReturn($checker);
         $bonusPointsStrategyRule->getConfiguration()->willReturn($ruleConfiguration);
@@ -58,5 +55,18 @@ final class BonusPointsStrategyRulesEligibilityCheckerSpec extends ObjectBehavio
         $checker->isEligible($orderItem, $ruleConfiguration)->shouldBeCalled();
 
         $this->isEligible($orderItem, $bonusPointsStrategy)->shouldReturn(false);
+    }
+
+    function it_returns_true(
+        OrderItemInterface $orderItem,
+        BonusPointsStrategyInterface $bonusPointsStrategy
+    ): void {
+        $bonusPointsStrategy->hasRules()->willReturn(true);
+        $bonusPointsStrategy->getRules()->willReturn(new ArrayCollection());
+
+        $bonusPointsStrategy->hasRules()->shouldBeCalled();
+        $bonusPointsStrategy->getRules()->shouldBeCalled();
+
+        $this->isEligible($orderItem, $bonusPointsStrategy)->shouldReturn(true);
     }
 }
