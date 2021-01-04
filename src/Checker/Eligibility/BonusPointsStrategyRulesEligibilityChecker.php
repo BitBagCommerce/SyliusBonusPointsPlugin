@@ -28,7 +28,6 @@ final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStr
 
         foreach ($bonusPointsStrategy->getRules() as $rule) {
             if (!$this->isEligibleToRule($orderItem, $rule)) {
-
                 return false;
             }
         }
