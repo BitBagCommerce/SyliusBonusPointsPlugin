@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
+use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligibilityCheckerInterface;
 use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyRulesEligibilityChecker;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
@@ -45,7 +46,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
             foreach ($orderItems as $orderItem) {
                 if (!$this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
                     $this->context
-                        ->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.invalid_taxon')
+                        ->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')
                         ->setTranslationDomain('validators')
                         ->addViolation()
                     ;
@@ -54,8 +55,12 @@ final class BonusPointsApplyValidator extends ConstraintValidator
                 }
             }
 
-            if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
-                $this->context->buildViolation($constraint->message)->setTranslationDomain('validators')->addViolation();
+            if ($bonusPointsStrategy->getCalculatorType() === PerOrderPriceCalculator::TYPE) {
+                if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
+                    $this->context->buildViolation($constraint->message)->setTranslationDomain('validators')->addViolation();
+
+                    return;
+                }
             }
         }
     }
