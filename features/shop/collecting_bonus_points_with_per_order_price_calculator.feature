@@ -29,8 +29,8 @@ Feature: Collecting bonus points
     @ui @javascript
     Scenario: Successfully using of awarded bonus points with "per order price" calculator
         When I want to use "1" bonus points
-        Then I specified the billing address
-        Then I proceed with "DHL" shipping method and "Offline" payment
+        And I specified the billing address
+        And I proceed with "DHL" shipping method and "Offline" payment
         Then I should be on the checkout summary step
         And I should see that price of my order is equal to "$11.54"
 
