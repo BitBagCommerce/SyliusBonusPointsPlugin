@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
+use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligibilityCheckerInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
 use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsApply;
 use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsApplyValidator;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\ConstraintValidator;
 
 final class BonusPointsApplyValidatorSpec extends ObjectBehavior
 {
     function let(
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository
+        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        CartContextInterface $cartContext
     ): void {
-        $this->beConstructedWith($bonusPointsStrategyRepository);
+        $this->beConstructedWith($bonusPointsStrategyRepository, $bonusPointsStrategyEligibilityChecker, $cartContext);
     }
 
     function it_is_initializable(): void
@@ -31,15 +37,21 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
 
     function it_validates(
         BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        BonusPointsStrategyInterface $bonusPointsStrategy
+        BonusPointsStrategyInterface $bonusPointsStrategy,
+        CartContextInterface $cartContext,
+        OrderInterface $order
     ): void {
         $bonusPointsApplyConstraint = new BonusPointsApply();
 
         $bonusPointsStrategies = [];
 
-        $bonusPointsStrategyRepository->findAll()->willReturn($bonusPointsStrategies);
-
-        $bonusPointsStrategyRepository->findAll()->shouldBeCalled();
+        $bonusPointsStrategyRepository->findAllActive()->willReturn($bonusPointsStrategies);
+        $cartContext->getCart()->willReturn($order);
+        $order->getItems()->willReturn(new ArrayCollection());
+        
+        $bonusPointsStrategyRepository->findAllActive()->shouldBeCalled();
+        $cartContext->getCart()->shouldBeCalled();
+        $order->getItems()->shouldBeCalled();
         $bonusPointsStrategy->getCalculatorType()->shouldNotBeCalled();
 
         $this->validate(99, $bonusPointsApplyConstraint);
