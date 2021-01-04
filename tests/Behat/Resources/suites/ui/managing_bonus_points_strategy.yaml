@@ -1,0 +1,16 @@
+default:
+    suites:
+        ui_managing_bonus_points_strategy:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.taxonomy
+
+                - sylius.behat.context.transform.taxon
+
+                - bitbag_sylius_bonus_points_plugin.behat.context.ui.admin.bonus_points_strategy
+                - bitbag_sylius_bonus_points_plugin.behat.context.setup.bonus_points_strategy
+            filters:
+                tags: "@managing_bonus_points_strategy && @ui"

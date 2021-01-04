@@ -6,11 +6,13 @@ namespace BitBag\SyliusBonusPointsPlugin\Form\Extension;
 
 use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
 use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolverInterface;
+use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsApply;
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\OrderBundle\Form\Type\CartType;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -56,14 +58,20 @@ final class CartTypeExtension extends AbstractTypeExtension
                     new Range([
                         'min' => 0.01,
                         'groups' => ['sylius'],
+                    ]),
+                    new BonusPointsApply([
+                        'message' => 'bitbag_sylius_bonus_points.cart.bonus_points.invalid_number',
+                        'groups' => ['sylius'],
                     ])
                 ]
             ])
         ;
     }
 
-    public function getExtendedType(): string
+    public function getExtendedTypes(): array
     {
-        return CartType::class;
+        return [
+            CartType::class
+        ];
     }
 }

@@ -49,16 +49,14 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "BitBag\\SyliusBonusPointsPlugin\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+            "BitBag\\SyliusBonusPointsPlugin\\": "src/",
             "Tests\\BitBag\\SyliusBonusPointsPlugin\\": [
                 "tests/",
                 "tests/Application/src"
             ]
-        },
+        }
+    },
+    "autoload-dev": {
         "classmap": ["tests/Application/Kernel.php"]
     }
 }

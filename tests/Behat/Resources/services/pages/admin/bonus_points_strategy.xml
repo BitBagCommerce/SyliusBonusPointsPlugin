@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.index" class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrategy\IndexPage"
+            parent="sylius.behat.page.admin.crud.index">
+            <argument>bitbag_sylius_bonus_points_admin_bonus_points_strategy_index</argument>
+        </service>
+
+        <service id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.create" class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrategy\CreatePage"
+                 parent="sylius.behat.page.admin.crud.create">
+            <argument>bitbag_sylius_bonus_points_admin_bonus_points_strategy_create</argument>
+        </service>
+
+        <service id="bitbag_sylius_bonus_points_plugin.behat.page.admin.bonus_points_strategy.update" class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrategy\UpdatePage"
+                 parent="sylius.behat.page.admin.crud.update">
+            <argument>bitbag_sylius_bonus_points_admin_bonus_points_strategy_update</argument>
+        </service>
+    </services>
+</container>

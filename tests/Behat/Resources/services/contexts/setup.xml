@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <defaults public="true" />
+
+        <service id="bitbag_sylius_bonus_points_plugin.behat.context.setup.bonus_points_strategy"
+                 class="Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Setup\BonusPointsStrategyContext">
+            <argument type="service" id="bitbag_sylius_bonus_points.factory.bonus_points_strategy" />
+            <argument type="service" id="bitbag_sylius_bonus_points.factory.bonus_points_strategy_rule" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points_strategy" />
+            <argument type="service" id="sylius.repository.taxon" />
+        </service>
+    </services>
+</container>

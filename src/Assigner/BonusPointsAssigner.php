@@ -93,7 +93,8 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
                         $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                             $orderItem,
                             $bonusPointsStrategy,
-                            $bonusPointsStrategy->isDeductBonusPoints() ? $splitAmountOrderItems[$orderItem->getId()] : 0
+                            $bonusPointsStrategy->isDeductBonusPoints() && \count($splitAmountOrderItems) > 0 ?
+                                $splitAmountOrderItems[$orderItem->getId()] : 0
                         );
                     }
                 }
@@ -166,6 +167,10 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
 
         foreach ($itemsEligible as $item) {
             $totals[] = $item->getTotal();
+        }
+
+        if (\count($totals) === 0) {
+            return [];
         }
 
         $splitAmount = $this->proportionalIntegerDistributor->distribute($totals, $bonusPointsAmount);

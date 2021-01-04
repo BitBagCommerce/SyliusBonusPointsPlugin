@@ -8,10 +8,10 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Webmozart\Assert\Assert;
 
-final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalculatorInterface
+final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInterface
 {
     /** @var string */
-    public const TYPE = 'per_order_item_percentage';
+    public const TYPE = 'per_order_price';
 
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
@@ -21,15 +21,11 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
         /** @var OrderInterface $order */
         $order = $subject->getOrder();
 
-        $configuration = $configuration[$order->getChannel()->getCode()];
+        $totalPriceForOrderItems = $order->getTotal() - $order->getShippingTotal();
 
-        $total = $subject->getTotal();
+        $total = intval(floor($totalPriceForOrderItems / 100));
 
-        if ($amountToDeduct < 0) {
-            $total += $amountToDeduct;
-        }
-
-        return intval(round($total * $configuration['percentToCalculatePoints']));
+        return intval($total * $configuration['numberOfPointsEarnedPerOneCurrency']);
     }
 
     public function isPerOrderItem(): bool
