@@ -46,10 +46,10 @@ final class CartContext implements Context
     }
 
     /**
-     * @Then I should be notified that this number must be natural number, greater than or equal to 1
+     * @Then I should be notified that this value should be natural number, greater than or equal to 1
      */
     public function iShouldBeNotifiedThatThisNumberMustBeNaturalNumberGreaterThanOrEqualTo(): void
     {
-        Assert::true($this->cartPage->containsErrorWithMessage(sprintf('This number must be natural number, greater than or equal to 1.')));
+        Assert::true($this->cartPage->containsErrorWithMessage(sprintf('This value should be natural number, greater than or equal to 1.')));
     }
 }

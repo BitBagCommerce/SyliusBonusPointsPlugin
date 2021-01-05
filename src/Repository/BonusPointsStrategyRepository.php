@@ -16,4 +16,15 @@ class BonusPointsStrategyRepository extends EntityRepository implements BonusPoi
             ->getResult()
         ;
     }
+
+    public function findActiveByCalculatorType(string $calculatorType): array
+    {
+        return $this->createQueryBuilder('o')
+            ->where('o.enabled = true')
+            ->andWhere('o.calculatorType = :calculatorType')
+            ->setParameter('calculatorType', $calculatorType)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

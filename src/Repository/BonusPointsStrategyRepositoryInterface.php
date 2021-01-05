@@ -9,4 +9,6 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 interface BonusPointsStrategyRepositoryInterface extends RepositoryInterface
 {
     public function findAllActive(): array;
+
+    public function findActiveByCalculatorType(string $calculatorType): array;
 }
