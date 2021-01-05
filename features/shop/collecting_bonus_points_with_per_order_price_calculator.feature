@@ -37,4 +37,4 @@ Feature: Collecting bonus points
     @ui @javascript
     Scenario: Unsuccessfully using of awarded bonus points with "per order price" calculator
         When I want to use "0.32" bonus points
-        Then I should be notified that this number must be natural number, greater than or equal to 1
+        Then I should be notified that this value should be natural number, greater than or equal to 1

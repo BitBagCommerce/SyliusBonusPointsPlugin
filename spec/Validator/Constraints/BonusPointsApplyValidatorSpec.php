@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
+use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligibilityCheckerInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
@@ -45,11 +46,11 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
 
         $bonusPointsStrategies = [];
 
-        $bonusPointsStrategyRepository->findAllActive()->willReturn($bonusPointsStrategies);
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn($bonusPointsStrategies);
         $cartContext->getCart()->willReturn($order);
         $order->getItems()->willReturn(new ArrayCollection());
         
-        $bonusPointsStrategyRepository->findAllActive()->shouldBeCalled();
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
         $cartContext->getCart()->shouldBeCalled();
         $order->getItems()->shouldBeCalled();
         $bonusPointsStrategy->getCalculatorType()->shouldNotBeCalled();

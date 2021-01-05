@@ -9,6 +9,8 @@ use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligib
 use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyRulesEligibilityChecker;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -36,7 +38,22 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
     public function validate($bonusPoints, Constraint $constraint): void
     {
-        $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findAllActive();
+        $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE);
+
+        $eligibleBonusPointsStrategies = $this->extractOnlyEligibleStrategies($bonusPointsStrategies);
+
+        foreach ($eligibleBonusPointsStrategies as $eligibleBonusPointsStrategy) {
+            if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
+                $this->context->buildViolation($constraint->message)->addViolation();
+
+                return;
+            }
+        }
+    }
+
+    private function extractOnlyEligibleStrategies(array $bonusPointsStrategies): Collection
+    {
+        $eligibleBonusPointsStrategies = new ArrayCollection();
 
         $order = $this->cartContext->getCart();
         $orderItems = $order->getItems();
@@ -44,24 +61,14 @@ final class BonusPointsApplyValidator extends ConstraintValidator
         /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
         foreach ($bonusPointsStrategies as $bonusPointsStrategy) {
             foreach ($orderItems as $orderItem) {
-                if (!$this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
-                    $this->context
-                        ->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')
-                        ->setTranslationDomain('validators')
-                        ->addViolation()
-                    ;
-
-                    return;
-                }
-            }
-
-            if ($bonusPointsStrategy->getCalculatorType() === PerOrderPriceCalculator::TYPE) {
-                if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
-                    $this->context->buildViolation($constraint->message)->setTranslationDomain('validators')->addViolation();
-
-                    return;
+                if ($this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
+                    if (!$eligibleBonusPointsStrategies->contains($bonusPointsStrategy)) {
+                        $eligibleBonusPointsStrategies->add($bonusPointsStrategy);
+                    }
                 }
             }
         }
+
+        return $eligibleBonusPointsStrategies;
     }
 }
