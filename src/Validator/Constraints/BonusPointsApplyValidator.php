@@ -61,10 +61,11 @@ final class BonusPointsApplyValidator extends ConstraintValidator
         /** @var BonusPointsStrategyInterface $bonusPointsStrategy */
         foreach ($bonusPointsStrategies as $bonusPointsStrategy) {
             foreach ($orderItems as $orderItem) {
-                if ($this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
-                    if (!$eligibleBonusPointsStrategies->contains($bonusPointsStrategy)) {
-                        $eligibleBonusPointsStrategies->add($bonusPointsStrategy);
-                    }
+                if (
+                    $this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy) &&
+                    !$eligibleBonusPointsStrategies->contains($bonusPointsStrategy)
+                ) {
+                    $eligibleBonusPointsStrategies->add($bonusPointsStrategy);
                 }
             }
         }
