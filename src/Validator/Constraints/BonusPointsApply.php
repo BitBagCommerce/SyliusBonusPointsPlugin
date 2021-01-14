@@ -9,7 +9,10 @@ use Symfony\Component\Validator\Constraint;
 final class BonusPointsApply extends Constraint
 {
     /** @var string */
-    public $message;
+    public $messageInvalidNumber;
+
+    /** @var string */
+    public $messageInvalidOrderItem;
 
     public function validatedBy(): string
     {

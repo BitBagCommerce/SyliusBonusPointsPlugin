@@ -20,3 +20,4 @@ bitbag_sylius_bonus_points:
         is_deduct_bonus_points: Is deduct bonus points
         number_of_points_earned_per_one_currency: Number of points earned per one currency
         per_order_price: Per order price
+        every_point_is_equal_to_one_currency: Each bonus point is equal to a discount of one currency
