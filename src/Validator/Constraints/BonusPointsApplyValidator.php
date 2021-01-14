@@ -47,12 +47,12 @@ final class BonusPointsApplyValidator extends ConstraintValidator
         $eligibleBonusPointsStrategies = $this->extractOnlyEligibleStrategies($bonusPointsStrategies);
 
         if (\count($eligibleBonusPointsStrategies) === 0) {
-            $this->context->buildViolation($constraint->messageInvalidOrderItem)->addViolation();
+            $this->context->buildViolation($constraint->noProductsFromBonusPointsStrategyTaxonMessage)->addViolation();
         }
 
         foreach ($eligibleBonusPointsStrategies as $eligibleBonusPointsStrategy) {
             if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
-                $this->context->buildViolation($constraint->messageInvalidNumber)->addViolation();
+                $this->context->buildViolation($constraint->invalidBonusPointsValueMessage)->addViolation();
 
                 return;
             }

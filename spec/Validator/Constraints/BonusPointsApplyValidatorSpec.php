@@ -17,6 +17,8 @@ use Sylius\Component\Core\Model\OrderItem;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 final class BonusPointsApplyValidatorSpec extends ObjectBehavior
 {
@@ -55,7 +57,6 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn($bonusPointsStrategies->toArray());
         $cartContext->getCart()->willReturn($order);
         $order->getItems()->willReturn($orderItems);
-        $order->getItems()->willReturn($orderItems);
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(true);
 
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
@@ -63,6 +64,49 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         $order->getItems()->shouldBeCalled();
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
 
+        $this->validate(100, $bonusPointsApplyConstraint);
+    }
+
+    function it_validates_if_it_does_not_find_strategies(BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository): void
+    {
+        $bonusPointsApplyConstraint = new BonusPointsApply();
+
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn([]);
+
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
+
+        $this->validate(100, $bonusPointsApplyConstraint);
+    }
+
+    function it_validates_if_it_does_not_have_eligible_strategies(
+        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        BonusPointsStrategyInterface $bonusPointsStrategy,
+        CartContextInterface $cartContext,
+        OrderInterface $order,
+        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        ExecutionContextInterface $context,
+        ConstraintViolationBuilderInterface $constraintViolationBuilder
+    ): void {
+        $bonusPointsApplyConstraint = new BonusPointsApply();
+        $orderItem = new OrderItem();
+
+        $bonusPointsStrategies = new ArrayCollection([$bonusPointsStrategy]);
+        $orderItems = new ArrayCollection([$orderItem]);
+
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn($bonusPointsStrategies->toArray());
+        $cartContext->getCart()->willReturn($order);
+        $order->getItems()->willReturn($orderItems);
+        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(false);
+        $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')->willReturn($constraintViolationBuilder);
+
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
+        $cartContext->getCart()->shouldBeCalled();
+        $order->getItems()->shouldBeCalled();
+        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
+        $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')->shouldBeCalled();
+        $constraintViolationBuilder->addViolation()->shouldBeCalled();
+
+        $this->initialize($context);
         $this->validate(100, $bonusPointsApplyConstraint);
     }
 }

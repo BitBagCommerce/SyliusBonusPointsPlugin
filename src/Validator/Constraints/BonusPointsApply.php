@@ -9,10 +9,10 @@ use Symfony\Component\Validator\Constraint;
 final class BonusPointsApply extends Constraint
 {
     /** @var string */
-    public $messageInvalidNumber;
+    public $invalidBonusPointsValueMessage = 'bitbag_sylius_bonus_points.cart.bonus_points.invalid_value';
 
     /** @var string */
-    public $messageInvalidOrderItem;
+    public $noProductsFromBonusPointsStrategyTaxonMessage = 'bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon';
 
     public function validatedBy(): string
     {
