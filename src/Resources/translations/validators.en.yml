@@ -13,5 +13,5 @@ bitbag_sylius_bonus_points:
             unique: Code must be unique.
     cart:
         bonus_points:
-            invalid_number: This value should be natural number, greater than or equal to 1.
+            invalid_value: This value should be natural number, greater than or equal to 1.
             cannot_use_points_for_this_taxon: You cannot use bonus points for products from this category.
