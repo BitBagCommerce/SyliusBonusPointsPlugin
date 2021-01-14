@@ -60,8 +60,6 @@ final class CartTypeExtension extends AbstractTypeExtension
                         'groups' => ['sylius'],
                     ]),
                     new BonusPointsApply([
-                        'messageInvalidNumber' => 'bitbag_sylius_bonus_points.cart.bonus_points.invalid_number',
-                        'messageInvalidOrderItem' => 'bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon',
                         'groups' => ['sylius'],
                     ])
                 ]
