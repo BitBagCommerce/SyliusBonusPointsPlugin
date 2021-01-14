@@ -40,6 +40,10 @@ final class BonusPointsApplyValidator extends ConstraintValidator
     {
         $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE);
 
+        if (\count($bonusPointsStrategies) === 0) {
+            return;
+        }
+
         $eligibleBonusPointsStrategies = $this->extractOnlyEligibleStrategies($bonusPointsStrategies);
 
         if (\count($eligibleBonusPointsStrategies) === 0) {
