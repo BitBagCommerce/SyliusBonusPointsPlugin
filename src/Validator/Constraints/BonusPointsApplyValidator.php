@@ -38,6 +38,10 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
     public function validate($bonusPoints, Constraint $constraint): void
     {
+        if (null === $bonusPoints) {
+            return;
+        }
+
         $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE);
 
         if (\count($bonusPointsStrategies) === 0) {
