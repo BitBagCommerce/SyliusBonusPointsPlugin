@@ -17,6 +17,7 @@ use Sylius\Component\Core\Model\OrderItem;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
@@ -46,7 +47,9 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         BonusPointsStrategyInterface $bonusPointsStrategy,
         CartContextInterface $cartContext,
         OrderInterface $order,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker
+        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        ExecutionContextInterface $context,
+        ConstraintViolationListInterface $constraintViolationList
     ): void {
         $bonusPointsApplyConstraint = new BonusPointsApply();
         $orderItem = new OrderItem();
@@ -58,12 +61,16 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         $cartContext->getCart()->willReturn($order);
         $order->getItems()->willReturn($orderItems);
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(true);
+        $context->getViolations()->willReturn($constraintViolationList);
 
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
         $cartContext->getCart()->shouldBeCalled();
         $order->getItems()->shouldBeCalled();
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
+        $context->getViolations()->shouldBeCalled();
+        $constraintViolationList->remove(0)->shouldBeCalled();
 
+        $this->initialize($context);
         $this->validate(100, $bonusPointsApplyConstraint);
     }
 
