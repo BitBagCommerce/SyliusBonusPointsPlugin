@@ -38,10 +38,6 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
     public function validate($bonusPoints, Constraint $constraint): void
     {
-        if (null === $bonusPoints) {
-            return;
-        }
-
         $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE);
 
         if (\count($bonusPointsStrategies) === 0) {
@@ -52,9 +48,13 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
         if (\count($eligibleBonusPointsStrategies) === 0) {
             $this->context->buildViolation($constraint->noProductsFromBonusPointsStrategyTaxonMessage)->addViolation();
+
+            return;
         }
 
         foreach ($eligibleBonusPointsStrategies as $eligibleBonusPointsStrategy) {
+            $this->context->getViolations()->remove(0);
+
             if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
                 $this->context->buildViolation($constraint->invalidBonusPointsValueMessage)->addViolation();
 
