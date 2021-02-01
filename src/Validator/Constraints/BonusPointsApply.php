@@ -21,6 +21,6 @@ final class BonusPointsApply extends Constraint
 
     public function getTargets(): string
     {
-        return self::CLASS_CONSTRAINT;
+        return self::PROPERTY_CONSTRAINT;
     }
 }
