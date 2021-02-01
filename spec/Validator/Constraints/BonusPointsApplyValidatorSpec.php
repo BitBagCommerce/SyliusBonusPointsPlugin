@@ -48,8 +48,7 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         CartContextInterface $cartContext,
         OrderInterface $order,
         BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        ExecutionContextInterface $context,
-        ConstraintViolationListInterface $constraintViolationList
+        ExecutionContextInterface $context
     ): void {
         $bonusPointsApplyConstraint = new BonusPointsApply();
         $orderItem = new OrderItem();
@@ -61,14 +60,11 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         $cartContext->getCart()->willReturn($order);
         $order->getItems()->willReturn($orderItems);
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(true);
-        $context->getViolations()->willReturn($constraintViolationList);
 
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
         $cartContext->getCart()->shouldBeCalled();
         $order->getItems()->shouldBeCalled();
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
-        $context->getViolations()->shouldBeCalled();
-        $constraintViolationList->remove(0)->shouldBeCalled();
 
         $this->initialize($context);
         $this->validate(100, $bonusPointsApplyConstraint);
@@ -92,8 +88,7 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         OrderInterface $order,
         BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
         ExecutionContextInterface $context,
-        ConstraintViolationBuilderInterface $constraintViolationBuilder,
-        ConstraintViolationListInterface $constraintViolationList
+        ConstraintViolationBuilderInterface $constraintViolationBuilder
     ): void {
         $bonusPointsApplyConstraint = new BonusPointsApply();
         $orderItem = new OrderItem();
@@ -105,15 +100,12 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
         $cartContext->getCart()->willReturn($order);
         $order->getItems()->willReturn($orderItems);
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(false);
-        $context->getViolations()->willReturn($constraintViolationList);
         $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')->willReturn($constraintViolationBuilder);
 
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
         $cartContext->getCart()->shouldBeCalled();
         $order->getItems()->shouldBeCalled();
         $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
-        $context->getViolations()->shouldBeCalled();
-        $constraintViolationList->remove(0)->shouldBeCalled();
         $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')->shouldBeCalled();
         $constraintViolationBuilder->addViolation()->shouldBeCalled();
 
