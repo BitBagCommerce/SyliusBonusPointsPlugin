@@ -23,12 +23,9 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 final class BonusPointsApplyValidatorSpec extends ObjectBehavior
 {
-    function let(
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        CartContextInterface $cartContext
-    ): void {
-        $this->beConstructedWith($bonusPointsStrategyRepository, $bonusPointsStrategyEligibilityChecker, $cartContext);
+    function let(BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository): void
+    {
+        $this->beConstructedWith($bonusPointsStrategyRepository);
     }
 
     function it_is_initializable(): void
@@ -45,29 +42,24 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
     function it_validates(
         BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
         BonusPointsStrategyInterface $bonusPointsStrategy,
-        CartContextInterface $cartContext,
-        OrderInterface $order,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        ExecutionContextInterface $context
+        ConstraintViolationListInterface $constraintViolationList,
+        ExecutionContextInterface $context,
+        ConstraintViolationBuilderInterface $constraintViolationBuilder
     ): void {
         $bonusPointsApplyConstraint = new BonusPointsApply();
-        $orderItem = new OrderItem();
 
-        $bonusPointsStrategies = new ArrayCollection([$bonusPointsStrategy]);
-        $orderItems = new ArrayCollection([$orderItem]);
-
-        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn($bonusPointsStrategies->toArray());
-        $cartContext->getCart()->willReturn($order);
-        $order->getItems()->willReturn($orderItems);
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(true);
+        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn([$bonusPointsStrategy]);
+        $context->getViolations()->willReturn($constraintViolationList);
+        $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.invalid_value')->willReturn($constraintViolationBuilder);
 
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
-        $cartContext->getCart()->shouldBeCalled();
-        $order->getItems()->shouldBeCalled();
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
+        $context->getViolations()->shouldBeCalled();
+        $constraintViolationList->remove(0)->shouldBeCalled();
+        $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.invalid_value')->shouldBeCalled();
+        $constraintViolationBuilder->addViolation()->shouldBeCalled();
 
         $this->initialize($context);
-        $this->validate(100, $bonusPointsApplyConstraint);
+        $this->validate(232, $bonusPointsApplyConstraint)->shouldReturn(null);
     }
 
     function it_validates_if_it_does_not_find_strategies(BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository): void
@@ -78,38 +70,13 @@ final class BonusPointsApplyValidatorSpec extends ObjectBehavior
 
         $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
 
-        $this->validate(100, $bonusPointsApplyConstraint);
+        $this->validate(100, $bonusPointsApplyConstraint)->shouldReturn(null);
     }
 
-    function it_validates_if_it_does_not_have_eligible_strategies(
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        BonusPointsStrategyInterface $bonusPointsStrategy,
-        CartContextInterface $cartContext,
-        OrderInterface $order,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        ExecutionContextInterface $context,
-        ConstraintViolationBuilderInterface $constraintViolationBuilder
-    ): void {
+    function it_validates_if_bonus_points_are_null(): void
+    {
         $bonusPointsApplyConstraint = new BonusPointsApply();
-        $orderItem = new OrderItem();
 
-        $bonusPointsStrategies = new ArrayCollection([$bonusPointsStrategy]);
-        $orderItems = new ArrayCollection([$orderItem]);
-
-        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->willReturn($bonusPointsStrategies->toArray());
-        $cartContext->getCart()->willReturn($order);
-        $order->getItems()->willReturn($orderItems);
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(false);
-        $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')->willReturn($constraintViolationBuilder);
-
-        $bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
-        $cartContext->getCart()->shouldBeCalled();
-        $order->getItems()->shouldBeCalled();
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
-        $context->buildViolation('bitbag_sylius_bonus_points.cart.bonus_points.cannot_use_points_for_this_taxon')->shouldBeCalled();
-        $constraintViolationBuilder->addViolation()->shouldBeCalled();
-
-        $this->initialize($context);
-        $this->validate(100, $bonusPointsApplyConstraint);
+        $this->validate(null, $bonusPointsApplyConstraint)->shouldReturn(null);
     }
 }
