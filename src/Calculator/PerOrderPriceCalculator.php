@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Calculator;
 
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Webmozart\Assert\Assert;
 
@@ -18,10 +17,7 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
         /** @var OrderItemInterface $subject */
         Assert::isInstanceOf($subject, OrderItemInterface::class);
 
-        /** @var OrderInterface $order */
-        $order = $subject->getOrder();
-
-        $totalPriceForOrderItems = $order->getTotal() - $order->getShippingTotal();
+        $totalPriceForOrderItems = $subject->getTotal();
 
         $total = intval(floor($totalPriceForOrderItems / 100));
 

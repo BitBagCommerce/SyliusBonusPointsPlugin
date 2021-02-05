@@ -22,6 +22,7 @@
 
         <service id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator" class="BitBag\SyliusBonusPointsPlugin\Calculator\DelegatingBonusPointsStrategyCalculator">
             <argument type="service" id="bitbag_sylius_bonus_points.registry.bonus_points_strategy_calculator"/>
+            <argument type="service" id="bitbag_sylius_bonus_points.bonus_points_strategy_rules_eligibility_checker"/>
         </service>
     </services>
 </container>
