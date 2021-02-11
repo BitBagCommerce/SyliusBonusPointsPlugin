@@ -46,6 +46,14 @@ final class CartContext implements Context
     }
 
     /**
+     * @Then I should be notified that I cannot use more bonus points than order items value
+     */
+    public function iShouldBeNotifiedThatICannotUseMoreBonusPointsThanOrderItemsValue(): void
+    {
+        Assert::true($this->cartPage->containsErrorWithMessage(sprintf('You cannot use more points than your order items value')));
+    }
+
+    /**
      * @Then I should be notified that this value should be natural number, greater than or equal to 1
      */
     public function iShouldBeNotifiedThatThisNumberMustBeNaturalNumberGreaterThanOrEqualTo(): void

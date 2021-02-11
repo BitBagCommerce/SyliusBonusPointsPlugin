@@ -11,6 +11,9 @@ final class BonusPointsApply extends Constraint
     /** @var string */
     public $invalidBonusPointsValueMessage = 'bitbag_sylius_bonus_points.cart.bonus_points.invalid_value';
 
+    /** @var string */
+    public $exceedOrderItemsTotalMessage = 'bitbag_sylius_bonus_points.cart.bonus_points.exceed_order_items_total';
+
     public function validatedBy(): string
     {
         return 'bitbag_bonus_points_apply';
