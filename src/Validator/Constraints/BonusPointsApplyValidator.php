@@ -6,6 +6,7 @@ namespace BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
 use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
+use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -14,14 +15,26 @@ final class BonusPointsApplyValidator extends ConstraintValidator
     /** @var BonusPointsStrategyRepositoryInterface */
     private $bonusPointsStrategyRepository;
 
-    public function __construct(BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository)
-    {
+    /** @var CartContextInterface */
+    private $cartContext;
+
+    public function __construct(
+        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        CartContextInterface $cartContext
+    ) {
         $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
+        $this->cartContext = $cartContext;
     }
 
     public function validate($bonusPoints, Constraint $constraint): void
     {
         if (null === $bonusPoints) {
+            return;
+        }
+
+        if ($this->checkIfBonusPointsAreGreaterThanOrderItemTotals($bonusPoints)) {
+            $this->context->buildViolation($constraint->exceedOrderItemsTotalMessage)->addViolation();
+
             return;
         }
 
@@ -37,5 +50,12 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
             return;
         }
+    }
+
+    private function checkIfBonusPointsAreGreaterThanOrderItemTotals(int $bonusPoints): bool
+    {
+        $order = $this->cartContext->getCart();
+
+        return $order->getItemsTotal() <= $bonusPoints;
     }
 }

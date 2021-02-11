@@ -47,7 +47,7 @@
 
         <service id="bitbag_sylius_bonus_points.validator.bonus_points_apply" class="BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsApplyValidator">
             <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points_strategy" />
-            <argument type="service" id="bitbag_sylius_bonus_points.bonus_points_strategy_rules_eligibility_checker" />
+            <argument type="service" id="sylius.context.cart" />
             <argument type="service" id="sylius.context.cart" />
             <tag name="validator.constraint_validator" alias="bitbag_bonus_points_apply" />
         </service>

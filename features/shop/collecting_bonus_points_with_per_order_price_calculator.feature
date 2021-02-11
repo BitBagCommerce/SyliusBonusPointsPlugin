@@ -11,7 +11,7 @@ Feature: Collecting bonus points
         And the store allows paying "Offline"
         And there is bonus points strategy with code "bitbag-bonus-points-strategy" and name "BitBag Bonus Points Strategy" with rule "Has Taxon" with "Watches" taxon
         And the bonus points strategy "bitbag-bonus-points-strategy" admits "2" points per one currency
-        And the store has a product "BitBag Watch" priced at "$60.32"
+        And the store has a product "BitBag Watch" priced at "$2000.32"
         And this product belongs to "Watches"
         And there is a customer "Francis Underwood" identified by an email "francis@underwood.com" and a password "whitehouse"
         And there is a customer "francis@underwood.com" that placed an order "#00000022"
@@ -24,7 +24,7 @@ Feature: Collecting bonus points
         And the store has a product "PHP Watch" priced at "$12.54"
         And this product belongs to "Watches"
         And I add this product to the cart
-        And I should see that I have "1.20" bonus points
+        And I should see that I have "40.00" bonus points
 
     @ui @javascript
     Scenario: Successfully using of awarded bonus points with "per order price" calculator
@@ -33,6 +33,11 @@ Feature: Collecting bonus points
         And I proceed with "DHL" shipping method and "Offline" payment
         Then I should be on the checkout summary step
         And I should see that price of my order is equal to "$11.54"
+
+    @ui @javascript
+    Scenario: Unsuccessfully using more bonus points than order items value
+        When I want to use "15" bonus points
+        Then I should be notified that I cannot use more bonus points than order items value
 
     @ui @javascript
     Scenario: Unsuccessfully using of awarded bonus points with "per order price" calculator
