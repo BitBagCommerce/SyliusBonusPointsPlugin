@@ -6,11 +6,16 @@
         <p>{{ 'bitbag_sylius_bonus_points.ui.you_have_bonus_points_available'|trans }}: <span id="value-bonus-points">{{ (bitbag_active_bonus_points() / 100) | number_format(2) }}</span></p>
         <div class="ui coupon action input">
             {{ form_widget(form.bonusPoints, {'attr': {'placeholder': 'bitbag_sylius_bonus_points.ui.bonus_points'|trans~'...', 'form': 'sylius_cart'}}) }}
-            <button type="submit" id="sylius-save-bonus-points"
-                    data-tooltip="{{ 'bitbag_sylius_bonus_points.ui.every_point_is_equal_to_one_currency'|trans }}"
-                    class="ui teal icon labeled button" form="sylius_cart">
-                <i class="ticket icon"></i>{{ 'bitbag_sylius_bonus_points.ui.apply_points'|trans }}
-            </button>
+            <div class="ui buttons">
+                <button type="submit" id="sylius-save-bonus-points"
+                        data-tooltip="{{ 'bitbag_sylius_bonus_points.ui.every_point_is_equal_to_one_currency'|trans }}"
+                        class="ui teal icon labeled button" form="sylius_cart">
+                    <i class="ticket icon"></i>{{ 'bitbag_sylius_bonus_points.ui.apply_points'|trans }}
+                </button>
+                <a href="{{ path('bitbag_sylius_bonus_points_plugin_shop_reset_bonus_points') }}" class="ui button icon">
+                    <i class="x icon"></i>
+                </a>
+            </div>
         </div>
         <br>
         {{ form_errors(form.bonusPoints) }}

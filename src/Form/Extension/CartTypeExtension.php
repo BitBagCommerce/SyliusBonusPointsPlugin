@@ -56,7 +56,7 @@ final class CartTypeExtension extends AbstractTypeExtension
                 'currency' => false,
                 'constraints' => [
                     new Range([
-                        'min' => 0.01,
+                        'min' => 0,
                         'groups' => ['sylius'],
                     ]),
                     new BonusPointsApply([

@@ -44,7 +44,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
             return;
         }
 
-        if ($bonusPoints % 100 !== 0 || $bonusPoints < 100) {
+        if ($bonusPoints % 100 !== 0) {
             $this->context->getViolations()->remove(0);
             $this->context->buildViolation($constraint->invalidBonusPointsValueMessage)->addViolation();
 
