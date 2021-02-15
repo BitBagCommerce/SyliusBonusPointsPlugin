@@ -7,9 +7,8 @@
         <service id="bitbag_sylius_bonus_points.controller.action.reset_order_bonus_points"
                  class="BitBag\SyliusBonusPointsPlugin\Controller\ResetOrderBonusPointsAction">
             <argument type="service" id="router.default" />
-            <argument type="service" id="bitbag_sylius_bonus_points.purifier.order_bonus_points" />
             <argument type="service" id="sylius.context.cart" />
-            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
+            <argument type="service" id="bitbag_sylius_bonus_points.processor.reset_order_bonus_points" />
         </service>
     </services>
 </container>

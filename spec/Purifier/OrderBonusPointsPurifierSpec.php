@@ -54,10 +54,8 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
         $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints)->shouldBeCalled();
         $bonusPoints->setPoints(0)->shouldBeCalled();
-        $manager->persist($bonusPoints)->shouldBeCalled();
         $manager->persist($customerBonusPoints)->shouldBeCalled();
         $manager->persist($order)->shouldBeCalled();
-        $manager->flush()->shouldBeCalled();
 
         $this->purify($bonusPoints);
     }

@@ -53,6 +53,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         if (0 === $bonusPoints->getPoints()) {
             $this->orderBonusPointsPurifier->purify($bonusPoints);
 
+            $this->bonusPointsRepository->add($bonusPoints);
             return;
         }
 

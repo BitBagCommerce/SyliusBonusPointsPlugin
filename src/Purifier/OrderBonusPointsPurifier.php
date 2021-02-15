@@ -15,14 +15,14 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
     private $customerBonusPointsContext;
 
     /** @var ObjectManager */
-    private $manager;
+    private $persistenceManager;
 
     public function __construct(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $manager
+        ObjectManager $persistenceManager
     ) {
         $this->customerBonusPointsContext = $customerBonusPointsContext;
-        $this->manager = $manager;
+        $this->persistenceManager = $persistenceManager;
     }
 
     public function purify(BonusPointsInterface $bonusPoints): void
@@ -38,9 +38,7 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints);
         $bonusPoints->setPoints(0);
 
-        $this->manager->persist($bonusPoints);
-        $this->manager->persist($customerBonusPoints);
-        $this->manager->persist($order);
-        $this->manager->flush();
+        $this->persistenceManager->persist($customerBonusPoints);
+        $this->persistenceManager->persist($order);
     }
 }

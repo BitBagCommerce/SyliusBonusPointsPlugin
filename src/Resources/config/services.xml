@@ -10,6 +10,7 @@
         <import resource="services/twig.xml"/>
         <import resource="services/purifiers.xml"/>
         <import resource="services/controllers.xml"/>
+        <import resource="services/processors.xml"/>
     </imports>
 
     <services>

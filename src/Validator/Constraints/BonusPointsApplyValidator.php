@@ -32,7 +32,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->checkIfBonusPointsAreGreaterThanOrderItemTotals($bonusPoints)) {
+        if ($this->canFitBonusPointsToOrder($bonusPoints)) {
             $this->context->buildViolation($constraint->exceedOrderItemsTotalMessage)->addViolation();
 
             return;
@@ -52,7 +52,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
         }
     }
 
-    private function checkIfBonusPointsAreGreaterThanOrderItemTotals(int $bonusPoints): bool
+    private function canFitBonusPointsToOrder(int $bonusPoints): bool
     {
         $order = $this->cartContext->getCart();
 

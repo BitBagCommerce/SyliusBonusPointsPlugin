@@ -28,7 +28,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $this->shouldHaveType(OrderBonusPointsProcessor::class);
     }
 
-    function it_process(
+    function it_processes(
         Order $order,
         RepositoryInterface $bonusPointsRepository,
         AdjustmentFactoryInterface $adjustmentFactory,
@@ -51,7 +51,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $this->process($order);
     }
 
-    function it_process_when_bonus_points_have_zero_value(
+    function it_processes_when_bonus_points_have_zero_value(
         Order $order,
         RepositoryInterface $bonusPointsRepository,
         BonusPointsInterface $bonusPoints,
@@ -63,6 +63,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $bonusPoints->getPoints()->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldBeCalled();
+        $bonusPointsRepository->add($bonusPoints)->shouldBeCalled();
 
         $this->process($order);
     }
