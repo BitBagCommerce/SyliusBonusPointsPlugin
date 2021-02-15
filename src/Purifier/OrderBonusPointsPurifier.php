@@ -34,7 +34,7 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
             return;
         }
 
-        $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
+        $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints);
         $bonusPoints->setPoints(0);
 

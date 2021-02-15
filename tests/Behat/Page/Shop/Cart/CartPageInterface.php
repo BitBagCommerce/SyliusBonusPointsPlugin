@@ -12,4 +12,6 @@ interface CartPageInterface extends SummaryPageInterface, ContainsErrorInterface
     public function getNumberOfAvailableBonusPoints(): string;
 
     public function applyPoints(string $points): void;
+
+    public function resetPoints(): void;
 }

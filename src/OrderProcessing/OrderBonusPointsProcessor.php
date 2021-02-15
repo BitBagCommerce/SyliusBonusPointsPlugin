@@ -45,13 +45,14 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             'isUsed' => true,
         ]);
 
-        if (0 === $bonusPoints->getPoints()) {
-            $this->orderBonusPointsPurifier->purify($bonusPoints);
 
+        if (null === $bonusPoints) {
             return;
         }
 
-        if (null === $bonusPoints) {
+        if (0 === $bonusPoints->getPoints()) {
+            $this->orderBonusPointsPurifier->purify($bonusPoints);
+
             return;
         }
 

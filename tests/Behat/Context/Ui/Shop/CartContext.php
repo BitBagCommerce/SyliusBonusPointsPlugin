@@ -38,6 +38,22 @@ final class CartContext implements Context
     }
 
     /**
+     * @Given I want to resign of using bonus points and I apply zero bonus points
+     */
+    public function iWantToResignOfUsingBonusPoints()
+    {
+        $this->cartPage->applyPoints('0');
+    }
+
+    /**
+     * @Given I want to resign of using bonus points and click button to reset bonus points
+     */
+    public function iWantToResignOfUsingBonusPointsAndClickButtonToResetBonusPoints()
+    {
+        $this->cartPage->resetPoints();
+    }
+
+    /**
      * @Then I should be notified that I do not have enough bonus points
      */
     public function iShouldBeNotifiedThatIDoNotHaveEnoughBonusPoints(): void
