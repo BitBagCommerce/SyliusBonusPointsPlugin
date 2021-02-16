@@ -1,3 +1,9 @@
 bitbag_sylius_bonus_points_plugin_admin:
     resource: routing/admin.yml
     prefix: /admin
+
+bitbag_sylius_bonus_points_plugin_shop:
+    resource: routing/shop.yml
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$

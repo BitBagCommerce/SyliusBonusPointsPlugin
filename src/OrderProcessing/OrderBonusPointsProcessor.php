@@ -7,6 +7,7 @@ namespace BitBag\SyliusBonusPointsPlugin\OrderProcessing;
 use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
 use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
@@ -21,10 +22,17 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
     /** @var AdjustmentFactoryInterface */
     private $adjustmentFactory;
 
-    public function __construct(RepositoryInterface $bonusPointsRepository, AdjustmentFactoryInterface $adjustmentFactory)
-    {
+    /** @var OrderBonusPointsPurifierInterface */
+    private $orderBonusPointsPurifier;
+
+    public function __construct(
+        RepositoryInterface $bonusPointsRepository,
+        AdjustmentFactoryInterface $adjustmentFactory,
+        OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
+    ) {
         $this->bonusPointsRepository = $bonusPointsRepository;
         $this->adjustmentFactory = $adjustmentFactory;
+        $this->orderBonusPointsPurifier = $orderBonusPointsPurifier;
     }
 
     public function process(OrderInterface $order): void
@@ -37,7 +45,15 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             'isUsed' => true,
         ]);
 
+
         if (null === $bonusPoints) {
+            return;
+        }
+
+        if (0 === $bonusPoints->getPoints()) {
+            $this->orderBonusPointsPurifier->purify($bonusPoints);
+
+            $this->bonusPointsRepository->add($bonusPoints);
             return;
         }
 

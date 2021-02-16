@@ -1,0 +1,5 @@
+bitbag_sylius_bonus_points_plugin_shop_reset_bonus_points:
+    path: /cart/bonus-points-reset
+    methods: [GET]
+    defaults:
+        _controller: bitbag_sylius_bonus_points.controller.action.reset_order_bonus_points

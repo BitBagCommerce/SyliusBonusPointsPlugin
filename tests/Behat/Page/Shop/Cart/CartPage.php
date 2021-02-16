@@ -22,4 +22,9 @@ class CartPage extends SummaryPage implements CartPageInterface
 
         $this->getDocument()->findButton('Apply')->click();
     }
+
+    public function resetPoints(): void
+    {
+        $this->getDocument()->clickLink('reset-bonus-points');
+    }
 }
