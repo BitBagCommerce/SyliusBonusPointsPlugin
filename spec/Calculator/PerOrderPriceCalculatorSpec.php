@@ -22,20 +22,14 @@ final class PerOrderPriceCalculatorSpec extends ObjectBehavior
         $this->shouldHaveType(BonusPointsStrategyCalculatorInterface::class);
     }
 
-    function it_calculates(
-        OrderItemInterface $orderItem,
-        OrderInterface $order
-    ): void {
+    function it_calculates(OrderItemInterface $orderItem): void
+    {
         $configuration = ['numberOfPointsEarnedPerOneCurrency' => 2];
 
-        $orderItem->getOrder()->willReturn($order);
-        $order->getTotal()->willReturn(10000);
-        $order->getShippingTotal()->willReturn(5000);
+        $orderItem->getTotal()->willReturn(10000);
 
-        $orderItem->getOrder()->shouldBeCalled();
-        $order->getTotal()->shouldBeCalled();
-        $order->getShippingTotal()->shouldBeCalled();
+        $orderItem->getTotal()->shouldBeCalled();
 
-        $this->calculate($orderItem, $configuration)->shouldReturn(100);
+        $this->calculate($orderItem, $configuration)->shouldReturn(200);
     }
 }
