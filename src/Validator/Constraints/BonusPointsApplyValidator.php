@@ -56,6 +56,6 @@ final class BonusPointsApplyValidator extends ConstraintValidator
     {
         $order = $this->cartContext->getCart();
 
-        return $order->getItemsTotal() <= $bonusPoints;
+        return $order->getItemsTotal() < $bonusPoints;
     }
 }
