@@ -12,7 +12,6 @@ use Sylius\Bundle\OrderBundle\Form\Type\CartType;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -62,7 +61,8 @@ final class CartTypeExtension extends AbstractTypeExtension
                     new BonusPointsApply([
                         'groups' => ['sylius'],
                     ])
-                ]
+                ],
+                'data' => null
             ])
         ;
     }
