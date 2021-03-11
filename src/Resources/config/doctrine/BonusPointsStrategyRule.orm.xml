@@ -12,7 +12,7 @@
         <field name="type" type="string"/>
         <field name="configuration" type="array"/>
 
-        <many-to-one field="bonusPointsStrategy" target-entity="BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategy" inversed-by="rules">
+        <many-to-one field="bonusPointsStrategy" target-entity="BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface" inversed-by="rules">
             <join-column name="bonus_points_strategy_id" referenced-column-name="id" nullable="true" />
         </many-to-one>
     </mapped-superclass>
