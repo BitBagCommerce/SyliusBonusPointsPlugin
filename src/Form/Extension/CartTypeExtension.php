@@ -67,7 +67,7 @@ final class CartTypeExtension extends AbstractTypeExtension
         ;
     }
 
-    public function getExtendedTypes(): array
+    public static function getExtendedTypes(): iterate
     {
         return [
             CartType::class
