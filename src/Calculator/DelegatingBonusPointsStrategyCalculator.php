@@ -34,7 +34,9 @@ final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPo
         /** @var OrderItemInterface $subject */
         Assert::isInstanceOf($subject, OrderItemInterface::class);
 
-        $isEligible = $this->bonusPointsStrategyEligibilityChecker->isEligible($subject, $bonusPointsStrategy);
+        $product = $subject->getProduct();
+
+        $isEligible = $this->bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy);
 
         return $isEligible ? $calculator->calculate($subject, $bonusPointsStrategy->getCalculatorConfiguration(), $amountToDeduct) : 0;
     }

@@ -12,6 +12,7 @@ use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligib
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class DelegatingBonusPointsStrategyCalculatorSpec extends ObjectBehavior
@@ -37,18 +38,21 @@ final class DelegatingBonusPointsStrategyCalculatorSpec extends ObjectBehavior
         ServiceRegistryInterface $registry,
         BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
         BonusPointsStrategyInterface $bonusPointsStrategy,
+        ProductInterface $product,
         OrderItemInterface $orderItem,
         BonusPointsStrategyCalculatorInterface $calculator
     ): void {
         $bonusPointsStrategy->getCalculatorType()->willReturn(PerOrderPriceCalculator::TYPE);
         $registry->get(PerOrderPriceCalculator::TYPE)->willReturn($calculator);
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(true);
+        $orderItem->getProduct()->willReturn($product);
+        $bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)->willReturn(true);
         $bonusPointsStrategy->getCalculatorConfiguration()->willReturn(['numberOfPointsEarnedPerOneCurrency' => 2]);
         $calculator->calculate($orderItem, ['numberOfPointsEarnedPerOneCurrency' => 2], 0)->willReturn(88);
 
         $bonusPointsStrategy->getCalculatorType()->shouldBeCalled();
         $registry->get(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
+        $orderItem->getProduct()->shouldBeCalled();
+        $bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)->shouldBeCalled();
         $bonusPointsStrategy->getCalculatorConfiguration()->shouldBeCalled();
         $calculator->calculate($orderItem, ['numberOfPointsEarnedPerOneCurrency' => 2], 0)->shouldBeCalled();
 
@@ -60,15 +64,18 @@ final class DelegatingBonusPointsStrategyCalculatorSpec extends ObjectBehavior
         BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
         BonusPointsStrategyInterface $bonusPointsStrategy,
         OrderItemInterface $orderItem,
+        ProductInterface $product,
         BonusPointsStrategyCalculatorInterface $calculator
     ): void {
         $bonusPointsStrategy->getCalculatorType()->willReturn(PerOrderPriceCalculator::TYPE);
         $registry->get(PerOrderPriceCalculator::TYPE)->willReturn($calculator);
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->willReturn(false);
+        $orderItem->getProduct()->willReturn($product);
+        $bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)->willReturn(false);
 
         $bonusPointsStrategy->getCalculatorType()->shouldBeCalled();
         $registry->get(PerOrderPriceCalculator::TYPE)->shouldBeCalled();
-        $bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)->shouldBeCalled();
+        $orderItem->getProduct()->shouldBeCalled();
+        $bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)->shouldBeCalled();
 
         $this->calculate($orderItem, $bonusPointsStrategy)->shouldReturn(0);
     }
