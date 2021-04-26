@@ -89,7 +89,9 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
 
                 /** @var OrderItemInterface $orderItem */
                 foreach ($order->getItems() as $orderItem) {
-                    if ($this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
+                    $product = $orderItem->getProduct();
+
+                    if ($this->bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)) {
                         $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                             $orderItem,
                             $bonusPointsStrategy,
@@ -103,7 +105,9 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
 
                 /** @var OrderItemInterface $orderItem */
                 foreach ($order->getItems() as $orderItem) {
-                    if (!$this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
+                    $product = $orderItem->getProduct();
+
+                    if (!$this->bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)) {
                         $status = false;
                     }
                 }
@@ -158,7 +162,9 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
         $itemsEligible = [];
 
         foreach ($orderItems as $orderItem) {
-            if ($this->bonusPointsStrategyEligibilityChecker->isEligible($orderItem, $bonusPointsStrategy)) {
+            $product = $orderItem->getProduct();
+
+            if ($this->bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)) {
                 $itemsEligible[] = $orderItem;
             }
         }

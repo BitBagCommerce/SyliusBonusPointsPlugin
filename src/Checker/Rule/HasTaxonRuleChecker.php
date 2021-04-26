@@ -23,14 +23,8 @@ final class HasTaxonRuleChecker implements BonusPointsStrategyRuleCheckerInterfa
         $this->taxonRepository = $taxonRepository;
     }
 
-    public function isEligible(OrderItemInterface $orderItem, array $configuration): bool
+    public function isEligible(ProductInterface $product, array $configuration): bool
     {
-        $product = $orderItem->getProduct();
-
-        if (!$product instanceof ProductInterface) {
-            throw new UnsupportedTypeException($product, ProductInterface::class);
-        }
-
         Assert::keyExists($configuration, 'taxons');
 
         /** @var TaxonInterface[] $taxons */

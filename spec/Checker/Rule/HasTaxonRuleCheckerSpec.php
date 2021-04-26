@@ -41,14 +41,12 @@ final class HasTaxonRuleCheckerSpec extends ObjectBehavior
 
         $configuration = ['taxons' => ['t-shirts']];
 
-        $orderItem->getProduct()->willReturn($product);
         $taxonRepository->findBy(['code' => $configuration['taxons']])->willReturn($taxons);
         $product->hasTaxon($taxon)->willReturn(true);
 
-        $orderItem->getProduct()->shouldBeCalled();
         $taxonRepository->findBy(['code' => $configuration['taxons']])->shouldBeCalled();
         $product->hasTaxon(Argument::type(TaxonInterface::class))->shouldBeCalled();
 
-        $this->isEligible($orderItem, $configuration)->shouldReturn(true);
+        $this->isEligible($product, $configuration)->shouldReturn(true);
     }
 }

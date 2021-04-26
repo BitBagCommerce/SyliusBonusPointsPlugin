@@ -12,6 +12,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRuleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class BonusPointsStrategyRulesEligibilityCheckerSpec extends ObjectBehavior
@@ -33,6 +34,7 @@ final class BonusPointsStrategyRulesEligibilityCheckerSpec extends ObjectBehavio
 
     function it_returns_false(
         OrderItemInterface $orderItem,
+        ProductInterface $product,
         BonusPointsStrategyInterface $bonusPointsStrategy,
         ServiceRegistryInterface $ruleRegistry,
         BonusPointsStrategyRuleInterface $bonusPointsStrategyRule,
@@ -45,20 +47,20 @@ final class BonusPointsStrategyRulesEligibilityCheckerSpec extends ObjectBehavio
         $bonusPointsStrategyRule->getType()->willReturn('has_taxon');
         $ruleRegistry->get('has_taxon')->willReturn($checker);
         $bonusPointsStrategyRule->getConfiguration()->willReturn($ruleConfiguration);
-        $checker->isEligible($orderItem, $ruleConfiguration)->willReturn(false);
+        $checker->isEligible($product, $ruleConfiguration)->willReturn(false);
 
         $bonusPointsStrategy->hasRules()->shouldBeCalled();
         $bonusPointsStrategy->getRules()->shouldBeCalled();
         $bonusPointsStrategyRule->getType()->shouldBeCalled();
         $ruleRegistry->get('has_taxon')->shouldBeCalled();
         $bonusPointsStrategyRule->getConfiguration()->shouldBeCalled();
-        $checker->isEligible($orderItem, $ruleConfiguration)->shouldBeCalled();
+        $checker->isEligible($product, $ruleConfiguration)->shouldBeCalled();
 
-        $this->isEligible($orderItem, $bonusPointsStrategy)->shouldReturn(false);
+        $this->isEligible($product, $bonusPointsStrategy)->shouldReturn(false);
     }
 
     function it_returns_true(
-        OrderItemInterface $orderItem,
+        ProductInterface $product,
         BonusPointsStrategyInterface $bonusPointsStrategy
     ): void {
         $bonusPointsStrategy->hasRules()->willReturn(true);
@@ -67,6 +69,6 @@ final class BonusPointsStrategyRulesEligibilityCheckerSpec extends ObjectBehavio
         $bonusPointsStrategy->hasRules()->shouldBeCalled();
         $bonusPointsStrategy->getRules()->shouldBeCalled();
 
-        $this->isEligible($orderItem, $bonusPointsStrategy)->shouldReturn(true);
+        $this->isEligible($product, $bonusPointsStrategy)->shouldReturn(true);
     }
 }

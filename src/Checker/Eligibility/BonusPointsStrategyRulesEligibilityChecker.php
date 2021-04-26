@@ -8,6 +8,7 @@ use BitBag\SyliusBonusPointsPlugin\Checker\Rule\BonusPointsStrategyRuleCheckerIn
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRuleInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStrategyEligibilityCheckerInterface
@@ -20,14 +21,14 @@ final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStr
         $this->ruleRegistry = $ruleRegistry;
     }
 
-    public function isEligible(OrderItemInterface $orderItem, BonusPointsStrategyInterface $bonusPointsStrategy): bool
+    public function isEligible(ProductInterface $product, BonusPointsStrategyInterface $bonusPointsStrategy): bool
     {
         if (!$bonusPointsStrategy->hasRules()) {
             return false;
         }
 
         foreach ($bonusPointsStrategy->getRules() as $rule) {
-            if (!$this->isEligibleToRule($orderItem, $rule)) {
+            if (!$this->isEligibleToRule($product, $rule)) {
                 return false;
             }
         }
@@ -35,11 +36,11 @@ final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStr
         return true;
     }
 
-    private function isEligibleToRule(OrderItemInterface $orderItem, BonusPointsStrategyRuleInterface $rule): bool
+    private function isEligibleToRule(ProductInterface $product, BonusPointsStrategyRuleInterface $rule): bool
     {
         /** @var BonusPointsStrategyRuleCheckerInterface $checker */
         $checker = $this->ruleRegistry->get($rule->getType());
 
-        return $checker->isEligible($orderItem, $rule->getConfiguration());
+        return $checker->isEligible($product, $rule->getConfiguration());
     }
 }
