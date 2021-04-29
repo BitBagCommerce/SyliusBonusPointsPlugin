@@ -30,8 +30,8 @@ final class PerOrderPriceConfigurationType extends AbstractType
                 'label' => 'bitbag_sylius_bonus_points.ui.number_of_points_earned_per_one_currency',
                 'constraints' => [
                     new NotBlank(['groups' => ['bitbag_sylius_bonus_points']]),
-                    new Type(['type' => 'integer', 'groups' => ['sylius']]),
-                    new Range(['min' => 1, 'groups' => ['sylius']]),
+                    new Type(['type' => 'integer', 'groups' => ['bitbag_sylius_bonus_points']]),
+                    new Range(['min' => 1, 'groups' => ['bitbag_sylius_bonus_points']]),
                 ],
             ])
         ;
