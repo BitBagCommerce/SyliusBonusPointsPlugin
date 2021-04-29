@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Type;
 
 final class PerOrderPriceConfigurationType extends AbstractType
@@ -30,6 +31,7 @@ final class PerOrderPriceConfigurationType extends AbstractType
                 'constraints' => [
                     new NotBlank(['groups' => ['bitbag_sylius_bonus_points']]),
                     new Type(['type' => 'integer', 'groups' => ['sylius']]),
+                    new Range(['min' => 1, 'groups' => ['sylius']]),
                 ],
             ])
         ;
