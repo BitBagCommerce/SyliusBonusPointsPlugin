@@ -12,6 +12,9 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
     /** @var string */
     public const TYPE = 'per_order_price';
 
+    /** @var float */
+    private $decimalPart = 0;
+
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
         /** @var OrderItemInterface $subject */
@@ -19,7 +22,16 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
 
         $totalPriceForOrderItems = $subject->getTotal();
 
-        $total = intval(floor($totalPriceForOrderItems / 100));
+        $totalFloat = $totalPriceForOrderItems / 100;
+        $total = intval(floor($totalFloat));
+
+        $this->decimalPart += ($totalFloat - $total);
+
+        if ($this->decimalPart >= 1) {
+            $total++;
+
+            $this->decimalPart--;
+        }
 
         return intval($total * $configuration['numberOfPointsEarnedPerOneCurrency']);
     }
