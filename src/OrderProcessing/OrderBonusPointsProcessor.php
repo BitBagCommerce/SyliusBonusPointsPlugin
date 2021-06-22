@@ -45,7 +45,6 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             'isUsed' => true,
         ]);
 
-
         if (null === $bonusPoints) {
             return;
         }
@@ -54,6 +53,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             $this->orderBonusPointsPurifier->purify($bonusPoints);
 
             $this->bonusPointsRepository->add($bonusPoints);
+
             return;
         }
 

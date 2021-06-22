@@ -26,13 +26,15 @@ final class BonusPointsAvailabilityValidator extends ConstraintValidator
         $this->bonusPointsRepository = $bonusPointsRepository;
     }
 
+    /**
+     * @param BonusPointsAwareInterface $order
+     */
     public function validate($order, Constraint $constraint): void
     {
-        /** @var BonusPointsAwareInterface $order */
         Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
         Assert::isInstanceOf($constraint, BonusPointsAvailability::class);
 
-        $points = null !== $order->getBonusPoints() ? intval($order->getBonusPoints()) : null;
+        $points = null !== $order->getBonusPoints() ? (int) ($order->getBonusPoints()) : null;
 
         if (null === $points) {
             /** @var BonusPointsInterface $bonusPoints */

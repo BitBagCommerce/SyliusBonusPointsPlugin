@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Checker\Rule;
 
-use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
-use Sylius\Component\Promotion\Exception\UnsupportedTypeException;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Webmozart\Assert\Assert;
 

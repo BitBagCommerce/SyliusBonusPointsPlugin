@@ -42,7 +42,7 @@ final class OrderBonusPointsListener
         Assert::isInstanceOf($order, OrderInterface::class);
         Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
 
-        $points = intval($order->getBonusPoints());
+        $points = (int) ($order->getBonusPoints());
 
         if (null === $order->getBonusPoints()) {
             return;

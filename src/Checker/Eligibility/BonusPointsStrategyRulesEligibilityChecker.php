@@ -7,7 +7,6 @@ namespace BitBag\SyliusBonusPointsPlugin\Checker\Eligibility;
 use BitBag\SyliusBonusPointsPlugin\Checker\Rule\BonusPointsStrategyRuleCheckerInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyRuleInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 

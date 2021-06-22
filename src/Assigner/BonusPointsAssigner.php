@@ -39,7 +39,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
     /** @var EntityManagerInterface */
     private $bonusPointsEntityManager;
 
-    /** @var RepositoryInterface  */
+    /** @var RepositoryInterface */
     private $customerBonusPointsRepository;
 
     /** @var FactoryInterface */

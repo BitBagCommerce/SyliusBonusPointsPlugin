@@ -13,9 +13,11 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
     /** @var string */
     public const TYPE = 'per_order_item_percentage';
 
+    /**
+     * @param OrderItemInterface $subject
+     */
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
-        /** @var OrderItemInterface $subject */
         Assert::isInstanceOf($subject, OrderItemInterface::class);
 
         /** @var OrderInterface $order */
@@ -29,7 +31,7 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
             $total += $amountToDeduct;
         }
 
-        return intval(round($total * $configuration['percentToCalculatePoints']));
+        return (int) (round($total * $configuration['percentToCalculatePoints']));
     }
 
     public function isPerOrderItem(): bool
