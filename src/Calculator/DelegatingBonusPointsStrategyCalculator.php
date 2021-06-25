@@ -8,7 +8,6 @@ use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligib
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
-use Webmozart\Assert\Assert;
 
 final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPointsStrategyCalculatorInterface
 {
@@ -26,17 +25,16 @@ final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPo
         $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;
     }
 
-    /**
-     * @param OrderItemInterface $subject
-     */
-    public function calculate($subject, BonusPointsStrategyInterface $bonusPointsStrategy, int $amountToDeduct = 0): int
+    public function calculate(OrderItemInterface $subject, BonusPointsStrategyInterface $bonusPointsStrategy, int $amountToDeduct = 0): int
     {
         /** @var BonusPointsStrategyCalculatorInterface $calculator */
-        $calculator = $this->registry->get($bonusPointsStrategy->getCalculatorType());
-
-        Assert::isInstanceOf($subject, OrderItemInterface::class);
+        $calculator = $this->registry->get((string) $bonusPointsStrategy->getCalculatorType());
 
         $product = $subject->getProduct();
+
+        if (null === $product) {
+            return 0;
+        }
 
         $isEligible = $this->bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy);
 
@@ -46,7 +44,7 @@ final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPo
     public function isPerOrderItem(BonusPointsStrategyInterface $bonusPointsStrategy): bool
     {
         /** @var BonusPointsStrategyCalculatorInterface $calculator */
-        $calculator = $this->registry->get($bonusPointsStrategy->getCalculatorType());
+        $calculator = $this->registry->get((string) $bonusPointsStrategy->getCalculatorType());
 
         return $calculator->isPerOrderItem();
     }

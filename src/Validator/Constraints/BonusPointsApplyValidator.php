@@ -33,6 +33,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
         }
 
         if ($this->canFitBonusPointsToOrder($bonusPoints)) {
+            /** @var BonusPointsApply $constraint */
             $this->context->buildViolation($constraint->exceedOrderItemsTotalMessage)->addViolation();
 
             return;
@@ -46,6 +47,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
         if ($bonusPoints % 100 !== 0) {
             $this->context->getViolations()->remove(0);
+            /** @var BonusPointsApply $constraint */
             $this->context->buildViolation($constraint->invalidBonusPointsValueMessage)->addViolation();
 
             return;

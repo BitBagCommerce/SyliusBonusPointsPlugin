@@ -14,6 +14,9 @@ interface CustomerBonusPointsInterface extends ResourceInterface
 
     public function setCustomer(?CustomerInterface $customer): void;
 
+    /**
+     * @return Collection<int,BonusPointsInterface>
+     */
     public function getBonusPoints(): Collection;
 
     public function addBonusPoints(BonusPointsInterface $bonusPoints): void;
@@ -22,6 +25,9 @@ interface CustomerBonusPointsInterface extends ResourceInterface
 
     public function hasBonusPoints(BonusPointsInterface $bonusPoints): bool;
 
+    /**
+     * @return Collection<int,BonusPointsInterface>
+     */
     public function getBonusPointsUsed(): Collection;
 
     public function addBonusPointsUsed(BonusPointsInterface $bonusPointsUsed): void;

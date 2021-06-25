@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\TimestampableTrait;
@@ -17,10 +18,10 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
     /** @var int */
     protected $id;
 
-    /** @var string */
+    /** @var string|null */
     protected $code;
 
-    /** @var string */
+    /** @var string|null */
     protected $name;
 
     /** @var string|null */
@@ -29,7 +30,7 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
     /** @var array */
     protected $calculatorConfiguration = [];
 
-    /** @var Collection|BonusPointsStrategyRuleInterface[] */
+    /** @var Collection<int,BonusPointsStrategyRuleInterface>|BonusPointsStrategyRuleInterface[] */
     protected $rules;
 
     /** @var bool */
@@ -37,7 +38,7 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
         $this->rules = new ArrayCollection();
     }
 
@@ -86,6 +87,9 @@ class BonusPointsStrategy implements BonusPointsStrategyInterface
         $this->calculatorConfiguration = $calculatorConfiguration;
     }
 
+    /**
+     * @return Collection<int,BonusPointsStrategyRuleInterface>
+     */
     public function getRules(): Collection
     {
         return $this->rules;

@@ -38,7 +38,7 @@ final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStr
     private function isEligibleToRule(ProductInterface $product, BonusPointsStrategyRuleInterface $rule): bool
     {
         /** @var BonusPointsStrategyRuleCheckerInterface $checker */
-        $checker = $this->ruleRegistry->get($rule->getType());
+        $checker = $this->ruleRegistry->get((string) $rule->getType());
 
         return $checker->isEligible($product, $rule->getConfiguration());
     }

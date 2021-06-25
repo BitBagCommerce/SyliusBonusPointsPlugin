@@ -7,6 +7,7 @@ namespace BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolverInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -27,17 +28,18 @@ final class BonusPointsAvailabilityValidator extends ConstraintValidator
     }
 
     /**
-     * @param BonusPointsAwareInterface $order
+     * @param OrderInterface|mixed $order
      */
     public function validate($order, Constraint $constraint): void
     {
-        Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
+        Assert::implementsInterface($order, BonusPointsAwareInterface::class);
+        Assert::isInstanceOf($order, OrderInterface::class);
         Assert::isInstanceOf($constraint, BonusPointsAvailability::class);
 
-        $points = null !== $order->getBonusPoints() ? (int) ($order->getBonusPoints()) : null;
+        $points = $order->getBonusPoints();
 
         if (null === $points) {
-            /** @var BonusPointsInterface $bonusPoints */
+            /** @var BonusPointsInterface|null $bonusPoints */
             $bonusPoints = $this->bonusPointsRepository->findOneBy([
                 'order' => $order,
                 'isUsed' => true,
@@ -53,8 +55,7 @@ final class BonusPointsAvailabilityValidator extends ConstraintValidator
         if ($points > $this->bonusPointsResolver->resolveBonusPoints($order)) {
             $this->context
                 ->buildViolation($constraint->message)
-                ->addViolation()
-            ;
+                ->addViolation();
         }
     }
 }

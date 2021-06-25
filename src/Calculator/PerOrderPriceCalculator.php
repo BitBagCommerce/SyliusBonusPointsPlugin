@@ -16,7 +16,7 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
     private $decimalPart = 0;
 
     /**
-     * @param OrderItemInterface $subject
+     * @param OrderItemInterface|mixed $subject
      */
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {

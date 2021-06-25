@@ -18,7 +18,6 @@
             <argument type="service" id="bitbag_sylius_bonus_points.bonus_points_strategy_calculator" />
             <argument type="service" id="bitbag_sylius_bonus_points.bonus_points_strategy_rules_eligibility_checker" />
             <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points_strategy" />
-            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
             <argument type="service" id="bitbag_sylius_bonus_points.factory.bonus_points" />
             <argument type="service" id="bitbag_sylius_bonus_points.manager.bonus_points" />
             <argument type="service" id="bitbag_sylius_bonus_points.repository.customer_bonus_points" />

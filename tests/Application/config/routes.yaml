@@ -1,2 +1,2 @@
 bitbag_sylius_bonus_points_plugin:
-    resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/routing.yml"
+ resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/routing.yml"

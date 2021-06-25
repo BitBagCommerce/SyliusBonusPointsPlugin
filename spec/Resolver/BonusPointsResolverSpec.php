@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Resolver;
 
-use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
-use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
-use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepositoryInterface;
 use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver;
 use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolverInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Customer\Context\CustomerContextInterface;
+use Sylius\Component\Customer\Model\CustomerInterface;
 
 final class BonusPointsResolverSpec extends ObjectBehavior
 {
     function let(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext
-    ): void {
-        $this->beConstructedWith($customerBonusPointsContext);
+        BonusPointsRepositoryInterface $bonusPointsRepository,
+        CustomerContextInterface $customerContext
+    ): void
+    {
+        $this->beConstructedWith($bonusPointsRepository, $customerContext);
     }
 
     function it_is_initializable(): void
@@ -31,16 +32,12 @@ final class BonusPointsResolverSpec extends ObjectBehavior
     }
 
     function it_resolves(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        CustomerBonusPointsInterface $customerBonusPoints
-    ): void {
+        CustomerInterface $customer,
+        BonusPointsRepositoryInterface $bonusPointsRepository
+    ): void
+    {
 
-        $customerBonusPointsContext->getCustomerBonusPoints()->willReturn($customerBonusPoints);
-        $customerBonusPoints->getBonusPoints()->willReturn(new ArrayCollection());
-        $customerBonusPoints->getBonusPointsUsed()->willReturn(new ArrayCollection());
-
-        $customerBonusPointsContext->getCustomerBonusPoints()->shouldBeCalled();
-        $customerBonusPoints->getBonusPoints()->shouldBeCalled();
+        $bonusPointsRepository->findAllCustomerPointsMovements($customer)->willReturn([]);
 
         $this->resolveBonusPoints()->shouldReturn(0);
     }

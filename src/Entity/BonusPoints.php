@@ -14,10 +14,10 @@ class BonusPoints implements BonusPointsInterface
     /** @var int */
     protected $id;
 
-    /** @var OrderInterface */
+    /** @var OrderInterface|null */
     protected $order;
 
-    /** @var int */
+    /** @var int|null */
     protected $points;
 
     /** @var bool */

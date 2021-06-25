@@ -16,9 +16,11 @@ final class ChannelBasedPerOrderItemPercentageConfigurationType extends Abstract
         $resolver->setDefaults([
             'entry_type' => PerOrderItemPercentageConfigurationType::class,
             'entry_options' => function (ChannelInterface $channel): array {
+                $currency = $channel->getBaseCurrency();
+
                 return [
                     'label' => $channel->getName(),
-                    'currency' => $channel->getBaseCurrency()->getCode(),
+                    'currency' => null !== $currency ? $currency->getCode() : null,
                 ];
             },
         ]);

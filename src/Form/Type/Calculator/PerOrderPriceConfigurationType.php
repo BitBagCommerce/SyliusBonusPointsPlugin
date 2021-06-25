@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\Form\Type\Calculator;
 
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,19 +34,20 @@ final class PerOrderPriceConfigurationType extends AbstractType
                     new Type(['type' => 'integer', 'groups' => ['bitbag_sylius_bonus_points']]),
                     new Range(['min' => 1, 'groups' => ['bitbag_sylius_bonus_points']]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelContext->getChannel();
+        $currency = $channel->getBaseCurrency();
         $resolver
             ->setDefaults([
                 'data_class' => null,
-                'currency' => $this->channelContext->getChannel()->getBaseCurrency()->getCode(),
+                'currency' => null !== $currency ? $currency->getCode() : null,
             ])
             ->setRequired('currency')
-            ->setAllowedTypes('currency', 'string')
-        ;
+            ->setAllowedTypes('currency', 'string');
     }
 }

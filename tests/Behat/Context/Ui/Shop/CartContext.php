@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
-use Sylius\Behat\Client\ResponseCheckerInterface;
 use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Shop\Cart\CartPageInterface;
 use Webmozart\Assert\Assert;
 

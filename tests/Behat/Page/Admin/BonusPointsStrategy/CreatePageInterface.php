@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrategy;
 
 use Sylius\Behat\Page\Admin\Crud\CreatePageInterface as BaseCreatePageInterface;
-use Sylius\Behat\Service\AutocompleteHelper;
 use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ContainsErrorInterface;
 
 interface CreatePageInterface extends BaseCreatePageInterface, ContainsErrorInterface

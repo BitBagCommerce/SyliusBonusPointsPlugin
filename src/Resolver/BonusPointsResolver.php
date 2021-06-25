@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\Resolver;
 
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPoints;
-use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepository;
-use Sylius\Bundle\CoreBundle\Context\CustomerContext;
+use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepositoryInterface;
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Customer\Context\CustomerContextInterface;
 
 final class BonusPointsResolver implements BonusPointsResolverInterface
 {
-    /** @var BonusPointsRepository */
+    /** @var BonusPointsRepositoryInterface */
     private $bonusPointsRepo;
 
     /** @var array */
     private $currentBonusPoints;
 
-    /** @var CustomerContext */
+    /** @var CustomerContextInterface */
     private $customerContext;
 
-    public function __construct(BonusPointsRepository $bonusPointsRepo, CustomerContext $customerContext)
+    public function __construct(BonusPointsRepositoryInterface $bonusPointsRepo, CustomerContextInterface $customerContext)
     {
         $this->bonusPointsRepo = $bonusPointsRepo;
         $this->customerContext = $customerContext;
@@ -60,7 +60,7 @@ final class BonusPointsResolver implements BonusPointsResolverInterface
     /**
      * Check if bonus points earned ealier are still available. Unsets the expired entries.
      */
-    public function checkExpiredBonusPoints(\DateTime $currentDate): void
+    public function checkExpiredBonusPoints(\DateTimeInterface $currentDate = null): void
     {
         foreach ($this->currentBonusPoints as $key => $currentBonusPoint) {
             if ($currentBonusPoint['expireDate'] < $currentDate) {
@@ -84,7 +84,7 @@ final class BonusPointsResolver implements BonusPointsResolverInterface
     public function removeBonusPoints(BonusPoints $bonusPoints): void
     {
         $this->checkExpiredBonusPoints($bonusPoints->getUpdatedAt());
-        $this->deducePointsFromEntry($bonusPoints->getPoints());
+        $this->deducePointsFromEntry((int) $bonusPoints->getPoints());
     }
 
     /**

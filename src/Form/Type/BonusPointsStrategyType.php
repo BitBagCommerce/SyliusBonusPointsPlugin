@@ -56,7 +56,7 @@ final class BonusPointsStrategyType extends AbstractResourceType
                 'label' => 'bitbag_sylius_bonus_points.ui.calculator_type',
             ])
             ->addEventSubscriber(new AddCodeFormSubscriber())
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 $data = $event->getData();
 
                 if (null === $data || null === $data->getId()) {
@@ -65,16 +65,15 @@ final class BonusPointsStrategyType extends AbstractResourceType
 
                 $this->addConfigurationField($event->getForm(), $data->getCalculatorType());
             })
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $data = $event->getData();
 
-                if (empty($data) || !array_key_exists('calculatorType', $data)) {
+                if (null === $data || !array_key_exists('calculatorType', $data)) {
                     return;
                 }
 
                 $this->addConfigurationField($event->getForm(), $data['calculatorType']);
-            })
-        ;
+            });
 
         $prototypes = [];
 

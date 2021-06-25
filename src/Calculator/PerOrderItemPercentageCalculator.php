@@ -14,7 +14,7 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
     public const TYPE = 'per_order_item_percentage';
 
     /**
-     * @param OrderItemInterface $subject
+     * @param OrderItemInterface|mixed $subject
      */
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
@@ -22,8 +22,10 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
 
         /** @var OrderInterface $order */
         $order = $subject->getOrder();
+        $channel = $order->getChannel();
+        $code = null !== $channel ? $channel->getCode() : null;
 
-        $configuration = $configuration[$order->getChannel()->getCode()];
+        $configuration = $configuration[$code];
 
         $total = $subject->getTotal();
 
