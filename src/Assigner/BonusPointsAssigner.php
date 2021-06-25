@@ -197,7 +197,8 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
      */
     public function calculateBonusPoints(OrderInterface $order, BonusPointsStrategyInterface $bonusPointsStrategy, int $bonusPointsTotal): int
     {
-        $status = true;
+        /** @var OrderItemInterface[] $eligibleOrderItems */
+        $eligibleOrderItems = [];
 
         /** @var OrderItemInterface $orderItem */
         foreach ($order->getItems() as $orderItem) {
@@ -206,13 +207,13 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
                 continue;
             }
             if (!$this->bonusPointsStrategyEligibilityChecker->isEligible($product, $bonusPointsStrategy)) {
-                $status = false;
+                $eligibleOrderItems[] = $orderItem;
             }
         }
 
-        if (true === $status) {
+        foreach ($eligibleOrderItems as $eligibleProduct){
             $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
-                $order,
+                $eligibleProduct,
                 $bonusPointsStrategy,
                 $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
             );
