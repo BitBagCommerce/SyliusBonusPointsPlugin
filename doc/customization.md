@@ -28,4 +28,5 @@ $ symfony server:start -d --dir=public
 $ open http://127.0.0.1:8000
 $ vendor/bin/behat
 $ vendor/bin/phpspec run
+$ vendor/bin/phpstan analyse -c phpstan.neon -l max src/
 ```

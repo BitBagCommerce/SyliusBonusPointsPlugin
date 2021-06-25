@@ -1,4 +1,4 @@
-# [![](https://bitbag.io/wp-content/uploads/2021/06/bonus-points.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
+# [![](https://bitbag.io/wp-content/uploads/2021/07/bonus-points.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
 
 # BitBag SyliusBonusPointsPlugin
 
