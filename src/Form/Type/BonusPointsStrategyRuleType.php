@@ -24,6 +24,6 @@ final class BonusPointsStrategyRuleType extends AbstractConfigurableBonusPointsS
 
     public function getBlockPrefix(): string
     {
-        return 'sylius_bonus_points_strategy_rule';
+        return 'bitbag_bonus_points_strategy_rule';
     }
 }
