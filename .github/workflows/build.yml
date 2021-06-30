@@ -104,13 +104,13 @@ jobs:
                     composer config extra.symfony.require "${{ matrix.symfony }}"
 
             -
-                name: Restrict Sylius version
-                if: matrix.sylius != ''
-                run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
-
-            -
                 name: Install PHP dependencies
                 run: composer install --no-interaction
+
+            -
+                name: Restrict Sylius version
+                if: matrix.sylius != ''
+                run: composer update "sylius/sylius:${{ matrix.sylius }}" -W
 
             -
                 name: Get Yarn cache directory
