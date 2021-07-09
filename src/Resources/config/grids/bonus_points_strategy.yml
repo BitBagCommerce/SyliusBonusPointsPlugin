@@ -15,7 +15,7 @@ sylius_grid:
                     type: twig
                     label: bitbag_sylius_bonus_points.ui.enabled
                     options:
-                        template: SyliusUiBundle:Grid/Field:enabled.html.twig
+                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
             filters:
                 name:
                     type: string
