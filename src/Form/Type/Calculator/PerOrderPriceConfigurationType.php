@@ -34,7 +34,8 @@ final class PerOrderPriceConfigurationType extends AbstractType
                     new Type(['type' => 'integer', 'groups' => ['bitbag_sylius_bonus_points']]),
                     new Range(['min' => 1, 'groups' => ['bitbag_sylius_bonus_points']]),
                 ],
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

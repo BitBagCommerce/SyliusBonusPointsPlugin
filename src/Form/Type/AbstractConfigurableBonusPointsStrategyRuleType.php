@@ -55,7 +55,8 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
 
                 $configurationType = (string) $this->formTypeRegistry->get($data['type'], 'default');
                 $this->addConfigurationFields($event->getForm(), $configurationType);
-            });
+            })
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

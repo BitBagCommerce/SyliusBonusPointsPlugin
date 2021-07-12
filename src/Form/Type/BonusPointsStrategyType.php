@@ -73,7 +73,8 @@ final class BonusPointsStrategyType extends AbstractResourceType
                 }
 
                 $this->addConfigurationField($event->getForm(), $data['calculatorType']);
-            });
+            })
+        ;
 
         $prototypes = [];
 
