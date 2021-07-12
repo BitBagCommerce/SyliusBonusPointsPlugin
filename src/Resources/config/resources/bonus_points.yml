@@ -5,3 +5,4 @@ sylius_resource:
             classes:
                 model: BitBag\SyliusBonusPointsPlugin\Entity\BonusPoints
                 interface: BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface
+                repository: BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepository

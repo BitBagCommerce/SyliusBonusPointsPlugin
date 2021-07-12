@@ -9,10 +9,10 @@ class BonusPointsStrategyRule implements BonusPointsStrategyRuleInterface
     /** @var int */
     protected $id;
 
-    /** @var string */
+    /** @var string|null */
     protected $type;
 
-    /** @var BonusPointsStrategyInterface */
+    /** @var BonusPointsStrategyInterface|null */
     protected $bonusPointsStrategy;
 
     /** @var array */

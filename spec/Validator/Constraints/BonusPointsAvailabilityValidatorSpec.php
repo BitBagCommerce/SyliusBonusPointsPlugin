@@ -11,13 +11,15 @@ use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailability
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Validator\ConstraintValidator;
+use Tests\BitBag\SyliusBonusPointsPlugin\Entity\Order;
 
 final class BonusPointsAvailabilityValidatorSpec extends ObjectBehavior
 {
     function let(
         BonusPointsResolverInterface $bonusPointsResolver,
         RepositoryInterface $bonusPointsRepository
-    ): void {
+    ): void
+    {
         $this->beConstructedWith($bonusPointsResolver, $bonusPointsRepository);
     }
 
@@ -32,14 +34,15 @@ final class BonusPointsAvailabilityValidatorSpec extends ObjectBehavior
     }
 
     function it_validates(
-        BonusPointsAwareInterface $order,
+        Order $order,
         RepositoryInterface $bonusPointsRepository
-    ): void {
+    ): void
+    {
         $bonusPointsAvailabilityConstraint = new BonusPointsAvailability();
 
         $order->getBonusPoints()->willReturn(null);
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true,])->willReturn(null);
 
+        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true,])->willReturn(null);
         $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true,])->shouldBeCalled();
         $order->getBonusPoints()->shouldBeCalled();
         $order->getBonusPoints()->shouldBeCalled();

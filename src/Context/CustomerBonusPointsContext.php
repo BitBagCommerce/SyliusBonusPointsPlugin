@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\Context;
 
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
+use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -32,6 +33,7 @@ final class CustomerBonusPointsContext implements CustomerBonusPointsContextInte
 
     public function getCustomerBonusPoints(): ?CustomerBonusPointsInterface
     {
+        /** @var CustomerInterface|null $customer */
         $customer = $this->customerContext->getCustomer();
 
         if (null === $customer) {

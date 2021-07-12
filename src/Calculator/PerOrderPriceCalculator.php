@@ -15,15 +15,17 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
     /** @var float */
     private $decimalPart = 0;
 
+    /**
+     * @param OrderItemInterface|mixed $subject
+     */
     public function calculate($subject, array $configuration, int $amountToDeduct = 0): int
     {
-        /** @var OrderItemInterface $subject */
         Assert::isInstanceOf($subject, OrderItemInterface::class);
 
         $totalPriceForOrderItems = $subject->getTotal();
 
         $totalFloat = $totalPriceForOrderItems / 100;
-        $total = intval(floor($totalFloat));
+        $total = (int) (floor($totalFloat));
 
         $this->decimalPart += ($totalFloat - $total);
 
@@ -33,7 +35,7 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
             $this->decimalPart--;
         }
 
-        return intval($total * $configuration['numberOfPointsEarnedPerOneCurrency']);
+        return (int) ($total * $configuration['numberOfPointsEarnedPerOneCurrency']);
     }
 
     public function isPerOrderItem(): bool

@@ -6,7 +6,7 @@ default:
     extensions:
         DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
 
-        Lakion\Behat\MinkDebugExtension:
+        FriendsOfBehat\MinkDebugExtension:
             directory: etc/build
             clean_start: false
             screenshot: true
@@ -38,6 +38,8 @@ default:
                                     - "no-sandbox"
                             extra_capabilities:
                                 unexpectedAlertBehaviour: accept
+                                goog:chromeOptions:
+                                    w3c: false
                 firefox:
                     selenium2:
                         browser: firefox
@@ -46,6 +48,7 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
+                debug: true
                 class: Tests\BitBag\SyliusBonusPointsPlugin\Application\Kernel
                 path: tests/Application/Kernel.php
                 environment: test

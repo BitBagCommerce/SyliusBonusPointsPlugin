@@ -13,13 +13,13 @@ class CustomerBonusPoints implements CustomerBonusPointsInterface
     /** @var int */
     protected $id;
 
-    /** @var CustomerInterface */
+    /** @var CustomerInterface|null */
     protected $customer;
 
-    /** @var BonusPointsInterface|Collection */
+    /** @var Collection<int,BonusPointsInterface> */
     protected $bonusPoints;
 
-    /** @var BonusPointsInterface|Collection */
+    /** @var Collection<int,BonusPointsInterface> */
     protected $bonusPointsUsed;
 
     public function __construct()
@@ -43,6 +43,9 @@ class CustomerBonusPoints implements CustomerBonusPointsInterface
         $this->customer = $customer;
     }
 
+    /**
+     * @return Collection<int,BonusPointsInterface>
+     */
     public function getBonusPoints(): Collection
     {
         return $this->bonusPoints;

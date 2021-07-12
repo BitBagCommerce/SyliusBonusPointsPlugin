@@ -97,7 +97,7 @@ final class BonusPointsStrategyContext implements Context
 
         /** @var ChannelInterface $channel */
         $channel = $this->sharedStorage->get('channel');
-        $configuration[$channel->getCode()] = ['percentToCalculatePoints' => (\intval($percent) / 100)];
+        $configuration[$channel->getCode()] = ['percentToCalculatePoints' => ((int) $percent / 100)];
 
         $bonusPointsStrategy->setCalculatorType($calculatorType);
         $bonusPointsStrategy->setCalculatorConfiguration($configuration);

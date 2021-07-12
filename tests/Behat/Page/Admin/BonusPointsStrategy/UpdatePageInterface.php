@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusBonusPointsPlugin\Behat\Page\Admin\BonusPointsStrategy;
 
 use Sylius\Behat\Page\Admin\Crud\UpdatePageInterface as BaseUpdatePageInterface;
-use Tests\BitBag\SyliusBonusPointsPlugin\Behat\Behaviour\ChecksCodeImmutabilityInterface;
 
 interface UpdatePageInterface extends BaseUpdatePageInterface
 {

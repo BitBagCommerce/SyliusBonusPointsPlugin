@@ -28,6 +28,9 @@ interface BonusPointsStrategyInterface extends
 
     public function setCalculatorConfiguration(array $calculatorConfiguration): void;
 
+    /**
+     * @return Collection<int,BonusPointsStrategyRuleInterface>
+     */
     public function getRules(): Collection;
 
     public function hasRules(): bool;

@@ -35,10 +35,10 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
                 if (null === $type) {
                     return;
                 }
-
-                $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($type, 'default'));
+                $configurationType = (string) $this->formTypeRegistry->get($type, 'default');
+                $this->addConfigurationFields($event->getForm(), $configurationType);
             })
-            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
                 $type = $this->getRegistryIdentifier($event->getForm(), $event->getData());
                 if (null === $type) {
                     return;
@@ -53,7 +53,8 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
                     return;
                 }
 
-                $this->addConfigurationFields($event->getForm(), $this->formTypeRegistry->get($data['type'], 'default'));
+                $configurationType = (string) $this->formTypeRegistry->get($data['type'], 'default');
+                $this->addConfigurationFields($event->getForm(), $configurationType);
             })
         ;
     }
@@ -64,8 +65,7 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
 
         $resolver
             ->setDefault('configuration_type', null)
-            ->setAllowedTypes('configuration_type', ['string', 'null'])
-        ;
+            ->setAllowedTypes('configuration_type', ['string', 'null']);
     }
 
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
@@ -75,13 +75,16 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
         ]);
     }
 
+    /**
+     * @param mixed|null $data
+     */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if ($data instanceof BonusPointsStrategyRuleInterface && null !== $data->getType()) {
             return $data->getType();
         }
 
-        if (null !== $form->getConfig()->hasOption('configuration_type')) {
+        if ($form->getConfig()->hasOption('configuration_type')) {
             return $form->getConfig()->getOption('configuration_type');
         }
 

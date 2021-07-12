@@ -9,6 +9,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
 use Doctrine\Persistence\ObjectManager;
+use Sylius\Component\Core\Model\OrderInterface;
 
 final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterface
 {
@@ -30,12 +31,14 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
         BonusPointsInterface $bonusPoints,
         CustomerBonusPointsInterface $customerBonusPoints = null
     ): void {
+        /** @var OrderInterface $order */
         $order = $bonusPoints->getOrder();
 
         if (null === $customerBonusPoints) {
             $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
         }
 
+        /** @var CustomerBonusPointsInterface $customerBonusPoints */
         if ($order->getCustomer() !== $customerBonusPoints->getCustomer()) {
             return;
         }

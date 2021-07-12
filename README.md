@@ -1,24 +1,37 @@
-<h1 align="center">
-    <a href="http://bitbag.shop" target="_blank">
-        <img src="doc/logo.png" width="55%" alt="BitBag" />
-    </a>
-    <br />
-    <a href="https://packagist.org/packages/bitbag/bonus-points-plugin" title="License" target="_blank">
-        <img src="https://img.shields.io/packagist/l/bitbag/bonus-points-plugin.svg" alt="License" />
-    </a>
-    <a href="https://packagist.org/packages/bitbag/bonus-points-plugin" title="Total Downloads" target="_blank">
-        <img src="https://poser.pugx.org/bitbag/bonus-points-plugin/downloads" alt="Total downloads"/>
-    </a>
-    <p>
-        <a href="https://sylius.com/plugins/" target="_blank">
-            <img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="85" alt="Approved by Sylius">
-        </a>
-    </p>
-</h1>
+# [![](https://bitbag.io/wp-content/uploads/2021/07/bonus-points.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
 
-## About us
+# BitBag SyliusBonusPointsPlugin
 
-At BitBag we do believe in open source. However, we are able to do it just because of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us working together, feel free to reach us out. You will find out more about our professional services, technologies and contact details at https://bitbag.io/.
+----
+
+[![](https://img.shields.io/packagist/l/bitbag/bonus-points-plugin.svg) ](https://packagist.org/packages/bitbag/bonus-points-plugin "License") [ ![](https://img.shields.io/packagist/v/bitbag/bonus-points-plugin.svg) ](https://packagist.org/packages/bitbag/bonus-points-plugin "Version") [ ![](https://img.shields.io/travis/BitBagCommerce/SyliusBonusPointsPlugin/master.svg) ](http://travis-ci.org/BitBagCommerce/SyliusBonusPointsPlugin "Build status") [ ![](https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusBonusPointsPlugin.svg) ](https://scrutinizer-ci.com/g/BitBagCommerce/SyliusBonusPointsPlugin/ "Scrutinizer") [![](https://poser.pugx.org/bitbag/bonus-points-plugin/downloads)](https://packagist.org/packages/bitbag/bonus-points-plugin "Total Downloads") [![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com) [![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
+
+<p>
+ <img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="85">
+</p> 
+
+At BitBag we do believe in open source. However, we are able to do it just because of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us working together, feel free to reach us out. You will find out more about our professional services, technologies and contact details at [https://bitbag.io/](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points).
+
+## Table of Content
+
+***
+
+* [Overview](#overview)
+* [Support](#we-are-here-to-help)
+* [About us](#about-us)
+   * [Community](#community)
+* [Demo](#demo)
+* [License](#license)
+* [Contact](#contact)
+- [Installation](doc/installation.md)
+- [Upgrade 1.3](UPGRADE-1.3.md)
+- [Upgrade 1.4](UPGRADE-1.4.md)
+- [Customization & Testing](doc/customization.md)
+
+## Overview
+
+This plugin allows you to create rules for assigning bonus points to users.<br />
+Users can exchange them for discounts(1 bonus point = 1 currency discount) when creating an order.
 
 ## Screenshots
 
@@ -30,105 +43,78 @@ At BitBag we do believe in open source. However, we are able to do it just becau
 
 ![Screenshot showing order shipped for free](doc/images/admin-discounted-order.png)
 
-## Overview
+## We are here to help
+This **open-source plugin was developed to help the Sylius community**. If you have any additional questions, would like help with installing or configuring the plugin or need any assistance with your Sylius project - let us know!
 
-This plugin allows you to create rules for assigning bonus points to users.<br />
-Users can exchange them for discounts(1 bonus point = 1 currency discount) when creating an order.
+[![](https://bitbag.io/wp-content/uploads/2020/10/button-contact.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
 
-## Installation
+# About us
 
-1. Require plugin with composer:
+---
 
-    ```bash
-    composer require bitbag/bonus-points-plugin
-    ```
- 
-1. Add plugin dependencies to your `config/bundles.php` file:
-    
-    ```php
-        return [
-         ...
-        
-            BitBag\SyliusBonusPointsPlugin\BitBagSyliusBonusPointsPlugin::class => ['all' => true],
-        ];
-    ```
+BitBag is an agency that provides high-quality **eCommerce and Digital Experience software**. Our main area of expertise includes eCommerce consulting and development for B2C, B2B, and Multi-vendor Marketplaces.
+The scope of our services related to Sylius includes:
+- **Consulting** in the field of strategy development
+- Personalized **headless software development**
+- **System maintenance and long-term support**
+- **Outsourcing**
+- **Plugin development**
+- **Data migration**
 
-1. Import required config by adding  `config/packages/bitbag_sylius_bonus_points_plugin.yaml` file:
-    
-    ```yaml
-    # config/packages/bitbag_sylius_bonus_points_plugin.yaml
-    
-    imports:
-       - { resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/config.yml" }
-    ```    
+Some numbers regarding Sylius:
+* **20+ experts** including consultants, UI/UX designers, Sylius trained front-end and back-end developers,
+* **100+ projects** delivered on top of Sylius,
+* Clients from  **20+ countries**
+* **3+ years** in the Sylius ecosystem.
 
-1. Import routing in your `config/routes.yaml` file:
-    
-    ```yaml
-    
-    # config/routes.yaml
-    ...
-    
-    bitbag_sylius_bonus_points_plugin:
-        resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/routing.yml"
-    ```
+---
 
-1. Extend `Order`(including Doctrine mapping):
+If you need some help with Sylius development, don't be hesitate to contact us directly. You can fill the form on [this site](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points) or send us an e-mail to hello@bitbag.io!
 
-    ```php
-    <?php 
-   
-   declare(strict_types=1);
-    
-    namespace App\Entity\Order;
-    
-    use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
-    use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareTrait;
-    use Sylius\Component\Core\Model\Order as BaseOrder;
+---
 
-    class Order extends BaseOrder implements BonusPointsAwareInterface
-    {
-        use BonusPointsAwareTrait;
-    }
-    ```
-   
-   Mapping (XML):
-   
-   ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                                         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
-   >
-         <entity repository-class="App\Doctrine\ORM\OrderRepository" name="App\Entity\Order\Order" table="sylius_order">
-               <field name="bonusPoints" type="integer" nullable="true" />
-         </entity>
-   </doctrine-mapping>
-   ```
+[![](https://bitbag.io/wp-content/uploads/2020/10/badges-sylius.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
 
-1. Customize shop templates to include bonus points. For starter You may want copy to templates directory everything from plugin's tests/Application/templates
-   
-1. Finish the installation by updating the database schema and installing assets:
+## Community
 
-    ```
-    $ bin/console doctrine:migrations:diff
-    $ bin/console doctrine:migrations:migrate
-    ```
+---- 
 
-## Testing
-```bash
-$ composer install
-$ cd tests/Application
-$ yarn install
-$ yarn build
-$ bin/console assets:install public -e test
-$ bin/console doctrine:schema:create -e test
-$ bin/console server:run 127.0.0.1:8080 -d public -e test
-$ open http://localhost:8080
-$ vendor/bin/behat
-```
+For online communication, we invite you to chat with us & other users on [Sylius Slack](https://sylius-devs.slack.com/).
 
-## Contribution
+# Demo
 
-Learn more about our contribution workflow on http://docs.sylius.org/en/latest/contributing/.
+---
+
+We created a demo app with some useful use-cases of the plugin! Visit [demo.bitbag.shop](https://demo.bitbag.shop) to take a look at it.
+The admin can be accessed under [demo.bitbag.shop/admin](https://demo.bitbag.shop/admin) link and `sylius: sylius` credentials.
+
+We also recorded a webinar which presents most of the plugin features, including how they have been implemented and specific use-cases.
+
+<div align="center">
+
+[![Webinar](https://img.youtube.com/vi/Nk8fKA48t_Y/0.jpg)](https://www.youtube.com/watch?v=Nk8fKA48t_Y)
+
+</div>
+
+
+
+**If you need an overview of this plugin, schedule a consultation with our expert.**
+
+[![](https://bitbag.io/wp-content/uploads/2020/10/button_free_consulatation-1.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
+
+
+
+## License
+
+---
+
+This plugin's source code is completely free and released under the terms of the MIT license.
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen.)
+
+## Contact
+
+---
+If you want to contact us, the best way is to fill the form on [our website](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points) or send us an e-mail to hello@bitbag.io with your question(s). We guarantee that we answer as soon as we can!
+
+[![](https://bitbag.io/wp-content/uploads/2020/10/footer.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)

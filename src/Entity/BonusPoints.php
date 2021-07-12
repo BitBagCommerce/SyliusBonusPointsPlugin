@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Entity;
 
-use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
@@ -15,10 +14,10 @@ class BonusPoints implements BonusPointsInterface
     /** @var int */
     protected $id;
 
-    /** @var OrderInterface */
+    /** @var OrderInterface|null */
     protected $order;
 
-    /** @var int */
+    /** @var int|null */
     protected $points;
 
     /** @var bool */
