@@ -62,7 +62,6 @@ final class BonusPointsStrategyContext implements Context
      */
     public function iGoToTheCreateBonusPointsStrategyPage(): void
     {
-        $adminUser = $this->sharedStorage->get('administrator');
         $this->createPage->open();
     }
 
