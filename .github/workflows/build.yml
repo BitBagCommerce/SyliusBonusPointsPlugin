@@ -13,13 +13,15 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
 
         strategy:
             fail-fast: false
             matrix:
-                php: [7.4]
+                php: [7.4, 8.0]
                 node: [10.x]
+                symfony: [ ^4.4, ^5.2 ]
+                sylius: [ ^1.10.0 ]
                 mysql: [8.0]
         env:
             APP_ENV: test
@@ -84,6 +86,19 @@ jobs:
                     key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json **/composer.lock') }}
                     restore-keys: |
                         ${{ runner.os }}-php-${{ matrix.php }}-composer-
+
+            -
+                name: Restrict Symfony version
+                if: matrix.symfony != ''
+                run: |
+                  composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
+                  composer config extra.symfony.require "${{ matrix.symfony }}"
+                    -
+            -
+                name: Restrict Sylius version
+                if: matrix.sylius != ''
+                run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
             -
                 name: Install PHP dependencies
                 run: |
