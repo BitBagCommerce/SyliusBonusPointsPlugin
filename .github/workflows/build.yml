@@ -23,7 +23,7 @@ jobs:
     php: [ 7.4, 8.0 ]
     node: [ 10.x ]
     symfony: [ ^4.4, ^5.2 ]
-    sylius: [ ^1.10.0 ]
+    sylius: [ ^1.8.0, ^1.9.0, ^1.10.0 ]
     mysql: [ 8.0 ]
 
   env:
