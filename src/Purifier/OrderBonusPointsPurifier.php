@@ -8,7 +8,7 @@ use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\OrderInterface;
 
 final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterface
@@ -16,12 +16,12 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
     /** @var CustomerBonusPointsContextInterface */
     private $customerBonusPointsContext;
 
-    /** @var EntityManagerInterface */
+    /** @var ObjectManager */
     private $persistenceManager;
 
     public function __construct(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        EntityManagerInterface $persistenceManager
+        ObjectManager $persistenceManager
     ) {
         $this->customerBonusPointsContext = $customerBonusPointsContext;
         $this->persistenceManager = $persistenceManager;
