@@ -4,13 +4,13 @@
 
 ----
 
-[![](https://img.shields.io/packagist/l/bitbag/bonus-points-plugin.svg) ](https://packagist.org/packages/bitbag/bonus-points-plugin "License") 
+[ ![](https://img.shields.io/packagist/l/bitbag/bonus-points-plugin.svg) ](https://packagist.org/packages/bitbag/bonus-points-plugin "License") 
 [ ![](https://img.shields.io/packagist/v/bitbag/bonus-points-plugin.svg) ](https://packagist.org/packages/bitbag/bonus-points-plugin "Version") 
 [ ![](https://img.shields.io/travis/BitBagCommerce/SyliusBonusPointsPlugin/master.svg) ](http://travis-ci.org/BitBagCommerce/SyliusBonusPointsPlugin "Build status") 
 [ ![](https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusBonusPointsPlugin.svg) ](https://scrutinizer-ci.com/g/BitBagCommerce/SyliusBonusPointsPlugin/ "Scrutinizer") 
-[![](https://poser.pugx.org/bitbag/bonus-points-plugin/downloads)](https://packagist.org/packages/bitbag/bonus-points-plugin "Total Downloads") 
-[![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com) 
-[![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
+[ ![](https://poser.pugx.org/bitbag/bonus-points-plugin/downloads)](https://packagist.org/packages/bitbag/bonus-points-plugin "Total Downloads") 
+[ ![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com) 
+[ ![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_bonus_points)
 
 <p>
  <img align="left" src="https://sylius.com/assets/badge-approved-by-sylius.png" width="85">
@@ -30,7 +30,6 @@ Like what we do? Want to join us? Check out our job listings on our [career page
 * [About us](#about-us)
    * [Community](#community)
 * [Demo](#demo-sylius-shop)
-* [Additional resources for developers](#additional-resources-for-developers)
 * [License](#license)
 * [Contact](#contact)
 
