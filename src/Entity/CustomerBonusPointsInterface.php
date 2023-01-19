@@ -41,4 +41,6 @@ interface CustomerBonusPointsInterface extends ResourceInterface
     public function removeBonusPointsUsed(BonusPointsInterface $bonusPointsUsed): void;
 
     public function hasBonusPointsUsed(BonusPointsInterface $bonusPointsUsed): bool;
+
+    public function getSortedNotUsedAndNotExpired(?\DateTime $dateTime = null): Collection;
 }

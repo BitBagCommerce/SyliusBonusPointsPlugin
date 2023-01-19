@@ -11,8 +11,11 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\EventListener;
 
 use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
+use BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreatorInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Processor\ResetOrderBonusPointsProcessorInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -21,23 +24,23 @@ use Webmozart\Assert\Assert;
 
 final class OrderBonusPointsListener
 {
-    /** @var EntityRepository */
-    private $bonusPointsRepository;
-
-    /** @var FactoryInterface */
-    private $bonusPointsFactory;
+    /** @var BonusPointsCreatorInterface */
+    private $bonusPointsCreator;
 
     /** @var CustomerBonusPointsContextInterface */
     private $customerBonusPointsContext;
 
+    /** @var ResetOrderBonusPointsProcessorInterface */
+    private $resetBonusPointsProcessor;
+
     public function __construct(
-        EntityRepository $bonusPointsRepository,
-        FactoryInterface $bonusPointsFactory,
-        CustomerBonusPointsContextInterface $customerBonusPointsContext
+        BonusPointsCreatorInterface $bonusPointsCreator,
+        CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor
     ) {
-        $this->bonusPointsRepository = $bonusPointsRepository;
-        $this->bonusPointsFactory = $bonusPointsFactory;
+        $this->bonusPointsCreator = $bonusPointsCreator;
         $this->customerBonusPointsContext = $customerBonusPointsContext;
+        $this->resetBonusPointsProcessor = $resetBonusPointsProcessor;
     }
 
     public function assignBonusPoints(ResourceControllerEvent $event): void
@@ -48,29 +51,40 @@ final class OrderBonusPointsListener
         Assert::isInstanceOf($order, OrderInterface::class);
         Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
 
-        $points = (int) ($order->getBonusPoints());
-
         if (null === $order->getBonusPoints()) {
             return;
         }
 
+        $points = (int) ($order->getBonusPoints());
         $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
 
         if (null === $customerBonusPoints) {
             return;
         }
 
-        /** @var BonusPointsInterface $bonusPoints */
-        $bonusPoints = $this->bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true]) ??
-            $this->bonusPointsFactory->createNew()
-        ;
+        $this->resetBonusPointsProcessor->process($order);
 
-        $bonusPoints->setIsUsed(true);
-        $bonusPoints->setPoints($points);
-        $bonusPoints->setOrder($order);
+        $now = new \DateTime();
+        $availableBonusPoints = $customerBonusPoints->getSortedNotUsedAndNotExpired($now);
 
-        $customerBonusPoints->addBonusPointsUsed($bonusPoints);
+        /** @var BonusPointsInterface $availableBonusPoint */
+        foreach ($availableBonusPoints as $availableBonusPoint) {
+            if (0 >= $points) {
+                break;
+            }
 
-        $this->bonusPointsRepository->add($bonusPoints);
+            $leftPointsFromPool = $availableBonusPoint->getLeftPointsFromAvailablePool();
+
+            if ($points >= $leftPointsFromPool) {
+                $this->bonusPointsCreator->createWithData($customerBonusPoints, $order, $leftPointsFromPool, $availableBonusPoint);
+
+                $points -= $leftPointsFromPool;
+                continue;
+            }
+
+            $this->bonusPointsCreator->createWithData($customerBonusPoints, $order, $points, $availableBonusPoint);
+
+            break;
+        }
     }
 }

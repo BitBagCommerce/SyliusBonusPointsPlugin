@@ -34,12 +34,14 @@ final class ResetOrderBonusPointsProcessor implements ResetOrderBonusPointsProce
     public function process(OrderInterface $order): void
     {
         /** @var BonusPointsInterface|null $bonusPoints */
-        $bonusPoints = $this->bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true]);
+        $bonusPoints = $this->bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true]);
 
-        if (null !== $bonusPoints) {
-            $this->orderBonusPointsPurifier->purify($bonusPoints);
+        foreach ($bonusPoints as $bonusPoint) {
+            if (null !== $bonusPoint) {
+                $this->orderBonusPointsPurifier->purify($bonusPoint);
 
-            $this->bonusPointsRepository->add($bonusPoints);
+                $this->bonusPointsRepository->add($bonusPoint);
+            }
         }
     }
 }

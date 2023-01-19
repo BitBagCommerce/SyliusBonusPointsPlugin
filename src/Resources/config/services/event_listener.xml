@@ -8,10 +8,12 @@
             <tag name="kernel.event_listener" event="sonata.block.event.bitbag_sylius_bonus_points.admin.bonus_points_strategy.update.javascripts" method="onBlockEvent" />
         </service>
 
-        <service id="bitbag_sylius_bonus_points.event_listener.order_bonus_points" class="BitBag\SyliusBonusPointsPlugin\EventListener\OrderBonusPointsListener">
-            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points"/>
-            <argument type="service" id="bitbag_sylius_bonus_points.factory.bonus_points"/>
+        <service id="bitbag_sylius_bonus_points.event_listener.order_bonus_points"
+                 class="BitBag\SyliusBonusPointsPlugin\EventListener\OrderBonusPointsListener"
+        >
+            <argument type="service" id="bitbag_sylius_bonus_points.creator.bonus_points"/>
             <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points"/>
+            <argument type="service" id="bitbag_sylius_bonus_points.processor.reset_order_bonus_points"/>
             <tag name="kernel.event_listener" event="sylius.order.pre_update" method="assignBonusPoints" />
         </service>
     </services>

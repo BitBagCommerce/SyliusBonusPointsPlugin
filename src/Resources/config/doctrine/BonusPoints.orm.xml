@@ -23,6 +23,19 @@
         <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface">
             <join-column name="order_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
         </many-to-one>
+
+        <many-to-one field="originalBonusPoints"
+                     target-entity="BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface"
+                     inversed-by="relatedBonusPoints"
+        >
+            <join-column name="original_bonus_points_id" referenced-column-name="id" on-delete="CASCADE" nullable="true" />
+        </many-to-one>
+
+        <one-to-many
+                field="relatedBonusPoints"
+                target-entity="BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface"
+                mapped-by="originalBonusPoints"
+        />
     </mapped-superclass>
 
 </doctrine-mapping>

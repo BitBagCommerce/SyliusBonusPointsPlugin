@@ -62,4 +62,30 @@ final class BonusPointsSpec extends ObjectBehavior
 
         $this->isUsed()->shouldReturn(true);
     }
+
+    function it_calculates_left_points_from_available_pool(BonusPoints $relatedBonusPoints): void
+    {
+        $this->setPoints(256445);
+        $this->setIsUsed(false);
+        $relatedBonusPoints->setOriginalBonusPoints($this)->shouldBeCalled();
+        $relatedBonusPoints->getPoints()->willReturn(45647);
+        $relatedBonusPoints->isUsed()->willReturn(true);
+        $this->addRelatedBonusPoints($relatedBonusPoints);
+        $this->getLeftPointsFromAvailablePool()->shouldReturn(210798);
+    }
+
+    function it_calculates_left_points_from_available_pool_when_no_related_bonus_points(): void
+    {
+        $this->setPoints(100);
+        $this->getLeftPointsFromAvailablePool()->shouldReturn(100);
+    }
+
+    function it_checks_if_it_is_expired(): void
+    {
+        $this->setExpiresAt(new \DateTime('+1 day'));
+        $this->isExpired()->shouldReturn(false);
+
+        $this->setExpiresAt(new \DateTime('-1 day'));
+        $this->isExpired()->shouldReturn(true);
+    }
 }
