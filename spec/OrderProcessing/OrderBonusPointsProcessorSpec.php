@@ -14,6 +14,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\OrderProcessing\OrderBonusPointsProcessor;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -41,8 +42,11 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         BonusPointsInterface $bonusPoints,
         AdjustmentInterface $adjustment
     ): void {
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPoints);
         $bonusPoints->getPoints()->willReturn(1234);
+
+        $bonusPointsCollection = new ArrayCollection([$bonusPoints->getWrappedObject()]);
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPointsCollection);
+
         $adjustmentFactory->createWithData(
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
@@ -63,10 +67,12 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         BonusPointsInterface $bonusPoints,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPoints);
+        $bonusPointsCollection = new ArrayCollection([$bonusPoints->getWrappedObject()]);
+
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPointsCollection);
         $bonusPoints->getPoints()->willReturn(0);
 
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $bonusPoints->getPoints()->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldBeCalled();
         $bonusPointsRepository->add($bonusPoints)->shouldBeCalled();

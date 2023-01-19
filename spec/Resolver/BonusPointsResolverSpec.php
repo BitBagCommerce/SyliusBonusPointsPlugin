@@ -10,41 +10,69 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Resolver;
 
-use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepositoryInterface;
-use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver;
-use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolverInterface;
+use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
+use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Customer\Context\CustomerContextInterface;
-use Sylius\Component\Customer\Model\CustomerInterface;
+use Sylius\Component\Core\Model\Customer;
+use Sylius\Component\Core\Model\OrderInterface;
 
 final class BonusPointsResolverSpec extends ObjectBehavior
 {
-    function let(
-        BonusPointsRepositoryInterface $bonusPointsRepository,
-        CustomerContextInterface $customerContext
-    ): void
+    public function let(CustomerBonusPointsContextInterface $customerBonusPointsContext): void
     {
-        $this->beConstructedWith($bonusPointsRepository, $customerContext);
+        $this->beConstructedWith($customerBonusPointsContext);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
-        $this->shouldHaveType(BonusPointsResolver::class);
+        $this->shouldHaveType('BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver');
     }
 
-    function it_implements_bonus_points_resolver_interface(): void
-    {
-        $this->shouldHaveType(BonusPointsResolverInterface::class);
+    public function it_resolves_bonus_points_correctly(
+        CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        CustomerBonusPointsInterface $customerBonusPoints,
+        Customer $customer,
+        BonusPointsInterface $bonusPoints1,
+        BonusPointsInterface $bonusPoints2,
+        BonusPointsInterface $bonusPoints3,
+        OrderInterface $order1,
+        OrderInterface $order2
+    ): void {
+        $customerBonusPointsContext->getCustomerBonusPoints()->willReturn($customerBonusPoints);
+        $customerBonusPoints->getCustomer()->willReturn($customer);
+        $customerBonusPoints->getBonusPoints()->willReturn(new ArrayCollection([
+            $bonusPoints1->getWrappedObject(),
+            $bonusPoints2->getWrappedObject(),
+            $bonusPoints3->getWrappedObject()
+        ]));
+        $bonusPoints1->getLeftPointsFromAvailablePool()->willReturn(10);
+        $bonusPoints2->getLeftPointsFromAvailablePool()->willReturn(5);
+        $bonusPoints3->getLeftPointsFromAvailablePool()->willReturn(15);
+        $bonusPoints1->getOrder()->willReturn($order1);
+        $bonusPoints2->getOrder()->willReturn($order1);
+        $bonusPoints3->getOrder()->willReturn($order2);
+
+        $this->resolveBonusPoints(null, $customer)->shouldReturn(30);
+        $this->resolveBonusPoints($order1, $customer)->shouldReturn(15);
     }
 
-    function it_resolves(
-        CustomerInterface $customer,
-        BonusPointsRepositoryInterface $bonusPointsRepository
-    ): void
-    {
-
-        $bonusPointsRepository->findAllCustomerPointsMovements($customer)->willReturn([]);
+    public function it_returns_zero_if_customer_is_not_set(
+        CustomerBonusPointsContextInterface $customerBonusPointsContext
+    ): void {
+        $customerBonusPointsContext->getCustomerBonusPoints()->willReturn(null);
 
         $this->resolveBonusPoints()->shouldReturn(0);
     }
+
+    public function it_returns_zero_if_customer_points_are_not_set(
+        CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        Customer $customer
+    ): void {
+        $customerBonusPointsContext->getCustomerBonusPoints()->willReturn(null);
+
+        $this->resolveBonusPoints(null, $customer)->shouldReturn(0);
+    }
 }
+

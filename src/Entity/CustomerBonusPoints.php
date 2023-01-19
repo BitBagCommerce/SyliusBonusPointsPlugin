@@ -12,6 +12,7 @@ namespace BitBag\SyliusBonusPointsPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 class CustomerBonusPoints implements CustomerBonusPointsInterface
@@ -22,7 +23,7 @@ class CustomerBonusPoints implements CustomerBonusPointsInterface
     /** @var CustomerInterface|null */
     protected $customer;
 
-    /** @var Collection<int,BonusPointsInterface> */
+    /** @var Collection<int,BonusPointsInterface>|BonusPointsInterface[] */
     protected $bonusPoints;
 
     /** @var Collection<int,BonusPointsInterface> */
@@ -98,5 +99,20 @@ class CustomerBonusPoints implements CustomerBonusPointsInterface
     public function hasBonusPointsUsed(BonusPointsInterface $bonusPointsUsed): bool
     {
         return $this->bonusPointsUsed->contains($bonusPointsUsed);
+    }
+
+    public function getSortedNotUsedAndNotExpired(?\DateTime $dateTime = null): Collection
+    {
+        $dateTime = null === $dateTime ? new \DateTime() : $dateTime;
+
+        $bonusPoints = $this->bonusPoints->filter(function (BonusPointsInterface $bonusPoints) use ($dateTime): bool {
+            return false === $bonusPoints->isUsed() && !$bonusPoints->isExpired($dateTime);
+        });
+
+        $orderBy = (Criteria::create())->orderBy([
+            'expiresAt' => Criteria::ASC,
+        ]);
+
+        return $bonusPoints->matching($orderBy);
     }
 }

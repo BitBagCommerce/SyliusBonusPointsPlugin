@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
@@ -31,4 +32,20 @@ interface BonusPointsInterface extends ResourceInterface, TimestampableInterface
     public function getExpiresAt(): ?\DateTimeInterface;
 
     public function setExpiresAt(?\DateTimeInterface $expiresAt): void;
+
+    public function setOriginalBonusPoints(?BonusPointsInterface $bonusPoints): void;
+
+    public function getOriginalBonusPoints(): ?BonusPointsInterface;
+
+    public function addRelatedBonusPoints(BonusPointsInterface $bonusPoints): void;
+
+    public function removeRelatedBonusPoints(BonusPointsInterface $bonusPoints): void;
+
+    public function hasRelatedBonusPoints(BonusPointsInterface $bonusPoints): bool;
+
+    public function getRelatedBonusPoints(): Collection;
+
+    public function isExpired(?\DateTime $dateTime = null): bool;
+
+    public function getLeftPointsFromAvailablePool(): int;
 }

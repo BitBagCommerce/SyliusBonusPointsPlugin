@@ -14,6 +14,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Processor\ResetOrderBonusPointsProcessor;
 use BitBag\SyliusBonusPointsPlugin\Processor\ResetOrderBonusPointsProcessorInterface;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Tests\BitBag\SyliusBonusPointsPlugin\Entity\Order;
@@ -43,9 +44,10 @@ final class ResetOrderBonusPointsProcessorSpec extends ObjectBehavior
         BonusPointsInterface $bonusPoints,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPoints);
+        $bonusPointsCollection = new ArrayCollection([$bonusPoints->getWrappedObject()]);
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPointsCollection);
 
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldBeCalled();
         $bonusPointsRepository->add($bonusPoints)->shouldBeCalled();
 
@@ -58,9 +60,9 @@ final class ResetOrderBonusPointsProcessorSpec extends ObjectBehavior
         BonusPointsInterface $bonusPoints,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->willReturn(null);
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn([]);
 
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldNotBeCalled();
         $bonusPointsRepository->add($bonusPoints)->shouldNotBeCalled();
 
