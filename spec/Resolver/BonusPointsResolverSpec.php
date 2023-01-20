@@ -13,6 +13,7 @@ namespace spec\BitBag\SyliusBonusPointsPlugin\Resolver;
 use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\Customer;
@@ -27,7 +28,7 @@ final class BonusPointsResolverSpec extends ObjectBehavior
 
     public function it_is_initializable(): void
     {
-        $this->shouldHaveType('BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver');
+        $this->shouldHaveType(BonusPointsResolver::class);
     }
 
     public function it_resolves_bonus_points_correctly(
