@@ -45,19 +45,18 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
     {
         Assert::isInstanceOf($order, BonusPointsAwareInterface::class);
 
-        /** @var BonusPointsInterface|null $bonusPoints */
+        /** @var BonusPointsInterface[] $bonusPoints */
         $bonusPoints = $this->bonusPointsRepository->findBy([
             'order' => $order,
             'isUsed' => true,
         ]);
 
-        if (empty($bonusPoints)) {
+        if (0 === count($bonusPoints)) {
             return;
         }
 
         $totalUsedPoints = 0;
 
-        /** @var BonusPointsInterface $bonusPoint */
         foreach ($bonusPoints as $bonusPoint) {
             if (0 === $bonusPoint->getPoints()) {
                 $this->orderBonusPointsPurifier->purify($bonusPoint);
@@ -76,7 +75,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         $adjustment = $this->adjustmentFactory->createWithData(
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
-            (-1 * (int) $totalUsedPoints)
+            (-1 * $totalUsedPoints)
         );
 
         $adjustment->setOriginCode(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);

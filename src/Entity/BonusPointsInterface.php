@@ -43,6 +43,9 @@ interface BonusPointsInterface extends ResourceInterface, TimestampableInterface
 
     public function hasRelatedBonusPoints(self $bonusPoints): bool;
 
+    /**
+     * @return Collection<int,self>
+     */
     public function getRelatedBonusPoints(): Collection;
 
     public function isExpired(?\DateTime $dateTime = null): bool;

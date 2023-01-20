@@ -44,7 +44,6 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
             $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
         }
 
-        /** @var CustomerBonusPointsInterface $customerBonusPoints */
         if ($order->getCustomer() !== $customerBonusPoints->getCustomer()) {
             return;
         }
