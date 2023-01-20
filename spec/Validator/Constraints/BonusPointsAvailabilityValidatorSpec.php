@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
-use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolverInterface;
 use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailability;
 use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailabilityValidator;
@@ -24,8 +23,7 @@ final class BonusPointsAvailabilityValidatorSpec extends ObjectBehavior
     function let(
         BonusPointsResolverInterface $bonusPointsResolver,
         RepositoryInterface $bonusPointsRepository
-    ): void
-    {
+    ): void {
         $this->beConstructedWith($bonusPointsResolver, $bonusPointsRepository);
     }
 
@@ -42,14 +40,13 @@ final class BonusPointsAvailabilityValidatorSpec extends ObjectBehavior
     function it_validates(
         Order $order,
         RepositoryInterface $bonusPointsRepository
-    ): void
-    {
+    ): void {
         $bonusPointsAvailabilityConstraint = new BonusPointsAvailability();
 
         $order->getBonusPoints()->willReturn(null);
 
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true,])->willReturn(null);
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true,])->shouldBeCalled();
+        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->willReturn(null);
+        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $order->getBonusPoints()->shouldBeCalled();
         $order->getBonusPoints()->shouldBeCalled();
 

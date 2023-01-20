@@ -12,7 +12,6 @@ namespace spec\BitBag\SyliusBonusPointsPlugin\Calculator;
 
 use BitBag\SyliusBonusPointsPlugin\Calculator\BonusPointsStrategyCalculatorInterface;
 use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderItemPercentageCalculator;
-use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;

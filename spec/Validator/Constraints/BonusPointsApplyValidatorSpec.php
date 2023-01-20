@@ -11,16 +11,12 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
 use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
-use BitBag\SyliusBonusPointsPlugin\Checker\Eligibility\BonusPointsStrategyEligibilityCheckerInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
 use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsApply;
 use BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsApplyValidator;
-use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItem;
-use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

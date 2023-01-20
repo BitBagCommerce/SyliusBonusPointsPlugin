@@ -50,7 +50,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $adjustmentFactory->createWithData(
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
-        -1234
+            -1234
         )->willReturn($adjustment);
 
         $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
