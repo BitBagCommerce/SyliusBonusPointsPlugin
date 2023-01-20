@@ -11,6 +11,7 @@
         <import resource="services/purifiers.xml"/>
         <import resource="services/controllers.xml"/>
         <import resource="services/processors.xml"/>
+        <import resource="services/creator.xml"/>
     </imports>
 
     <services>
@@ -39,8 +40,7 @@
         </service>
 
         <service id="bitbag_sylius_bonus_points.resolver.bonus_points" class="BitBag\SyliusBonusPointsPlugin\Resolver\BonusPointsResolver">
-            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
-            <argument type="service" id="sylius.context.customer" />
+            <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points" />
         </service>
 
         <service id="bitbag_sylius_bonus_points.validator.bonus_points_availability" class="BitBag\SyliusBonusPointsPlugin\Validator\Constraints\BonusPointsAvailabilityValidator">
