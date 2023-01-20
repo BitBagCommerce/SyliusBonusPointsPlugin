@@ -14,12 +14,9 @@ use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
 use BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreatorInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
-use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Processor\ResetOrderBonusPointsProcessorInterface;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderBonusPointsListener
@@ -79,6 +76,7 @@ final class OrderBonusPointsListener
                 $this->bonusPointsCreator->createWithData($customerBonusPoints, $order, $leftPointsFromPool, $availableBonusPoint);
 
                 $points -= $leftPointsFromPool;
+
                 continue;
             }
 

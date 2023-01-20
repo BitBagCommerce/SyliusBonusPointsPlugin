@@ -33,15 +33,15 @@ interface BonusPointsInterface extends ResourceInterface, TimestampableInterface
 
     public function setExpiresAt(?\DateTimeInterface $expiresAt): void;
 
-    public function setOriginalBonusPoints(?BonusPointsInterface $bonusPoints): void;
+    public function setOriginalBonusPoints(?self $bonusPoints): void;
 
-    public function getOriginalBonusPoints(): ?BonusPointsInterface;
+    public function getOriginalBonusPoints(): ?self;
 
-    public function addRelatedBonusPoints(BonusPointsInterface $bonusPoints): void;
+    public function addRelatedBonusPoints(self $bonusPoints): void;
 
-    public function removeRelatedBonusPoints(BonusPointsInterface $bonusPoints): void;
+    public function removeRelatedBonusPoints(self $bonusPoints): void;
 
-    public function hasRelatedBonusPoints(BonusPointsInterface $bonusPoints): bool;
+    public function hasRelatedBonusPoints(self $bonusPoints): bool;
 
     public function getRelatedBonusPoints(): Collection;
 
