@@ -116,8 +116,8 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             ]) ?? $this->customerBonusPointsFactory->createNew();
 
         if (null === $customerBonusPoints->getId()) {
-            /** @var \Sylius\Component\Core\Model\CustomerInterface|null $customer */
             $customerBonusPoints->setCustomer($customer);
+
             $this->customerBonusPointsRepository->add($customerBonusPoints);
         }
 

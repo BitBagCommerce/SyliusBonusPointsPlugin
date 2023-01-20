@@ -52,7 +52,7 @@ final class OrderBonusPointsListener
             return;
         }
 
-        $points = (int) ($order->getBonusPoints());
+        $points = $order->getBonusPoints();
         $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
 
         if (null === $customerBonusPoints) {
