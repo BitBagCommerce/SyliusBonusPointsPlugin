@@ -34,14 +34,10 @@ class BonusPoints implements BonusPointsInterface
     /** @var \DateTimeInterface|null */
     protected $expiresAt;
 
-    /**
-     * @var null|self
-     */
-    protected $originalBonusPoints = null;
+    /** @var self|null */
+    protected $originalBonusPoints;
 
-    /**
-     * @var Collection
-     */
+    /** @var Collection */
     protected $relatedBonusPoints;
 
     public function __construct()

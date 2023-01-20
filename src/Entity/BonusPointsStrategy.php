@@ -19,6 +19,7 @@ use Sylius\Component\Resource\Model\ToggleableTrait;
 class BonusPointsStrategy implements BonusPointsStrategyInterface
 {
     use ToggleableTrait;
+
     use TimestampableTrait;
 
     /** @var int */

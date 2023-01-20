@@ -36,9 +36,9 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
         $this->decimalPart += ($totalFloat - $total);
 
         if ($this->decimalPart >= 1) {
-            $total++;
+            ++$total;
 
-            $this->decimalPart--;
+            --$this->decimalPart;
         }
 
         return (int) ($total * $configuration['numberOfPointsEarnedPerOneCurrency']);

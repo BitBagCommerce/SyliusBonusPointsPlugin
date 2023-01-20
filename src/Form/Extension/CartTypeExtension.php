@@ -66,16 +66,16 @@ final class CartTypeExtension extends AbstractTypeExtension
                     ]),
                     new BonusPointsApply([
                         'groups' => ['sylius'],
-                    ])
+                    ]),
                 ],
-                'data' => null
+                'data' => null,
             ]);
     }
 
     public static function getExtendedTypes(): iterable
     {
         return [
-            CartType::class
+            CartType::class,
         ];
     }
 }
