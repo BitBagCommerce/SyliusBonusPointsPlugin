@@ -12,7 +12,6 @@ namespace spec\BitBag\SyliusBonusPointsPlugin\Checker\Rule;
 
 use BitBag\SyliusBonusPointsPlugin\Checker\Rule\BonusPointsStrategyRuleCheckerInterface;
 use BitBag\SyliusBonusPointsPlugin\Checker\Rule\HasTaxonRuleChecker;
-use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderItemInterface;

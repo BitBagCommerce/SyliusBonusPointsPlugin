@@ -13,7 +13,6 @@ namespace spec\BitBag\SyliusBonusPointsPlugin\Calculator;
 use BitBag\SyliusBonusPointsPlugin\Calculator\BonusPointsStrategyCalculatorInterface;
 use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 
 final class PerOrderPriceCalculatorSpec extends ObjectBehavior

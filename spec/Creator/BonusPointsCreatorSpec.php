@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file was created by developers working at BitBag
  * Do you need more information about us and what we do? Visit our https://bitbag.io website!
@@ -8,14 +10,14 @@
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Creator;
 
+use BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreator;
+use BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreatorInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
-use BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreator;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepositoryInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreatorInterface;
 
 final class BonusPointsCreatorSpec extends ObjectBehavior
 {

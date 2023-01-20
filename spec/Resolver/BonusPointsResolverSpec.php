@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusBonusPointsPlugin\Resolver;
 
 use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
-use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
+use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\Customer;
@@ -45,7 +45,7 @@ final class BonusPointsResolverSpec extends ObjectBehavior
         $customerBonusPoints->getBonusPoints()->willReturn(new ArrayCollection([
             $bonusPoints1->getWrappedObject(),
             $bonusPoints2->getWrappedObject(),
-            $bonusPoints3->getWrappedObject()
+            $bonusPoints3->getWrappedObject(),
         ]));
         $bonusPoints1->getLeftPointsFromAvailablePool()->willReturn(10);
         $bonusPoints2->getLeftPointsFromAvailablePool()->willReturn(5);
@@ -75,4 +75,3 @@ final class BonusPointsResolverSpec extends ObjectBehavior
         $this->resolveBonusPoints(null, $customer)->shouldReturn(0);
     }
 }
-
