@@ -6,7 +6,7 @@
 >
     <services>
         <service id="bitbag_sylius_bonus_points.creator.bonus_points"
-                 class="BitBag\SyliusBonusPointsPlugin\Creator\BonusPoints\BonusPointsCreator"
+                 class="BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreator"
         >
             <argument type="service" id="bitbag_sylius_bonus_points.factory.bonus_points" />
             <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
