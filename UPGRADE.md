@@ -1,4 +1,4 @@
-# UPGRADE FROM `v1.2.0` TO `v1.2.1`
+# UPGRADE FROM `v1.2.0` TO `v2.0`
 
 New fields were added to BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface:
 
@@ -8,7 +8,8 @@ New fields were added to BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterf
 
 > New class `BitBag\SyliusBonusPointsPlugin\Creator\BonusPointsCreator` were added which is responsible to create new BonusPoints entity based on provided data's.
 
-------------------------------
+
+> [BC Break] - The new calculation of points breaks compatibility with existing data records in the db
 
 ### What has changed?
 
