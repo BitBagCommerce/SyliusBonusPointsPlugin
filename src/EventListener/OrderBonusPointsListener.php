@@ -72,6 +72,10 @@ final class OrderBonusPointsListener
 
             $leftPointsFromPool = $availableBonusPoint->getLeftPointsFromAvailablePool();
 
+            if (0 >= $leftPointsFromPool) {
+                continue;
+            }
+
             if ($points >= $leftPointsFromPool) {
                 $this->bonusPointsCreator->createWithData($customerBonusPoints, $order, $leftPointsFromPool, $availableBonusPoint);
 
