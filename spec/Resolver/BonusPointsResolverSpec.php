@@ -49,14 +49,21 @@ final class BonusPointsResolverSpec extends ObjectBehavior
             $bonusPoints3->getWrappedObject(),
         ]));
         $bonusPoints1->getLeftPointsFromAvailablePool()->willReturn(10);
-        $bonusPoints2->getLeftPointsFromAvailablePool()->willReturn(5);
+        $bonusPoints1->isExpired()->willReturn(true);
+
+        $bonusPoints2->getLeftPointsFromAvailablePool()->willReturn(7);
+        $bonusPoints2->isExpired()->willReturn(true);
+
         $bonusPoints3->getLeftPointsFromAvailablePool()->willReturn(15);
+        $bonusPoints3->isExpired()->willReturn(false);
+
         $bonusPoints1->getOrder()->willReturn($order1);
         $bonusPoints2->getOrder()->willReturn($order1);
         $bonusPoints3->getOrder()->willReturn($order2);
 
-        $this->resolveBonusPoints(null, $customer)->shouldReturn(30);
+        $this->resolveBonusPoints(null, $customer)->shouldReturn(15);
         $this->resolveBonusPoints($order1, $customer)->shouldReturn(15);
+        $this->resolveBonusPoints($order2, $customer)->shouldReturn(0);
     }
 
     public function it_returns_zero_if_customer_is_not_set(
