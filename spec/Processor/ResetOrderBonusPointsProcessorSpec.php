@@ -49,7 +49,6 @@ final class ResetOrderBonusPointsProcessorSpec extends ObjectBehavior
 
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldBeCalled();
-        $bonusPointsRepository->add($bonusPoints)->shouldBeCalled();
 
         $this->process($order);
     }

@@ -14,6 +14,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
@@ -70,6 +71,11 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             return;
         }
 
+        if ($order->getItemsTotal() < $totalUsedPoints) {
+            $totalUsedPoints -= $order->getTotal();
+            $this->decreaseBonusPoints($bonusPoints, $totalUsedPoints);
+        }
+
         $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
 
         $adjustment = $this->adjustmentFactory->createWithData(
@@ -83,5 +89,32 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         $adjustment->setAdjustable($order);
 
         $order->addAdjustment($adjustment);
+    }
+
+    /** @param BonusPointsInterface[] $bonusPoints */
+    private function decreaseBonusPoints(array $bonusPoints, int $decreasePoints): void
+    {
+        foreach ($bonusPoints as $bonusPoint) {
+            if (0 >= $decreasePoints) {
+                break;
+            }
+
+            if (0 < $bonusPoint->getPoints()) {
+                continue;
+            }
+
+            if ($bonusPoint->getPoints() > $decreasePoints) {
+                $bonusPoint->setPoints($bonusPoint->getPoints() - $decreasePoints);
+
+                $this->bonusPointsRepository->add($bonusPoint);
+                break;
+            }
+
+            if($bonusPoint->getPoints() <= $decreasePoints) {
+                $decreasePoints -= $bonusPoint->getPoints();
+
+                $this->bonusPointsRepository->remove($bonusPoint);
+            }
+        }
     }
 }
