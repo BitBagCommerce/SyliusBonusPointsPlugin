@@ -6,6 +6,7 @@ parameters:
     excludes_analyse:
         # Makes PHPStan crash
         - 'src/DependencyInjection/Configuration.php'
+        - 'src/OrderProcessing/OrderBonusPointsProcessor.php'
 
         # Test dependencies
         - 'tests/Application/app/**.php'
