@@ -14,7 +14,7 @@ use BitBag\SyliusBonusPointsPlugin\Context\CustomerBonusPointsContextInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
-use Doctrine\Persistence\ObjectManager;
+use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepositoryInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 
 final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterface
@@ -22,15 +22,15 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
     /** @var CustomerBonusPointsContextInterface */
     private $customerBonusPointsContext;
 
-    /** @var ObjectManager */
-    private $persistenceManager;
+    /** @var BonusPointsRepositoryInterface */
+    private $bonusPointsRepository;
 
     public function __construct(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $persistenceManager
+        BonusPointsRepositoryInterface $bonusPointsRepository
     ) {
         $this->customerBonusPointsContext = $customerBonusPointsContext;
-        $this->persistenceManager = $persistenceManager;
+        $this->bonusPointsRepository = $bonusPointsRepository;
     }
 
     public function purify(
@@ -50,9 +50,9 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
 
         $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints);
-        $bonusPoints->setPoints(0);
 
-        $this->persistenceManager->persist($customerBonusPoints);
-        $this->persistenceManager->persist($order);
+        $this->bonusPointsRepository->add($customerBonusPoints);
+        $this->bonusPointsRepository->add($order);
+        $this->bonusPointsRepository->remove($bonusPoints);
     }
 }

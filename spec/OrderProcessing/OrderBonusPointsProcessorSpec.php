@@ -57,6 +57,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $adjustment->setOriginCode(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
         $adjustment->setAdjustable($order)->shouldBeCalled();
         $order->addAdjustment($adjustment)->shouldBeCalled();
+        $order->getTotal()->willReturn(5420);
 
         $this->process($order);
     }
