@@ -99,22 +99,22 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
                 break;
             }
 
-            if (0 < $bonusPoint->getPoints()) {
+            $points = (int) $bonusPoint->getPoints();
+
+            if (0 < $points) {
                 continue;
             }
 
-            if ($bonusPoint->getPoints() > $decreasePoints) {
-                $bonusPoint->setPoints($bonusPoint->getPoints() - $decreasePoints);
+            if ($points > $decreasePoints) {
+                $bonusPoint->setPoints($points - $decreasePoints);
 
                 $this->bonusPointsRepository->add($bonusPoint);
                 break;
             }
 
-            if($bonusPoint->getPoints() <= $decreasePoints) {
-                $decreasePoints -= $bonusPoint->getPoints();
+            $decreasePoints -= $points;
 
-                $this->bonusPointsRepository->remove($bonusPoint);
-            }
+            $this->bonusPointsRepository->remove($bonusPoint);
         }
     }
 }
