@@ -50,5 +50,5 @@ interface BonusPointsInterface extends ResourceInterface, TimestampableInterface
 
     public function isExpired(?\DateTime $dateTime = null): bool;
 
-    public function getLeftPointsFromAvailablePool(): int;
+    public function getLeftPointsFromAvailablePool(?OrderInterface $withoutOrder = null): int;
 }

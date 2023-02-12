@@ -136,7 +136,7 @@ class BonusPoints implements BonusPointsInterface
         return $dateTime > $this->expiresAt;
     }
 
-    public function getLeftPointsFromAvailablePool(): int
+    public function getLeftPointsFromAvailablePool(?OrderInterface $withoutOrder = null): int
     {
         $relatedBonusPoints = $this->getRelatedBonusPoints();
 
@@ -148,7 +148,12 @@ class BonusPoints implements BonusPointsInterface
 
         /** @var BonusPointsInterface $bonusPoint */
         foreach ($relatedBonusPoints as $bonusPoint) {
-            if (true === $bonusPoint->isUsed()) {
+            if (
+                true === $bonusPoint->isUsed() && (
+                    null === $withoutOrder ||
+                    $withoutOrder !== $bonusPoint->getOrder()
+                )
+            ) {
                 $totalUsedPointsFromPool += $bonusPoint->getPoints();
             }
         }
