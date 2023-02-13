@@ -15,6 +15,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\OrderProcessing\OrderBonusPointsProcessor;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -24,10 +25,11 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
 {
     public function let(
         RepositoryInterface $bonusPointsRepository,
+        ObjectManager $bonusPointsManager,
         AdjustmentFactoryInterface $adjustmentFactory,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
-        $this->beConstructedWith($bonusPointsRepository, $adjustmentFactory, $orderBonusPointsPurifier);
+        $this->beConstructedWith($bonusPointsRepository, $bonusPointsManager, $adjustmentFactory, $orderBonusPointsPurifier);
     }
 
     public function it_is_initializable(): void
@@ -57,7 +59,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $adjustment->setOriginCode(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
         $adjustment->setAdjustable($order)->shouldBeCalled();
         $order->addAdjustment($adjustment)->shouldBeCalled();
-        $order->getItemsTotal()->willReturn(5420);
+        $order->getItemsTotal()->willReturn(1420);
 
         $this->process($order);
     }
@@ -65,6 +67,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
     public function it_processes_when_bonus_points_have_zero_value(
         Order $order,
         RepositoryInterface $bonusPointsRepository,
+        ObjectManager $bonusPointsManager,
         BonusPointsInterface $bonusPoints,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
@@ -76,7 +79,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $bonusPoints->getPoints()->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldBeCalled();
-        $bonusPointsRepository->add($bonusPoints)->shouldBeCalled();
+        $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldNotBeCalled();
 
         $this->process($order);
     }
