@@ -14,7 +14,7 @@ use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Order\Factory\AdjustmentFactoryInterface;
 use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
@@ -26,6 +26,9 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
     /** @var RepositoryInterface */
     private $bonusPointsRepository;
 
+    /** @var ObjectManager */
+    private $bonusPointsManager;
+
     /** @var AdjustmentFactoryInterface */
     private $adjustmentFactory;
 
@@ -34,10 +37,12 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
 
     public function __construct(
         RepositoryInterface $bonusPointsRepository,
+        ObjectManager $bonusPointsManager,
         AdjustmentFactoryInterface $adjustmentFactory,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ) {
         $this->bonusPointsRepository = $bonusPointsRepository;
+        $this->bonusPointsManager = $bonusPointsManager;
         $this->adjustmentFactory = $adjustmentFactory;
         $this->orderBonusPointsPurifier = $orderBonusPointsPurifier;
     }
@@ -61,7 +66,6 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         foreach ($bonusPoints as $bonusPoint) {
             if (0 === $bonusPoint->getPoints()) {
                 $this->orderBonusPointsPurifier->purify($bonusPoint);
-                $this->bonusPointsRepository->add($bonusPoint);
             }
 
             $totalUsedPoints += $bonusPoint->getPoints();
@@ -72,7 +76,8 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         }
 
         if ($order->getItemsTotal() < $totalUsedPoints) {
-            $decreasePoints = $totalUsedPoints - $order->getItemsTotal();
+            $pennies = $order->getItemsTotal() % 100;
+            $decreasePoints = ($totalUsedPoints - ($order->getItemsTotal() - $pennies));
             $totalUsedPoints -= $decreasePoints;
 
             $this->decreaseBonusPoints($bonusPoints, $decreasePoints);
@@ -110,13 +115,13 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             if ($points > $decreasePoints) {
                 $bonusPoint->setPoints($points - $decreasePoints);
 
-                $this->bonusPointsRepository->add($bonusPoint);
+                $this->bonusPointsManager->persist($bonusPoint);
                 break;
             }
 
             $decreasePoints -= $points;
 
-            $this->bonusPointsRepository->remove($bonusPoint);
+            $this->bonusPointsManager->remove($bonusPoint);
         }
     }
 }
