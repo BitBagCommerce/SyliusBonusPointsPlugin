@@ -42,23 +42,34 @@ final class BonusPointsAvailabilityValidator extends ConstraintValidator
         Assert::isInstanceOf($order, OrderInterface::class);
         Assert::isInstanceOf($constraint, BonusPointsAvailability::class);
 
-        $points = $order->getBonusPoints();
+        $usedPoints = $order->getBonusPoints();
 
-        if (null === $points) {
-            /** @var BonusPointsInterface|null $bonusPoints */
-            $bonusPoints = $this->bonusPointsRepository->findOneBy([
+        if (null === $usedPoints) {
+            /** @var BonusPointsInterface[] $bonusPoints */
+            $bonusPoints = $this->bonusPointsRepository->findBy([
                 'order' => $order,
                 'isUsed' => true,
             ]);
 
-            if (null === $bonusPoints) {
+            if (!$bonusPoints) {
                 return;
             }
 
-            $points = $bonusPoints->getPoints();
+            foreach ($bonusPoints as $bonusPoint) {
+                $parentBonusPoint = $bonusPoint->getOriginalBonusPoints();
+
+                if (null === $parentBonusPoint ||
+                    $parentBonusPoint->isExpired() ||
+                    0 === $bonusPoint->getPoints()
+                ) {
+                    continue;
+                }
+
+                $usedPoints += $bonusPoint->getPoints();
+            }
         }
 
-        if ($points > $this->bonusPointsResolver->resolveBonusPoints($order)) {
+        if ($usedPoints > $this->bonusPointsResolver->resolveBonusPoints($order)) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation();
