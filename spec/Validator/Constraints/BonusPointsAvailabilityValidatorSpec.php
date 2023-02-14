@@ -20,24 +20,24 @@ use Tests\BitBag\SyliusBonusPointsPlugin\Entity\Order;
 
 final class BonusPointsAvailabilityValidatorSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         BonusPointsResolverInterface $bonusPointsResolver,
         RepositoryInterface $bonusPointsRepository
     ): void {
         $this->beConstructedWith($bonusPointsResolver, $bonusPointsRepository);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(BonusPointsAvailabilityValidator::class);
     }
 
-    function it_extends_constraint_validator_class(): void
+    public function it_extends_constraint_validator_class(): void
     {
         $this->shouldHaveType(ConstraintValidator::class);
     }
 
-    function it_validates(
+    public function it_validates(
         Order $order,
         RepositoryInterface $bonusPointsRepository
     ): void {
@@ -45,8 +45,8 @@ final class BonusPointsAvailabilityValidatorSpec extends ObjectBehavior
 
         $order->getBonusPoints()->willReturn(null);
 
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->willReturn(null);
-        $bonusPointsRepository->findOneBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn([]);
+        $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $order->getBonusPoints()->shouldBeCalled();
         $order->getBonusPoints()->shouldBeCalled();
 
