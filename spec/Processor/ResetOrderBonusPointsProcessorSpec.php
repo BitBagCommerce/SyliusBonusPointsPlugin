@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusBonusPointsPlugin\Processor;
 
+use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Processor\ResetOrderBonusPointsProcessor;
 use BitBag\SyliusBonusPointsPlugin\Processor\ResetOrderBonusPointsProcessorInterface;
@@ -45,6 +46,7 @@ final class ResetOrderBonusPointsProcessorSpec extends ObjectBehavior
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
         $bonusPointsCollection = new ArrayCollection([$bonusPoints->getWrappedObject()]);
+        $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();;
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPointsCollection);
 
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
@@ -59,6 +61,7 @@ final class ResetOrderBonusPointsProcessorSpec extends ObjectBehavior
         BonusPointsInterface $bonusPoints,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
+        $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();;
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn([]);
 
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
