@@ -38,6 +38,8 @@ final class ResetOrderBonusPointsProcessor implements ResetOrderBonusPointsProce
 
         foreach ($bonusPoints as $bonusPoint) {
             $this->orderBonusPointsPurifier->purify($bonusPoint);
+
+            $this->bonusPointsRepository->add($bonusPoint);
         }
     }
 }

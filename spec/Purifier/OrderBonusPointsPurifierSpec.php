@@ -16,7 +16,6 @@ use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifier;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
-use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsRepositoryInterface;
 use Doctrine\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -26,9 +25,9 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
 {
     function let(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        BonusPointsRepositoryInterface $repository
+        ObjectManager $manager
     ): void {
-        $this->beConstructedWith($customerBonusPointsContext, $repository);
+        $this->beConstructedWith($customerBonusPointsContext, $manager);
     }
 
     function it_is_initializable(): void
@@ -43,7 +42,7 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
 
     function it_purifies_bonus_points_form_order(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        BonusPointsRepositoryInterface $repository,
+        ObjectManager $manager,
         CustomerInterface $customer,
         CustomerBonusPointsInterface $customerBonusPoints,
         OrderInterface $order,
@@ -60,14 +59,14 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
         $customerBonusPoints->getCustomer()->shouldBeCalled();
         $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints)->shouldBeCalled();
-        $repository->add($customerBonusPoints)->shouldBeCalled();
-        $repository->add($order)->shouldBeCalled();
-        $repository->remove($bonusPoints)->shouldBeCalled();
+        $bonusPoints->setPoints(0)->shouldBeCalled();
+        $manager->persist($customerBonusPoints)->shouldBeCalled();
+        $manager->persist($order)->shouldBeCalled();
 
         $this->purify($bonusPoints);
     }
 
-    function it_does_not_purify_bonus_points_if_it_is_not_owner_of_order(
+    function it_does_not_purify_bonus_points_if_it_is_not_owner_of_orede(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
         CustomerInterface $customer,
         CustomerInterface $otherCustomer,
