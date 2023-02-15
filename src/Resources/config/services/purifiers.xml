@@ -7,6 +7,7 @@
         <service id="bitbag_sylius_bonus_points.purifier.order_bonus_points" class="BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifier">
             <argument type="service" id="bitbag_sylius_bonus_points.context.customer_bonus_points" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
         </service>
     </services>
 </container>

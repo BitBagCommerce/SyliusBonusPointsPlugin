@@ -21,14 +21,16 @@ use Doctrine\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OrderBonusPointsPurifierSpec extends ObjectBehavior
 {
     function let(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $manager
+        ObjectManager $manager,
+        RepositoryInterface $repository
     ): void {
-        $this->beConstructedWith($customerBonusPointsContext, $manager);
+        $this->beConstructedWith($customerBonusPointsContext, $manager, $repository);
     }
 
     function it_is_initializable(): void
@@ -44,6 +46,7 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
     function it_purifies_bonus_points_form_order(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
         ObjectManager $manager,
+        RepositoryInterface $repository,
         CustomerInterface $customer,
         CustomerBonusPointsInterface $customerBonusPoints,
         OrderInterface $order,
@@ -62,7 +65,7 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints)->shouldBeCalled();
         $manager->persist($customerBonusPoints)->shouldBeCalled();
         $manager->persist($order)->shouldBeCalled();
-        $manager->remove($bonusPoints)->shouldBeCalled();
+        $repository->remove($bonusPoints)->shouldBeCalled();
 
         $this->purify($bonusPoints);
     }

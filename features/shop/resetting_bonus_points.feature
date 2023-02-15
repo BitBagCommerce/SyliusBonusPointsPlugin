@@ -29,7 +29,7 @@ Feature: Collecting bonus points
 
     @ui @javascript
     Scenario: Resetting points by applying zero bonus points
-        When I want to use "0.54" bonus points
+        When I want to use "2" bonus points
         And I want to resign of using bonus points and I apply zero bonus points
         And I specified the billing address
         And I proceed with "DHL" shipping method and "Offline" payment
