@@ -51,7 +51,7 @@ final class BonusPointsAvailabilityValidator extends ConstraintValidator
                 'isUsed' => true,
             ]);
 
-            if ([] === $bonusPoints) {
+            if (!$bonusPoints) {
                 return;
             }
 
