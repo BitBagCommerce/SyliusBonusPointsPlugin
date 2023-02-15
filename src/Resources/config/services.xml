@@ -34,7 +34,6 @@
 
         <service id="bitbag_sylius_bonus_points.order_processing.order_bonus_points" class="BitBag\SyliusBonusPointsPlugin\OrderProcessing\OrderBonusPointsProcessor">
             <argument type="service" id="bitbag_sylius_bonus_points.repository.bonus_points" />
-            <argument type="service" id="bitbag_sylius_bonus_points.manager.bonus_points" />
             <argument type="service" id="sylius.factory.adjustment" />
             <argument type="service" id="bitbag_sylius_bonus_points.purifier.order_bonus_points" />
             <tag name="sylius.order_processor" priority="0"/>
