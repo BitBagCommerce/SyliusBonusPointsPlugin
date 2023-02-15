@@ -61,21 +61,11 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
             return;
         }
 
-        $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
-
         $totalUsedPoints = 0;
 
         foreach ($bonusPoints as $bonusPoint) {
-            $parentBonusPoint = $bonusPoint->getOriginalBonusPoints();
-
-            if (null === $parentBonusPoint) {
-                continue;
-            }
-
-            if (0 === $bonusPoint->getPoints() || $parentBonusPoint->isExpired()) {
+            if (0 === $bonusPoint->getPoints()) {
                 $this->orderBonusPointsPurifier->purify($bonusPoint);
-
-                continue;
             }
 
             $totalUsedPoints += $bonusPoint->getPoints();
@@ -92,6 +82,8 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
 
             $this->decreaseBonusPoints($bonusPoints, $decreasePoints);
         }
+
+        $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
 
         $adjustment = $this->adjustmentFactory->createWithData(
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,

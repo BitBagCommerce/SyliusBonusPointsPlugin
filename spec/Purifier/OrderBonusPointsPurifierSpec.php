@@ -26,9 +26,9 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
 {
     function let(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $manager
+        BonusPointsRepositoryInterface $repository
     ): void {
-        $this->beConstructedWith($customerBonusPointsContext, $manager);
+        $this->beConstructedWith($customerBonusPointsContext, $repository);
     }
 
     function it_is_initializable(): void
@@ -43,7 +43,7 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
 
     function it_purifies_bonus_points_form_order(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $manager,
+        BonusPointsRepositoryInterface $repository,
         CustomerInterface $customer,
         CustomerBonusPointsInterface $customerBonusPoints,
         OrderInterface $order,
@@ -60,9 +60,9 @@ final class OrderBonusPointsPurifierSpec extends ObjectBehavior
         $customerBonusPoints->getCustomer()->shouldBeCalled();
         $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
         $customerBonusPoints->removeBonusPointsUsed($bonusPoints)->shouldBeCalled();
-        $manager->persist($customerBonusPoints)->shouldBeCalled();
-        $manager->persist($order)->shouldBeCalled();
-        $manager->remove($bonusPoints)->shouldBeCalled();
+        $repository->add($customerBonusPoints)->shouldBeCalled();
+        $repository->add($order)->shouldBeCalled();
+        $repository->remove($bonusPoints)->shouldBeCalled();
 
         $this->purify($bonusPoints);
     }

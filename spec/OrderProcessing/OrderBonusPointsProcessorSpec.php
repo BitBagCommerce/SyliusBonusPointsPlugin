@@ -42,12 +42,9 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         RepositoryInterface $bonusPointsRepository,
         AdjustmentFactoryInterface $adjustmentFactory,
         BonusPointsInterface $bonusPoints,
-        BonusPointsInterface $originalBonusPoints,
         AdjustmentInterface $adjustment
     ): void {
-        $originalBonusPoints->isExpired()->willReturn(false);
         $bonusPoints->getPoints()->willReturn(1234);
-        $bonusPoints->getOriginalBonusPoints()->willReturn($originalBonusPoints);
 
         $bonusPointsCollection = new ArrayCollection([$bonusPoints->getWrappedObject()]);
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPointsCollection);
@@ -70,21 +67,19 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
     public function it_processes_when_bonus_points_have_zero_value(
         Order $order,
         RepositoryInterface $bonusPointsRepository,
+        ObjectManager $bonusPointsManager,
         BonusPointsInterface $bonusPoints,
-        BonusPointsInterface $originalBonusPoints,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
     ): void {
         $bonusPointsCollection = new ArrayCollection([$bonusPoints->getWrappedObject()]);
 
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->willReturn($bonusPointsCollection);
         $bonusPoints->getPoints()->willReturn(0);
-        $originalBonusPoints->isExpired()->willReturn(false);
-        $bonusPoints->getOriginalBonusPoints()->willReturn($originalBonusPoints);
 
         $bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true])->shouldBeCalled();
         $bonusPoints->getPoints()->shouldBeCalled();
         $orderBonusPointsPurifier->purify($bonusPoints)->shouldBeCalled();
-        $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldBeCalled();
+        $order->removeAdjustments(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)->shouldNotBeCalled();
 
         $this->process($order);
     }
