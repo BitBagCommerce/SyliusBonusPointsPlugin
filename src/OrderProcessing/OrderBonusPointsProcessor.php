@@ -72,7 +72,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         }
 
         if ($order->getItemsTotal() < $totalUsedPoints) {
-            $totalUsedPoints -= $order->getItemsTotal();
+            $totalUsedPoints -= $order->getTotal();
             $this->decreaseBonusPoints($bonusPoints, $totalUsedPoints);
         }
 
