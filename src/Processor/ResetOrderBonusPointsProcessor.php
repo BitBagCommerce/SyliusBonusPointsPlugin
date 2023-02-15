@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Processor;
 
-use BitBag\SyliusBonusPointsPlugin\Entity\AdjustmentInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsInterface;
 use BitBag\SyliusBonusPointsPlugin\Purifier\OrderBonusPointsPurifierInterface;
 use Sylius\Component\Order\Model\OrderInterface;
@@ -36,8 +35,6 @@ final class ResetOrderBonusPointsProcessor implements ResetOrderBonusPointsProce
     {
         /** @var BonusPointsInterface[] $bonusPoints */
         $bonusPoints = $this->bonusPointsRepository->findBy(['order' => $order, 'isUsed' => true]);
-
-        $order->removeAdjustmentsRecursively(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);
 
         foreach ($bonusPoints as $bonusPoint) {
             $this->orderBonusPointsPurifier->purify($bonusPoint);
