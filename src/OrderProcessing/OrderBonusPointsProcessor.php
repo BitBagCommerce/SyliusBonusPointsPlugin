@@ -124,7 +124,6 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
                 $bonusPoint->setPoints($points - $decreasePoints);
 
                 $this->bonusPointsManager->persist($bonusPoint);
-
                 break;
             }
 
