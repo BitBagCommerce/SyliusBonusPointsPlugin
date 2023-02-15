@@ -22,7 +22,7 @@ use Tests\BitBag\SyliusBonusPointsPlugin\Entity\Order;
 
 final class OrderBonusPointsProcessorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         RepositoryInterface $bonusPointsRepository,
         AdjustmentFactoryInterface $adjustmentFactory,
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
@@ -30,12 +30,12 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $this->beConstructedWith($bonusPointsRepository, $adjustmentFactory, $orderBonusPointsPurifier);
     }
 
-    public function it_is_initializable(): void
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(OrderBonusPointsProcessor::class);
     }
 
-    public function it_processes(
+    function it_processes(
         Order $order,
         RepositoryInterface $bonusPointsRepository,
         AdjustmentFactoryInterface $adjustmentFactory,
@@ -62,7 +62,7 @@ final class OrderBonusPointsProcessorSpec extends ObjectBehavior
         $this->process($order);
     }
 
-    public function it_processes_when_bonus_points_have_zero_value(
+    function it_processes_when_bonus_points_have_zero_value(
         Order $order,
         RepositoryInterface $bonusPointsRepository,
         BonusPointsInterface $bonusPoints,
