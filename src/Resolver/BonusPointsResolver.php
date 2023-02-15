@@ -42,8 +42,10 @@ final class BonusPointsResolver implements BonusPointsResolverInterface
         $totalAvailablePoints = 0;
 
         foreach ($customerPoints->getBonusPoints() as $customerPoint) {
-            if (!$customerPoint->isExpired()) {
-                $totalAvailablePoints += $customerPoint->getLeftPointsFromAvailablePool($withoutOrder);
+            if ((null === $withoutOrder || $customerPoint->getOrder() !== $withoutOrder) &&
+                !$customerPoint->isExpired()
+            ) {
+                $totalAvailablePoints += $customerPoint->getLeftPointsFromAvailablePool();
             }
         }
 

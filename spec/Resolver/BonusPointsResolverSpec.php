@@ -48,19 +48,13 @@ final class BonusPointsResolverSpec extends ObjectBehavior
             $bonusPoints2->getWrappedObject(),
             $bonusPoints3->getWrappedObject(),
         ]));
-        $bonusPoints1->getLeftPointsFromAvailablePool(null)->willReturn(10);
-        $bonusPoints1->getLeftPointsFromAvailablePool($order1)->willReturn(10);
-        $bonusPoints1->getLeftPointsFromAvailablePool($order2)->willReturn(10);
+        $bonusPoints1->getLeftPointsFromAvailablePool()->willReturn(10);
         $bonusPoints1->isExpired()->willReturn(true);
 
-        $bonusPoints2->getLeftPointsFromAvailablePool(null)->willReturn(7);
-        $bonusPoints2->getLeftPointsFromAvailablePool($order1)->willReturn(7);
-        $bonusPoints2->getLeftPointsFromAvailablePool($order2)->willReturn(7);
+        $bonusPoints2->getLeftPointsFromAvailablePool()->willReturn(7);
         $bonusPoints2->isExpired()->willReturn(true);
 
-        $bonusPoints3->getLeftPointsFromAvailablePool(null)->willReturn(15);
-        $bonusPoints3->getLeftPointsFromAvailablePool($order1)->willReturn(15);
-        $bonusPoints3->getLeftPointsFromAvailablePool($order2)->willReturn(0);
+        $bonusPoints3->getLeftPointsFromAvailablePool()->willReturn(15);
         $bonusPoints3->isExpired()->willReturn(false);
 
         $bonusPoints1->getOrder()->willReturn($order1);
