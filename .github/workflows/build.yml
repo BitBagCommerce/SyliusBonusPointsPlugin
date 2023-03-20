@@ -21,13 +21,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4, 8.0]
+        php: [8.0]
         symfony: [^5.4, ^6.0]
         sylius: [~1.11.0, ~1.12.0]
         node: [14.19]
         mysql: [5.7]
 
         exclude:
+          -
+            sylius: ~1.11.0
+            symfony: ^6.0
           -
             sylius: ~1.11.0
             php: 7.3
