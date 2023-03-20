@@ -44,7 +44,7 @@
     "yargs": "^6.4.0"
   },
   "scripts": {
-    "build": "gulp build",
+    "build": "yarn encore production",
     "gulp": "gulp build",
     "lint": "yarn lint:js",
     "lint:js": "eslint gulpfile.babel.js"
