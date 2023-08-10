@@ -1,0 +1,17 @@
+bitbag_sylius_bonus_points:
+    order:
+        bonus_points:
+            not_available: Vous n''avez pas assez de points de fidélité.
+    bonus_points_strategy:
+        name:
+            not_blank: Le nom ne doit pas être vide.
+            min_length: Le nom doit être composé d''au moins {{ limit }} caractères.
+            max_length: Le nom ne doit pas être composé de plus de {{ limit }} caractères.
+        code:
+            not_blank: Le code ne doit pas être vide.
+            regex: Le code ne peut être composé que de lettres, de chiffres, de tirets et de tirets bas
+            unique: Le code doit être unique.
+    cart:
+        bonus_points:
+            invalid_value: Cette valeur doit être un nombre entier, supérieur ou égal à 1.
+            exceed_order_items_total: Vous ne pouvez pas utiliser plus de points que la valeur de votre commande
