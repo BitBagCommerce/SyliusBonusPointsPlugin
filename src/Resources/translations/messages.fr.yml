@@ -1,0 +1,23 @@
+bitbag_sylius_bonus_points:
+    ui:
+        rules: Règles
+        type: Type
+        has_taxon: Possède un taxon
+        name: Nom
+        code: Code
+        bonus_points_strategies: Stratégies de points de fidélité
+        edit_bonus_points_strategy: Modifier la stratégie de points de fidélité
+        new_bonus_points_strategy: Nouvelle stratégie de points de fidélité
+        enabled: Activé
+        point_amount: Nombre de points
+        calculator_type: Mode de calcul
+        percent_to_calculate_points: Pourcentage pour calculer les points
+        per_order_item_percentage: Poucentage par produit commandé
+        bonus_points: Points de fidélité
+        apply_points: Appliquer les points
+        bonus_points_total: Total des points de fidélité
+        you_have_bonus_points_available: Vous avez des points de fidélité disponible
+        is_deduct_bonus_points: Est déduit des points de fidélités
+        number_of_points_earned_per_one_currency: Nombre de points de fidélité pour une devise
+        per_order_price: Gain par commande
+        every_point_is_equal_to_one_currency: Chaque point de fidélité vaut pour une réduction pour une devise
