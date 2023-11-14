@@ -18,17 +18,13 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractResourceType
 {
-    /** @var FormTypeRegistryInterface */
-    private $formTypeRegistry;
-
-    public function __construct(string $dataClass, array $validationGroups = [], FormTypeRegistryInterface $formTypeRegistry)
+    public function __construct(string $dataClass, array $validationGroups, private FormTypeRegistryInterface $formTypeRegistry)
     {
         parent::__construct($dataClass, $validationGroups);
-
-        $this->formTypeRegistry = $formTypeRegistry;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -53,6 +49,7 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
                 $event->getForm()->get('type')->setData($type);
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                /** @var array $data */
                 $data = $event->getData();
 
                 if (!isset($data['type'])) {
@@ -81,16 +78,18 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
         ]);
     }
 
-    /**
-     * @param mixed|null $data
-     */
-    protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
+    protected function getRegistryIdentifier(FormInterface $form, mixed $data = null): ?string
     {
         if ($data instanceof BonusPointsStrategyRuleInterface && null !== $data->getType()) {
             return $data->getType();
         }
 
         if ($form->getConfig()->hasOption('configuration_type')) {
+            if (null === $form->getConfig()->getOption('configuration_type')) {
+                return null;
+            }
+            Assert::string($form->getConfig()->getOption('configuration_type'));
+
             return $form->getConfig()->getOption('configuration_type');
         }
 

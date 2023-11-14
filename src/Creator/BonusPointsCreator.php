@@ -26,7 +26,7 @@ final class BonusPointsCreator implements BonusPointsCreatorInterface
 
     public function __construct(
         FactoryInterface $bonusPointsFactory,
-        BonusPointsRepositoryInterface $bonusPointsRepository
+        BonusPointsRepositoryInterface $bonusPointsRepository,
     ) {
         $this->bonusPointsFactory = $bonusPointsFactory;
         $this->bonusPointsRepository = $bonusPointsRepository;
@@ -36,7 +36,7 @@ final class BonusPointsCreator implements BonusPointsCreatorInterface
         CustomerBonusPointsInterface $customerBonusPoints,
         OrderInterface $order,
         int $points,
-        BonusPointsInterface $parentBonusPoints = null
+        BonusPointsInterface $parentBonusPoints = null,
     ): BonusPointsInterface {
         /** @var BonusPointsInterface $bonusPoints */
         $bonusPoints = $this->bonusPointsFactory->createNew();

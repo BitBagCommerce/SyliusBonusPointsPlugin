@@ -17,6 +17,6 @@ interface OrderBonusPointsPurifierInterface
 {
     public function purify(
         BonusPointsInterface $bonusPoints,
-        CustomerBonusPointsInterface $customerBonusPoints = null
+        CustomerBonusPointsInterface $customerBonusPoints = null,
     ): void;
 }

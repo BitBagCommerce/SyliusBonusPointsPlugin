@@ -35,7 +35,7 @@ final class CartTypeExtension extends AbstractTypeExtension
     public function __construct(
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
         BonusPointsResolverInterface $bonusPointsResolver,
-        CartContextInterface $cartContext
+        CartContextInterface $cartContext,
     ) {
         $this->customerBonusPointsContext = $customerBonusPointsContext;
         $this->bonusPointsResolver = $bonusPointsResolver;
@@ -51,7 +51,7 @@ final class CartTypeExtension extends AbstractTypeExtension
         /** @var OrderInterface $cart */
         $cart = $this->cartContext->getCart();
 
-        if ($this->bonusPointsResolver->resolveBonusPoints($cart) === 0) {
+        if (0 === $this->bonusPointsResolver->resolveBonusPoints($cart)) {
             return;
         }
 

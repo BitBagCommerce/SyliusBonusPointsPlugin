@@ -2,8 +2,10 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
-
-    excludes_analyse:
+    level: max
+    paths:
+        - src
+    excludePaths:
         # Makes PHPStan crash
         - 'src/DependencyInjection/Configuration.php'
         - 'src/OrderProcessing/OrderBonusPointsProcessor.php'

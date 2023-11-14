@@ -25,7 +25,7 @@ final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPo
 
     public function __construct(
         ServiceRegistryInterface $registry,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker
+        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
     ) {
         $this->registry = $registry;
         $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;

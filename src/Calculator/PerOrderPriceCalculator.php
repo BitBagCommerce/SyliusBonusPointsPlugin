@@ -35,7 +35,7 @@ final class PerOrderPriceCalculator implements BonusPointsStrategyCalculatorInte
 
         $this->decimalPart += ($totalFloat - $total);
 
-        if ($this->decimalPart >= 1) {
+        if (1 <= $this->decimalPart) {
             ++$total;
 
             --$this->decimalPart;

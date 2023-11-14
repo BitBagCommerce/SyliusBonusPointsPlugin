@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -19,30 +21,23 @@ class BonusPoints implements BonusPointsInterface
 {
     use TimestampableTrait;
 
-    /** @var int */
-    protected $id;
+    protected ?int $id = null;
 
-    /** @var OrderInterface|null */
-    protected $order;
+    protected ?OrderInterface $order;
 
-    /** @var int|null */
-    protected $points;
+    protected ?int $points = null;
 
-    /** @var bool */
-    protected $isUsed = false;
+    protected bool $isUsed = false;
 
-    /** @var \DateTimeInterface|null */
-    protected $expiresAt;
+    protected ?DateTimeInterface $expiresAt = null;
 
-    /** @var BonusPointsInterface|null */
-    protected $originalBonusPoints;
+    protected ?BonusPointsInterface $originalBonusPoints = null;
 
-    /** @var Collection<int,BonusPointsInterface> */
-    protected $relatedBonusPoints;
+    protected Collection $relatedBonusPoints;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
         $this->relatedBonusPoints = new ArrayCollection();
     }
 
@@ -81,12 +76,12 @@ class BonusPoints implements BonusPointsInterface
         $this->isUsed = $isUsed;
     }
 
-    public function getExpiresAt(): ?\DateTimeInterface
+    public function getExpiresAt(): ?DateTimeInterface
     {
         return $this->expiresAt;
     }
 
-    public function setExpiresAt(?\DateTimeInterface $expiresAt): void
+    public function setExpiresAt(?DateTimeInterface $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
     }
@@ -127,10 +122,10 @@ class BonusPoints implements BonusPointsInterface
         return $this->relatedBonusPoints;
     }
 
-    public function isExpired(?\DateTime $dateTime = null): bool
+    public function isExpired(?DateTime $dateTime = null): bool
     {
         if (null === $dateTime) {
-            $dateTime = new \DateTime();
+            $dateTime = new DateTime();
         }
 
         return $dateTime > $this->expiresAt;
@@ -138,6 +133,10 @@ class BonusPoints implements BonusPointsInterface
 
     public function getLeftPointsFromAvailablePool(?OrderInterface $withoutOrder = null): int
     {
+        if (null === $this->getPoints()) {
+            return 0;
+        }
+
         $relatedBonusPoints = $this->getRelatedBonusPoints();
 
         if ($relatedBonusPoints->isEmpty()) {

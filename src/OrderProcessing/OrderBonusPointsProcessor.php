@@ -39,7 +39,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         RepositoryInterface $bonusPointsRepository,
         ObjectManager $bonusPointsManager,
         AdjustmentFactoryInterface $adjustmentFactory,
-        OrderBonusPointsPurifierInterface $orderBonusPointsPurifier
+        OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
     ) {
         $this->bonusPointsRepository = $bonusPointsRepository;
         $this->bonusPointsManager = $bonusPointsManager;
@@ -96,7 +96,7 @@ final class OrderBonusPointsProcessor implements OrderProcessorInterface
         $adjustment = $this->adjustmentFactory->createWithData(
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
             AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT,
-            (-1 * $totalUsedPoints)
+            (-1 * $totalUsedPoints),
         );
 
         $adjustment->setOriginCode(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT);

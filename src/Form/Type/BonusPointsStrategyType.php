@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\Form\Type;
 
 use BitBag\SyliusBonusPointsPlugin\Calculator\BonusPointsStrategyCalculatorInterface;
+use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsStrategyInterface;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
@@ -22,25 +23,17 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Webmozart\Assert\Assert;
 
 final class BonusPointsStrategyType extends AbstractResourceType
 {
-    /** @var ServiceRegistryInterface */
-    private $calculatorRegistry;
-
-    /** @var FormTypeRegistryInterface */
-    private $formTypeRegistry;
-
     public function __construct(
         string $dataClass,
         array $validationGroups,
-        ServiceRegistryInterface $calculatorRegistry,
-        FormTypeRegistryInterface $formTypeRegistry
+        private ServiceRegistryInterface $calculatorRegistry,
+        private FormTypeRegistryInterface $formTypeRegistry,
     ) {
         parent::__construct($dataClass, $validationGroups);
-
-        $this->calculatorRegistry = $calculatorRegistry;
-        $this->formTypeRegistry = $formTypeRegistry;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -63,15 +56,21 @@ final class BonusPointsStrategyType extends AbstractResourceType
             ])
             ->addEventSubscriber(new AddCodeFormSubscriber())
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+                /** @var BonusPointsStrategyInterface|null $data */
                 $data = $event->getData();
 
                 if (null === $data || null === $data->getId()) {
                     return;
                 }
 
+                if (null === $data->getCalculatorType()) {
+                    return;
+                }
+
                 $this->addConfigurationField($event->getForm(), $data->getCalculatorType());
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                /** @var array|null $data */
                 $data = $event->getData();
 
                 if (null === $data || !array_key_exists('calculatorType', $data)) {
@@ -104,7 +103,10 @@ final class BonusPointsStrategyType extends AbstractResourceType
     {
         $view->vars['prototypes'] = [];
 
-        foreach ($form->getConfig()->getAttribute('prototypes') as $group => $prototypes) {
+        $formPrototypes = $form->getConfig()->getAttribute('prototypes');
+        Assert::isArray($formPrototypes);
+
+        foreach ($formPrototypes as $group => $prototypes) {
             foreach ($prototypes as $type => $prototype) {
                 $view->vars['prototypes'][$group . '_' . $type] = $prototype->createView($view);
             }

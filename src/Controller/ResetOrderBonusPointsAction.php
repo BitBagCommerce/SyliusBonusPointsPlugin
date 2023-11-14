@@ -31,7 +31,7 @@ final class ResetOrderBonusPointsAction
     public function __construct(
         RouterInterface $router,
         CartContextInterface $cartContext,
-        ResetOrderBonusPointsProcessorInterface $resetOrderBonusPointsProcessor
+        ResetOrderBonusPointsProcessorInterface $resetOrderBonusPointsProcessor,
     ) {
         $this->router = $router;
         $this->cartContext = $cartContext;

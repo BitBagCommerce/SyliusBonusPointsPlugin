@@ -20,6 +20,6 @@ interface BonusPointsCreatorInterface
         CustomerBonusPointsInterface $customerBonusPoints,
         OrderInterface $order,
         int $points,
-        BonusPointsInterface $parentBonusPoints = null
+        BonusPointsInterface $parentBonusPoints = null,
     ): BonusPointsInterface;
 }

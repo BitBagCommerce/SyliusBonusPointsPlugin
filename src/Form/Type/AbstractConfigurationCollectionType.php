@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusBonusPointsPlugin\Form\Type;
 
+use ECSPrefix202306\Webmozart\Assert\Assert;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -20,25 +21,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConfigurationCollectionType extends AbstractType
 {
-    /** @var ServiceRegistryInterface */
-    protected $registry;
-
-    public function __construct(ServiceRegistryInterface $registry)
+    public function __construct(private ServiceRegistryInterface $registry)
     {
-        $this->registry = $registry;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $prototypes = [];
         foreach (array_keys($this->registry->all()) as $type) {
+            Assert::string($options['prototype_name']);
+            Assert::string($options['entry_type']);
+            Assert::isArray($options['entry_options']);
+
             $formBuilder = $builder->create(
                 $options['prototype_name'],
                 $options['entry_type'],
                 array_replace(
                     $options['entry_options'],
-                    ['configuration_type' => $type]
-                )
+                    ['configuration_type' => $type],
+                ),
             );
 
             $prototypes[$type] = $formBuilder->getForm();
@@ -51,7 +52,10 @@ abstract class AbstractConfigurationCollectionType extends AbstractType
     {
         $view->vars['prototypes'] = [];
 
-        foreach ($form->getConfig()->getAttribute('prototypes') as $type => $prototype) {
+        $formPrototypes = $form->getConfig()->getAttribute('prototypes');
+        Assert::isArray($formPrototypes);
+
+        foreach ($formPrototypes as $type => $prototype) {
             /** @var FormInterface $prototype */
             $prototypeView = $prototype->createView($view);
             $view->vars['prototypes'][$type] = $prototypeView;

@@ -33,7 +33,7 @@ final class OrderBonusPointsListener
     public function __construct(
         BonusPointsCreatorInterface $bonusPointsCreator,
         CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor
+        ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor,
     ) {
         $this->bonusPointsCreator = $bonusPointsCreator;
         $this->customerBonusPointsContext = $customerBonusPointsContext;

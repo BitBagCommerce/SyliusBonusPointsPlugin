@@ -17,31 +17,20 @@ use BitBag\SyliusBonusPointsPlugin\Entity\CustomerBonusPointsInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webmozart\Assert\Assert;
 
 final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterface
 {
-    /** @var CustomerBonusPointsContextInterface */
-    private $customerBonusPointsContext;
-
-    /** @var ObjectManager */
-    private $persistenceManager;
-
-    /** @var RepositoryInterface */
-    private $bonusPointsRepository;
-
     public function __construct(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $persistenceManager,
-        RepositoryInterface $bonusPointsRepository
+        private CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private ObjectManager $persistenceManager,
+        private RepositoryInterface $bonusPointsRepository,
     ) {
-        $this->customerBonusPointsContext = $customerBonusPointsContext;
-        $this->persistenceManager = $persistenceManager;
-        $this->bonusPointsRepository = $bonusPointsRepository;
     }
 
     public function purify(
         BonusPointsInterface $bonusPoints,
-        CustomerBonusPointsInterface $customerBonusPoints = null
+        ?CustomerBonusPointsInterface $customerBonusPoints = null,
     ): void {
         /** @var OrderInterface $order */
         $order = $bonusPoints->getOrder();
@@ -49,6 +38,8 @@ final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterfac
         if (null === $customerBonusPoints) {
             $customerBonusPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
         }
+
+        Assert::implementsInterface($customerBonusPoints, CustomerBonusPointsInterface::class);
 
         if ($order->getCustomer() !== $customerBonusPoints->getCustomer()) {
             return;

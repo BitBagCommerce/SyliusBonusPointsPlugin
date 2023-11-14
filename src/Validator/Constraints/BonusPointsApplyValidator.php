@@ -12,32 +12,22 @@ namespace BitBag\SyliusBonusPointsPlugin\Validator\Constraints;
 
 use BitBag\SyliusBonusPointsPlugin\Calculator\PerOrderPriceCalculator;
 use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInterface;
+use function count;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 final class BonusPointsApplyValidator extends ConstraintValidator
 {
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
-    /** @var CartContextInterface */
-    private $cartContext;
-
     public function __construct(
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        CartContextInterface $cartContext
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private CartContextInterface $cartContext,
     ) {
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
-        $this->cartContext = $cartContext;
     }
 
-    /**
-     * @param Constraint|BonusPointsApply $constraint
-     */
-    public function validate($bonusPoints, Constraint $constraint): void
+    public function validate(mixed $bonusPoints, Constraint $constraint): void
     {
-        if (null === $bonusPoints) {
+        if (false === is_int($bonusPoints)) {
             return;
         }
 
@@ -49,11 +39,11 @@ final class BonusPointsApplyValidator extends ConstraintValidator
 
         $bonusPointsStrategies = $this->bonusPointsStrategyRepository->findActiveByCalculatorType(PerOrderPriceCalculator::TYPE);
 
-        if (\count($bonusPointsStrategies) === 0) {
+        if (0 === count($bonusPointsStrategies)) {
             return;
         }
 
-        if ($bonusPoints % 100 !== 0) {
+        if (0 !== $bonusPoints % 100) {
             $this->context->getViolations()->remove(0);
             $this->context->buildViolation($constraint->invalidBonusPointsValueMessage)->addViolation();
         }

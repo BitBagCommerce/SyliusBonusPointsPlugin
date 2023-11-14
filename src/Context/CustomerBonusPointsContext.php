@@ -18,23 +18,11 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class CustomerBonusPointsContext implements CustomerBonusPointsContextInterface
 {
-    /** @var CustomerContextInterface */
-    private $customerContext;
-
-    /** @var RepositoryInterface */
-    private $customerBonusPointsRepository;
-
-    /** @var FactoryInterface */
-    private $customerBonusPointsFactory;
-
     public function __construct(
-        CustomerContextInterface $customerContext,
-        RepositoryInterface $customerBonusPointsRepository,
-        FactoryInterface $customerBonusPointsFactory
+        private CustomerContextInterface $customerContext,
+        private RepositoryInterface $customerBonusPointsRepository,
+        private FactoryInterface $customerBonusPointsFactory,
     ) {
-        $this->customerContext = $customerContext;
-        $this->customerBonusPointsRepository = $customerBonusPointsRepository;
-        $this->customerBonusPointsFactory = $customerBonusPointsFactory;
     }
 
     public function getCustomerBonusPoints(): ?CustomerBonusPointsInterface
@@ -46,6 +34,7 @@ final class CustomerBonusPointsContext implements CustomerBonusPointsContextInte
             return null;
         }
 
+        /** @var ?CustomerBonusPointsInterface $customerBonusPoints */
         $customerBonusPoints = $this->customerBonusPointsRepository->findOneBy([
             'customer' => $customer,
         ]);

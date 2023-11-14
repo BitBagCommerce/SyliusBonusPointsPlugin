@@ -19,7 +19,7 @@ class BonusPointsStrategyRepository extends EntityRepository implements BonusPoi
         return $this->createQueryBuilder('o')
             ->where('o.enabled = true')
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
         ;
     }
 
@@ -30,7 +30,7 @@ class BonusPointsStrategyRepository extends EntityRepository implements BonusPoi
             ->andWhere('o.calculatorType = :calculatorType')
             ->setParameter('calculatorType', $calculatorType)
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
         ;
     }
 }

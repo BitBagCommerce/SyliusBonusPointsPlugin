@@ -26,7 +26,7 @@ final class ResetOrderBonusPointsProcessor implements ResetOrderBonusPointsProce
 
     public function __construct(
         OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
-        RepositoryInterface $bonusPointsRepository
+        RepositoryInterface $bonusPointsRepository,
     ) {
         $this->orderBonusPointsPurifier = $orderBonusPointsPurifier;
         $this->bonusPointsRepository = $bonusPointsRepository;

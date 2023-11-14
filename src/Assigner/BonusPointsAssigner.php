@@ -20,59 +20,25 @@ use BitBag\SyliusBonusPointsPlugin\Repository\BonusPointsStrategyRepositoryInter
 use function count;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-//use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Distributor\ProportionalIntegerDistributorInterface;
+use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-//use Sylius\Component\Order\Model\OrderInterface
 use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class BonusPointsAssigner implements BonusPointsAssignerInterface
 {
-    /** @var DelegatingBonusPointsStrategyCalculatorInterface */
-    private $delegatingBonusPointsStrategyCalculator;
-
-    /** @var BonusPointsStrategyEligibilityCheckerInterface */
-    private $bonusPointsStrategyEligibilityChecker;
-
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
-    /** @var FactoryInterface */
-    private $bonusPointsFactory;
-
-    /** @var EntityManagerInterface */
-    private $bonusPointsEntityManager;
-
-    /** @var RepositoryInterface */
-    private $customerBonusPointsRepository;
-
-    /** @var FactoryInterface */
-    private $customerBonusPointsFactory;
-
-    /** @var ProportionalIntegerDistributorInterface */
-    private $proportionalIntegerDistributor;
-
     public function __construct(
-        DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        FactoryInterface $bonusPointsFactory,
-        EntityManagerInterface $bonusPointsEntityManager,
-        RepositoryInterface $customerBonusPointsRepository,
-        FactoryInterface $customerBonusPointsFactory,
-        ProportionalIntegerDistributorInterface $proportionalIntegerDistributor
+        private DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
+        private BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private FactoryInterface $bonusPointsFactory,
+        private EntityManagerInterface $bonusPointsEntityManager,
+        private RepositoryInterface $customerBonusPointsRepository,
+        private FactoryInterface $customerBonusPointsFactory,
+        private ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
     ) {
-        $this->delegatingBonusPointsStrategyCalculator = $delegatingBonusPointsStrategyCalculator;
-        $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
-        $this->bonusPointsFactory = $bonusPointsFactory;
-        $this->bonusPointsEntityManager = $bonusPointsEntityManager;
-        $this->customerBonusPointsRepository = $customerBonusPointsRepository;
-        $this->customerBonusPointsFactory = $customerBonusPointsFactory;
-        $this->proportionalIntegerDistributor = $proportionalIntegerDistributor;
     }
 
     public function assign(OrderInterface $order): void
@@ -103,7 +69,9 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
         //TODO :: Change to more flexible date ?
         $bonusPoints->setExpiresAt((new DateTime())->modify('+1 year'));
 
-        $this->getCustomerBonusPoints($order->getCustomer())->addBonusPoints($bonusPoints);
+        /** @var CustomerInterface $customer */
+        $customer = $order->getCustomer();
+        $this->getCustomerBonusPoints($customer)->addBonusPoints($bonusPoints);
 
         $this->bonusPointsEntityManager->persist($bonusPoints);
         $this->bonusPointsEntityManager->flush();
@@ -111,6 +79,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
 
     private function getCustomerBonusPoints(?CustomerInterface $customer): CustomerBonusPointsInterface
     {
+        /** @var CustomerBonusPointsInterface $customerBonusPoints */
         $customerBonusPoints = $this->customerBonusPointsRepository->findOneBy([
                 'customer' => $customer,
             ]) ?? $this->customerBonusPointsFactory->createNew();
@@ -143,7 +112,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $totals[] = $item->getTotal();
         }
 
-        if (count($totals) === 0) {
+        if (0 === count($totals)) {
             return [];
         }
 
@@ -167,7 +136,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $splitAmountOrderItems = $this->getProportionalIntegerToDeduct(
                 $bonusPointsStrategy,
                 $order->getItems()->toArray(),
-                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
+                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT),
             );
         }
 
@@ -183,8 +152,8 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
                 $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                     $orderItem,
                     $bonusPointsStrategy,
-                    $bonusPointsStrategy->isDeductBonusPoints() && count($splitAmountOrderItems) > 0 ?
-                        $splitAmountOrderItems[$orderItem->getId()] : 0
+                    $bonusPointsStrategy->isDeductBonusPoints() && 0 < count($splitAmountOrderItems) ?
+                        $splitAmountOrderItems[$orderItem->getId()] : 0,
                 );
             }
         }
@@ -212,7 +181,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                 $eligibleProduct,
                 $bonusPointsStrategy,
-                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
+                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT),
             );
         }
 

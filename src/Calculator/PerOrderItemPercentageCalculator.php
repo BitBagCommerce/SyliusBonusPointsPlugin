@@ -35,7 +35,7 @@ final class PerOrderItemPercentageCalculator implements BonusPointsStrategyCalcu
 
         $total = $subject->getTotal();
 
-        if ($amountToDeduct < 0) {
+        if (0 > $amountToDeduct) {
             $total += $amountToDeduct;
         }
 

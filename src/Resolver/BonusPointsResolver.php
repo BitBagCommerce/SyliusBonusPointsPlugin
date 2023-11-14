@@ -20,14 +20,14 @@ final class BonusPointsResolver implements BonusPointsResolverInterface
     private $customerBonusPointsContext;
 
     public function __construct(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext
+        CustomerBonusPointsContextInterface $customerBonusPointsContext,
     ) {
         $this->customerBonusPointsContext = $customerBonusPointsContext;
     }
 
     public function resolveBonusPoints(
         OrderInterface $withoutOrder = null,
-        Customer $customer = null
+        Customer $customer = null,
     ): int {
         $customerPoints = $this->customerBonusPointsContext->getCustomerBonusPoints();
 
