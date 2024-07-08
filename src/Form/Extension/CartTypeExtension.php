@@ -25,9 +25,9 @@ use Symfony\Component\Validator\Constraints\Range;
 final class CartTypeExtension extends AbstractTypeExtension
 {
     public function __construct(
-        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        private readonly BonusPointsResolverInterface $bonusPointsResolver,
-        private readonly CartContextInterface $cartContext,
+        private CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private BonusPointsResolverInterface $bonusPointsResolver,
+        private CartContextInterface $cartContext,
     ) {
     }
 

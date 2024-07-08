@@ -19,8 +19,8 @@ use Sylius\Component\Registry\ServiceRegistryInterface;
 final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPointsStrategyCalculatorInterface
 {
     public function __construct(
-        private readonly ServiceRegistryInterface $registry,
-        private readonly BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        private ServiceRegistryInterface $registry,
+        private BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
     ) {
     }
 

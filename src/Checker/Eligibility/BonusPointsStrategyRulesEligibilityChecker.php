@@ -20,7 +20,7 @@ use Sylius\Component\Registry\ServiceRegistryInterface;
 final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStrategyEligibilityCheckerInterface
 {
     public function __construct(
-        private readonly ServiceRegistryInterface $ruleRegistry,
+        private ServiceRegistryInterface $ruleRegistry,
     ) {
     }
 

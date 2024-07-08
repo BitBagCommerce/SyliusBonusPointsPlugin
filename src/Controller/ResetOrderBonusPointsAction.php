@@ -21,9 +21,9 @@ use Symfony\Component\Routing\RouterInterface;
 final class ResetOrderBonusPointsAction
 {
     public function __construct(
-        private readonly RouterInterface $router,
-        private readonly CartContextInterface $cartContext,
-        private readonly ResetOrderBonusPointsProcessorInterface $resetOrderBonusPointsProcessor,
+        private RouterInterface $router,
+        private CartContextInterface $cartContext,
+        private ResetOrderBonusPointsProcessorInterface $resetOrderBonusPointsProcessor,
     ) {
     }
 

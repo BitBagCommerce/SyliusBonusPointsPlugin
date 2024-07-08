@@ -25,10 +25,10 @@ use Webmozart\Assert\Assert;
 final class OrderBonusPointsProcessor implements OrderProcessorInterface
 {
     public function __construct(
-        private readonly RepositoryInterface $bonusPointsRepository,
-        private readonly ObjectManager $bonusPointsManager,
-        private readonly AdjustmentFactoryInterface $adjustmentFactory,
-        private readonly OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
+        private RepositoryInterface $bonusPointsRepository,
+        private ObjectManager $bonusPointsManager,
+        private AdjustmentFactoryInterface $adjustmentFactory,
+        private OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
     ) {
     }
 

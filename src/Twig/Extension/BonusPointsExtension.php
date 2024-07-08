@@ -18,7 +18,7 @@ use Twig\TwigFunction;
 class BonusPointsExtension extends AbstractExtension
 {
     public function __construct(
-        private readonly BonusPointsResolverInterface $bonusPointsResolver,
+        private BonusPointsResolverInterface $bonusPointsResolver,
     ) {
     }
 

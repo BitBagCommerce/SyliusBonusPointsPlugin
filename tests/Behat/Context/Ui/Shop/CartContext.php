@@ -17,12 +17,9 @@ use Webmozart\Assert\Assert;
 
 final class CartContext implements Context
 {
-    /** @var CartPageInterface */
-    private $cartPage;
-
-    public function __construct(CartPageInterface $cartPage)
-    {
-        $this->cartPage = $cartPage;
+    public function __construct(
+        private CartPageInterface $cartPage,
+    ) {
     }
 
     /**

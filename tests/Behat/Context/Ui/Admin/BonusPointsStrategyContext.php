@@ -25,43 +25,15 @@ use Webmozart\Assert\Assert;
 
 final class BonusPointsStrategyContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var CurrentPageResolverInterface */
-    private $currentPageResolver;
-
-    /** @var NotificationCheckerInterface */
-    private $notificationChecker;
-
-    /** @var IndexPageInterface */
-    private $indexPage;
-
-    /** @var CreatePageInterface */
-    private $createPage;
-
-    /** @var UpdatePageInterface */
-    private $updatePage;
-
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
     public function __construct(
-        SharedStorageInterface $sharedStorage,
-        CurrentPageResolverInterface $currentPageResolver,
-        NotificationCheckerInterface $notificationChecker,
-        IndexPageInterface $indexPage,
-        CreatePageInterface $createPage,
-        UpdatePageInterface $updatePage,
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private SharedStorageInterface $sharedStorage,
+        private CurrentPageResolverInterface $currentPageResolver,
+        private NotificationCheckerInterface $notificationChecker,
+        private IndexPageInterface $indexPage,
+        private CreatePageInterface $createPage,
+        private UpdatePageInterface $updatePage,
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->currentPageResolver = $currentPageResolver;
-        $this->notificationChecker = $notificationChecker;
-        $this->indexPage = $indexPage;
-        $this->createPage = $createPage;
-        $this->updatePage = $updatePage;
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
     }
 
     /**

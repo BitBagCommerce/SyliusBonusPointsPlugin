@@ -23,9 +23,9 @@ use Webmozart\Assert\Assert;
 final class OrderBonusPointsListener
 {
     public function __construct(
-        private readonly BonusPointsCreatorInterface $bonusPointsCreator,
-        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        private readonly ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor,
+        private BonusPointsCreatorInterface $bonusPointsCreator,
+        private CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor,
     ) {
     }
 

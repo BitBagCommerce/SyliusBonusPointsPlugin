@@ -20,8 +20,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 final class BonusPointsApplyValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        private readonly CartContextInterface $cartContext,
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private CartContextInterface $cartContext,
     ) {
     }
 

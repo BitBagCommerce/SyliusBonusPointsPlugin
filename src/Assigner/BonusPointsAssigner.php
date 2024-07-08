@@ -33,14 +33,14 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 final class BonusPointsAssigner implements BonusPointsAssignerInterface
 {
     public function __construct(
-        private readonly DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
-        private readonly BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        private readonly BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        private readonly FactoryInterface $bonusPointsFactory,
-        private readonly EntityManagerInterface $bonusPointsEntityManager,
-        private readonly RepositoryInterface $customerBonusPointsRepository,
-        private readonly FactoryInterface $customerBonusPointsFactory,
-        private readonly ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
+        private DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
+        private BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private FactoryInterface $bonusPointsFactory,
+        private EntityManagerInterface $bonusPointsEntityManager,
+        private RepositoryInterface $customerBonusPointsRepository,
+        private FactoryInterface $customerBonusPointsFactory,
+        private ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
     ) {
     }
 

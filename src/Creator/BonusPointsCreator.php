@@ -20,8 +20,8 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 final class BonusPointsCreator implements BonusPointsCreatorInterface
 {
     public function __construct(
-        private readonly FactoryInterface $bonusPointsFactory,
-        private readonly BonusPointsRepositoryInterface $bonusPointsRepository,
+        private FactoryInterface $bonusPointsFactory,
+        private BonusPointsRepositoryInterface $bonusPointsRepository,
     ) {
     }
 

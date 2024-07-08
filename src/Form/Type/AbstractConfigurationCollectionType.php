@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractConfigurationCollectionType extends AbstractType
 {
     public function __construct(
-        private readonly ServiceRegistryInterface $registry,
+        private ServiceRegistryInterface $registry,
     ) {
     }
 

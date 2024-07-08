@@ -25,38 +25,14 @@ use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
 final class BonusPointsStrategyContext implements Context
 {
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var ObjectManager */
-    private $objectManager;
-
-    /** @var FactoryInterface */
-    private $bonusPointsStrategyFactory;
-
-    /** @var FactoryInterface */
-    private $bonusPointsStrategyRuleFactory;
-
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
-    /** @var TaxonRepositoryInterface */
-    private $taxonRepository;
-
     public function __construct(
-        FactoryInterface $bonusPointsStrategyFactory,
-        FactoryInterface $bonusPointsStrategyRuleFactory,
-        SharedStorageInterface $sharedStorage,
-        ObjectManager $objectManager,
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        TaxonRepositoryInterface $taxonRepository,
+        private FactoryInterface $bonusPointsStrategyFactory,
+        private FactoryInterface $bonusPointsStrategyRuleFactory,
+        private SharedStorageInterface $sharedStorage,
+        private ObjectManager $objectManager,
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private TaxonRepositoryInterface $taxonRepository,
     ) {
-        $this->sharedStorage = $sharedStorage;
-        $this->objectManager = $objectManager;
-        $this->bonusPointsStrategyFactory = $bonusPointsStrategyFactory;
-        $this->bonusPointsStrategyRuleFactory = $bonusPointsStrategyRuleFactory;
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
-        $this->taxonRepository = $taxonRepository;
     }
 
     /**

@@ -22,9 +22,9 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterface
 {
     public function __construct(
-        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        private readonly ObjectManager $persistenceManager,
-        private readonly RepositoryInterface $bonusPointsRepository,
+        private CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private ObjectManager $persistenceManager,
+        private RepositoryInterface $bonusPointsRepository,
     ) {
     }
 

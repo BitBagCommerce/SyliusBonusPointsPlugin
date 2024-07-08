@@ -23,8 +23,8 @@ use Webmozart\Assert\Assert;
 final class BonusPointsAvailabilityValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly BonusPointsResolverInterface $bonusPointsResolver,
-        private readonly RepositoryInterface $bonusPointsRepository,
+        private BonusPointsResolverInterface $bonusPointsResolver,
+        private RepositoryInterface $bonusPointsRepository,
     ) {
     }
 

@@ -20,8 +20,8 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 final class ResetOrderBonusPointsProcessor implements ResetOrderBonusPointsProcessorInterface
 {
     public function __construct(
-        private readonly OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
-        private readonly RepositoryInterface $bonusPointsRepository,
+        private OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
+        private RepositoryInterface $bonusPointsRepository,
     ) {
     }
 

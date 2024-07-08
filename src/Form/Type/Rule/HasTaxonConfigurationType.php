@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 final class HasTaxonConfigurationType extends AbstractType
 {
     public function __construct(
-        private readonly DataTransformerInterface $taxonsToCodesTransformer,
+        private DataTransformerInterface $taxonsToCodesTransformer,
     ) {
     }
 

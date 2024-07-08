@@ -20,9 +20,9 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 final class CustomerBonusPointsContext implements CustomerBonusPointsContextInterface
 {
     public function __construct(
-        private readonly CustomerContextInterface $customerContext,
-        private readonly RepositoryInterface $customerBonusPointsRepository,
-        private readonly FactoryInterface $customerBonusPointsFactory,
+        private CustomerContextInterface $customerContext,
+        private RepositoryInterface $customerBonusPointsRepository,
+        private FactoryInterface $customerBonusPointsFactory,
     ) {
     }
 

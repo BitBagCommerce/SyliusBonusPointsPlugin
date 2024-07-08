@@ -29,8 +29,8 @@ final class BonusPointsStrategyType extends AbstractResourceType
     public function __construct(
         string $dataClass,
         array $validationGroups,
-        private readonly ServiceRegistryInterface $calculatorRegistry,
-        private readonly FormTypeRegistryInterface $formTypeRegistry,
+        private ServiceRegistryInterface $calculatorRegistry,
+        private FormTypeRegistryInterface $formTypeRegistry,
     ) {
         parent::__construct($dataClass, $validationGroups);
     }
