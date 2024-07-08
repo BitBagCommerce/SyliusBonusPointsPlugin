@@ -1,10 +1,11 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -63,7 +64,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
         EntityManagerInterface $bonusPointsEntityManager,
         RepositoryInterface $customerBonusPointsRepository,
         FactoryInterface $customerBonusPointsFactory,
-        ProportionalIntegerDistributorInterface $proportionalIntegerDistributor
+        ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
     ) {
         $this->delegatingBonusPointsStrategyCalculator = $delegatingBonusPointsStrategyCalculator;
         $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;
@@ -143,7 +144,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $totals[] = $item->getTotal();
         }
 
-        if (count($totals) === 0) {
+        if (0 === count($totals)) {
             return [];
         }
 
@@ -167,7 +168,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $splitAmountOrderItems = $this->getProportionalIntegerToDeduct(
                 $bonusPointsStrategy,
                 $order->getItems()->toArray(),
-                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
+                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT),
             );
         }
 
@@ -183,8 +184,8 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
                 $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                     $orderItem,
                     $bonusPointsStrategy,
-                    $bonusPointsStrategy->isDeductBonusPoints() && count($splitAmountOrderItems) > 0 ?
-                        $splitAmountOrderItems[$orderItem->getId()] : 0
+                    $bonusPointsStrategy->isDeductBonusPoints() && 0 < count($splitAmountOrderItems) ?
+                        $splitAmountOrderItems[$orderItem->getId()] : 0,
                 );
             }
         }
@@ -212,7 +213,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                 $eligibleProduct,
                 $bonusPointsStrategy,
-                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
+                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT),
             );
         }
 

@@ -1,7 +1,14 @@
 <?php
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+declare(strict_types=1);
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import('vendor/sylius-labs/coding-standard/ecs.php');
+use Symplify\EasyCodingStandard\Config\ECSConfig;
+
+return static function (ECSConfig $config): void {
+
+    // Change this if you want to automatically add BitBag OpenSource Header
+    putenv('ALLOW_BITBAG_OS_HEADER=1');
+
+    $config->import('vendor/bitbag/coding-standard/ecs.php');
+    $config->paths(['src', 'tests']);
 };
