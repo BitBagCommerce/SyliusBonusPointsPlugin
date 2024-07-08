@@ -20,23 +20,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class ResetOrderBonusPointsAction
 {
-    /** @var RouterInterface */
-    private $router;
-
-    /** @var CartContextInterface */
-    private $cartContext;
-
-    /** @var ResetOrderBonusPointsProcessorInterface */
-    private $resetOrderBonusPointsProcessor;
-
     public function __construct(
-        RouterInterface $router,
-        CartContextInterface $cartContext,
-        ResetOrderBonusPointsProcessorInterface $resetOrderBonusPointsProcessor,
+        private readonly RouterInterface $router,
+        private readonly CartContextInterface $cartContext,
+        private readonly ResetOrderBonusPointsProcessorInterface $resetOrderBonusPointsProcessor,
     ) {
-        $this->router = $router;
-        $this->cartContext = $cartContext;
-        $this->resetOrderBonusPointsProcessor = $resetOrderBonusPointsProcessor;
     }
 
     public function __invoke(Request $request): Response

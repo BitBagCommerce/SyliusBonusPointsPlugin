@@ -17,13 +17,9 @@ use Sylius\Component\Core\Model\OrderInterface;
 
 final class BonusPointsResolver implements BonusPointsResolverInterface
 {
-    /** @var CustomerBonusPointsContextInterface */
-    private $customerBonusPointsContext;
-
     public function __construct(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
     ) {
-        $this->customerBonusPointsContext = $customerBonusPointsContext;
     }
 
     public function resolveBonusPoints(

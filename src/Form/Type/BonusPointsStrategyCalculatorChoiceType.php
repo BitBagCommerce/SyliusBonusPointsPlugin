@@ -17,12 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class BonusPointsStrategyCalculatorChoiceType extends AbstractType
 {
-    /** @var array */
-    private $calculators;
-
-    public function __construct(array $calculators)
-    {
-        $this->calculators = $calculators;
+    public function __construct(
+        private readonly array $calculators,
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void

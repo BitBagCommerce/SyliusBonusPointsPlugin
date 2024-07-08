@@ -22,23 +22,11 @@ use Webmozart\Assert\Assert;
 
 final class OrderBonusPointsListener
 {
-    /** @var BonusPointsCreatorInterface */
-    private $bonusPointsCreator;
-
-    /** @var CustomerBonusPointsContextInterface */
-    private $customerBonusPointsContext;
-
-    /** @var ResetOrderBonusPointsProcessorInterface */
-    private $resetBonusPointsProcessor;
-
     public function __construct(
-        BonusPointsCreatorInterface $bonusPointsCreator,
-        CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor,
+        private readonly BonusPointsCreatorInterface $bonusPointsCreator,
+        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private readonly ResetOrderBonusPointsProcessorInterface $resetBonusPointsProcessor,
     ) {
-        $this->bonusPointsCreator = $bonusPointsCreator;
-        $this->customerBonusPointsContext = $customerBonusPointsContext;
-        $this->resetBonusPointsProcessor = $resetBonusPointsProcessor;
     }
 
     public function assignBonusPoints(ResourceControllerEvent $event): void

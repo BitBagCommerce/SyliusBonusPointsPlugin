@@ -24,28 +24,12 @@ use Webmozart\Assert\Assert;
 
 final class OrderBonusPointsProcessor implements OrderProcessorInterface
 {
-    /** @var RepositoryInterface */
-    private $bonusPointsRepository;
-
-    /** @var ObjectManager */
-    private $bonusPointsManager;
-
-    /** @var AdjustmentFactoryInterface */
-    private $adjustmentFactory;
-
-    /** @var OrderBonusPointsPurifierInterface */
-    private $orderBonusPointsPurifier;
-
     public function __construct(
-        RepositoryInterface $bonusPointsRepository,
-        ObjectManager $bonusPointsManager,
-        AdjustmentFactoryInterface $adjustmentFactory,
-        OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
+        private readonly RepositoryInterface $bonusPointsRepository,
+        private readonly ObjectManager $bonusPointsManager,
+        private readonly AdjustmentFactoryInterface $adjustmentFactory,
+        private readonly OrderBonusPointsPurifierInterface $orderBonusPointsPurifier,
     ) {
-        $this->bonusPointsRepository = $bonusPointsRepository;
-        $this->bonusPointsManager = $bonusPointsManager;
-        $this->adjustmentFactory = $adjustmentFactory;
-        $this->orderBonusPointsPurifier = $orderBonusPointsPurifier;
     }
 
     public function process(OrderInterface $order): void

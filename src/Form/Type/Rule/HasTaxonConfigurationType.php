@@ -19,12 +19,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class HasTaxonConfigurationType extends AbstractType
 {
-    /** @var DataTransformerInterface */
-    private $taxonsToCodesTransformer;
-
-    public function __construct(DataTransformerInterface $taxonsToCodesTransformer)
-    {
-        $this->taxonsToCodesTransformer = $taxonsToCodesTransformer;
+    public function __construct(
+        private readonly DataTransformerInterface $taxonsToCodesTransformer,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

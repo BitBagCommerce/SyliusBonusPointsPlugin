@@ -24,23 +24,11 @@ use Symfony\Component\Validator\Constraints\Range;
 
 final class CartTypeExtension extends AbstractTypeExtension
 {
-    /** @var CustomerBonusPointsContextInterface */
-    private $customerBonusPointsContext;
-
-    /** @var BonusPointsResolverInterface */
-    private $bonusPointsResolver;
-
-    /** @var CartContextInterface */
-    private $cartContext;
-
     public function __construct(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        BonusPointsResolverInterface $bonusPointsResolver,
-        CartContextInterface $cartContext,
+        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private readonly BonusPointsResolverInterface $bonusPointsResolver,
+        private readonly CartContextInterface $cartContext,
     ) {
-        $this->customerBonusPointsContext = $customerBonusPointsContext;
-        $this->bonusPointsResolver = $bonusPointsResolver;
-        $this->cartContext = $cartContext;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

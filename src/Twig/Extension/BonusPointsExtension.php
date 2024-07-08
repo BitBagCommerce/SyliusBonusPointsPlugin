@@ -17,12 +17,9 @@ use Twig\TwigFunction;
 
 class BonusPointsExtension extends AbstractExtension
 {
-    /** @var BonusPointsResolverInterface */
-    private $bonusPointsResolver;
-
-    public function __construct(BonusPointsResolverInterface $bonusPointsResolver)
-    {
-        $this->bonusPointsResolver = $bonusPointsResolver;
+    public function __construct(
+        private readonly BonusPointsResolverInterface $bonusPointsResolver,
+    ) {
     }
 
     public function getFunctions(): array

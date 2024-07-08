@@ -19,18 +19,10 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 final class BonusPointsApplyValidator extends ConstraintValidator
 {
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
-    /** @var CartContextInterface */
-    private $cartContext;
-
     public function __construct(
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        CartContextInterface $cartContext,
+        private readonly BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private readonly CartContextInterface $cartContext,
     ) {
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
-        $this->cartContext = $cartContext;
     }
 
     /**

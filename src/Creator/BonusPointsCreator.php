@@ -19,18 +19,10 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class BonusPointsCreator implements BonusPointsCreatorInterface
 {
-    /** @var FactoryInterface */
-    private $bonusPointsFactory;
-
-    /** @var BonusPointsRepositoryInterface */
-    private $bonusPointsRepository;
-
     public function __construct(
-        FactoryInterface $bonusPointsFactory,
-        BonusPointsRepositoryInterface $bonusPointsRepository,
+        private readonly FactoryInterface $bonusPointsFactory,
+        private readonly BonusPointsRepositoryInterface $bonusPointsRepository,
     ) {
-        $this->bonusPointsFactory = $bonusPointsFactory;
-        $this->bonusPointsRepository = $bonusPointsRepository;
     }
 
     public function createWithData(

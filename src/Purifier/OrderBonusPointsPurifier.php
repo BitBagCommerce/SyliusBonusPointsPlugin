@@ -21,23 +21,11 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OrderBonusPointsPurifier implements OrderBonusPointsPurifierInterface
 {
-    /** @var CustomerBonusPointsContextInterface */
-    private $customerBonusPointsContext;
-
-    /** @var ObjectManager */
-    private $persistenceManager;
-
-    /** @var RepositoryInterface */
-    private $bonusPointsRepository;
-
     public function __construct(
-        CustomerBonusPointsContextInterface $customerBonusPointsContext,
-        ObjectManager $persistenceManager,
-        RepositoryInterface $bonusPointsRepository,
+        private readonly CustomerBonusPointsContextInterface $customerBonusPointsContext,
+        private readonly ObjectManager $persistenceManager,
+        private readonly RepositoryInterface $bonusPointsRepository,
     ) {
-        $this->customerBonusPointsContext = $customerBonusPointsContext;
-        $this->persistenceManager = $persistenceManager;
-        $this->bonusPointsRepository = $bonusPointsRepository;
     }
 
     public function purify(

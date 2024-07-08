@@ -20,12 +20,9 @@ final class HasTaxonRuleChecker implements BonusPointsStrategyRuleCheckerInterfa
 {
     public const TYPE = 'has_taxon';
 
-    /** @var TaxonRepositoryInterface */
-    private $taxonRepository;
-
-    public function __construct(TaxonRepositoryInterface $taxonRepository)
-    {
-        $this->taxonRepository = $taxonRepository;
+    public function __construct(
+        private readonly TaxonRepositoryInterface $taxonRepository,
+    ) {
     }
 
     public function isEligible(ProductInterface $product, array $configuration): bool

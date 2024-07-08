@@ -19,12 +19,9 @@ use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class BonusPointsStrategyRulesEligibilityChecker implements BonusPointsStrategyEligibilityCheckerInterface
 {
-    /** @var ServiceRegistryInterface */
-    private $ruleRegistry;
-
-    public function __construct(ServiceRegistryInterface $ruleRegistry)
-    {
-        $this->ruleRegistry = $ruleRegistry;
+    public function __construct(
+        private readonly ServiceRegistryInterface $ruleRegistry,
+    ) {
     }
 
     public function isEligible(ProductInterface $product, BonusPointsStrategyInterface $bonusPointsStrategy): bool

@@ -32,48 +32,16 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class BonusPointsAssigner implements BonusPointsAssignerInterface
 {
-    /** @var DelegatingBonusPointsStrategyCalculatorInterface */
-    private $delegatingBonusPointsStrategyCalculator;
-
-    /** @var BonusPointsStrategyEligibilityCheckerInterface */
-    private $bonusPointsStrategyEligibilityChecker;
-
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
-    /** @var FactoryInterface */
-    private $bonusPointsFactory;
-
-    /** @var EntityManagerInterface */
-    private $bonusPointsEntityManager;
-
-    /** @var RepositoryInterface */
-    private $customerBonusPointsRepository;
-
-    /** @var FactoryInterface */
-    private $customerBonusPointsFactory;
-
-    /** @var ProportionalIntegerDistributorInterface */
-    private $proportionalIntegerDistributor;
-
     public function __construct(
-        DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        FactoryInterface $bonusPointsFactory,
-        EntityManagerInterface $bonusPointsEntityManager,
-        RepositoryInterface $customerBonusPointsRepository,
-        FactoryInterface $customerBonusPointsFactory,
-        ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
+        private readonly DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
+        private readonly BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        private readonly BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private readonly FactoryInterface $bonusPointsFactory,
+        private readonly EntityManagerInterface $bonusPointsEntityManager,
+        private readonly RepositoryInterface $customerBonusPointsRepository,
+        private readonly FactoryInterface $customerBonusPointsFactory,
+        private readonly ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
     ) {
-        $this->delegatingBonusPointsStrategyCalculator = $delegatingBonusPointsStrategyCalculator;
-        $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
-        $this->bonusPointsFactory = $bonusPointsFactory;
-        $this->bonusPointsEntityManager = $bonusPointsEntityManager;
-        $this->customerBonusPointsRepository = $customerBonusPointsRepository;
-        $this->customerBonusPointsFactory = $customerBonusPointsFactory;
-        $this->proportionalIntegerDistributor = $proportionalIntegerDistributor;
     }
 
     public function assign(OrderInterface $order): void

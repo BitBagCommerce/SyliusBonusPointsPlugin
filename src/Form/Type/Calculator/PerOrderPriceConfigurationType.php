@@ -23,12 +23,9 @@ use Symfony\Component\Validator\Constraints\Type;
 
 final class PerOrderPriceConfigurationType extends AbstractType
 {
-    /** @var ChannelContextInterface */
-    private $channelContext;
-
-    public function __construct(ChannelContextInterface $channelContext)
-    {
-        $this->channelContext = $channelContext;
+    public function __construct(
+        private readonly ChannelContextInterface $channelContext,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

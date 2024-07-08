@@ -18,18 +18,10 @@ use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class DelegatingBonusPointsStrategyCalculator implements DelegatingBonusPointsStrategyCalculatorInterface
 {
-    /** @var ServiceRegistryInterface */
-    private $registry;
-
-    /** @var BonusPointsStrategyEligibilityCheckerInterface */
-    private $bonusPointsStrategyEligibilityChecker;
-
     public function __construct(
-        ServiceRegistryInterface $registry,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        private readonly ServiceRegistryInterface $registry,
+        private readonly BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
     ) {
-        $this->registry = $registry;
-        $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;
     }
 
     public function calculate(OrderItemInterface $subject, BonusPointsStrategyInterface $bonusPointsStrategy, int $amountToDeduct = 0): int

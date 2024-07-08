@@ -26,22 +26,13 @@ use Symfony\Component\Form\FormView;
 
 final class BonusPointsStrategyType extends AbstractResourceType
 {
-    /** @var ServiceRegistryInterface */
-    private $calculatorRegistry;
-
-    /** @var FormTypeRegistryInterface */
-    private $formTypeRegistry;
-
     public function __construct(
         string $dataClass,
         array $validationGroups,
-        ServiceRegistryInterface $calculatorRegistry,
-        FormTypeRegistryInterface $formTypeRegistry,
+        private readonly ServiceRegistryInterface $calculatorRegistry,
+        private readonly FormTypeRegistryInterface $formTypeRegistry,
     ) {
         parent::__construct($dataClass, $validationGroups);
-
-        $this->calculatorRegistry = $calculatorRegistry;
-        $this->formTypeRegistry = $formTypeRegistry;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
