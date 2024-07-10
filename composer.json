@@ -8,7 +8,7 @@
   "description": "Bonus points plugin for Sylius.",
   "license": "MIT",
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "sylius/sylius": "~1.12.0 || ~1.13.0"
   },
   "require-dev": {
@@ -40,6 +40,9 @@
     "symfony/intl": "^5.4 || ^6.0",
     "symfony/web-profiler-bundle": "^5.4 || ^6.0",
     "symfony/webpack-encore-bundle": "^1.14"
+  },
+  "conflict": {
+    "behat/mink-selenium2-driver": ">=1.7.0"
   },
   "prefer-stable": true,
   "autoload": {
