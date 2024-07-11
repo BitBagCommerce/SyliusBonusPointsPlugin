@@ -39,10 +39,12 @@
     "symfony/dotenv": "^5.4 || ^6.0",
     "symfony/intl": "^5.4 || ^6.0",
     "symfony/web-profiler-bundle": "^5.4 || ^6.0",
-    "symfony/webpack-encore-bundle": "^1.14"
+    "symfony/webpack-encore-bundle": "^1.14",
+    "doctrine/persistence": "^3.0"
   },
   "conflict": {
-    "behat/mink-selenium2-driver": ">=1.7.0"
+    "behat/mink-selenium2-driver": ">=1.7.0",
+    "doctrine/annotations": ">1.15"
   },
   "prefer-stable": true,
   "autoload": {

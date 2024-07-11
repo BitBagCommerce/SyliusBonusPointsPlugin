@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "babel-polyfill": "^7.0.0",
+    "babel-polyfill": "^6.26.0",
     "chart.js": "3.7.1",
     "jquery": "^3.5.0",
     "jquery.dirtyforms": "^2.0.0",
@@ -39,13 +39,14 @@
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^4.0.0",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^12.1.0",
     "upath": "^1.1.0",
     "yargs": "^6.4.0"
   },
   "scripts": {
-    "build": "gulp build",
-    "gulp": "gulp build",
+    "dev": "yarn encore dev",
+    "watch": "yarn encore dev --watch",
+    "prod": "yarn encore prod",
     "lint": "yarn lint:js",
     "lint:js": "eslint gulpfile.babel.js"
   },

@@ -17,8 +17,8 @@
 
         <service id="bitbag_sylius_bonus_points.form.type.bonus_points_strategy_rule" class="BitBag\SyliusBonusPointsPlugin\Form\Type\BonusPointsStrategyRuleType">
             <argument>%bitbag_sylius_bonus_points.model.bonus_points_strategy_rule.class%</argument>
-            <argument>%bitbag.form.type.validation_groups%</argument>
             <argument type="service" id="bitbag_sylius_bonus_points.form_registry.bonus_points_strategy_rule_checker" />
+            <argument>%bitbag.form.type.validation_groups%</argument>
             <tag name="form.type" />
         </service>
 

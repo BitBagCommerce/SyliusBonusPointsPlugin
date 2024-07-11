@@ -4,5 +4,6 @@
     <imports>
         <import resource="contexts/ui.xml" />
         <import resource="contexts/setup.xml" />
+        <import resource="contexts/transform.xml" />
     </imports>
 </container>
