@@ -80,6 +80,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
 
     private function getCustomerBonusPoints(?CustomerInterface $customer): CustomerBonusPointsInterface
     {
+        /** @var CustomerBonusPointsInterface $customerBonusPoints */
         $customerBonusPoints = $this->customerBonusPointsRepository->findOneBy([
                 'customer' => $customer,
             ]) ?? $this->customerBonusPointsFactory->createNew();

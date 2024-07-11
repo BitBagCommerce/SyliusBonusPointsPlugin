@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusBonusPointsPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\CustomerInterface;
+use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface CustomerBonusPointsInterface extends ResourceInterface

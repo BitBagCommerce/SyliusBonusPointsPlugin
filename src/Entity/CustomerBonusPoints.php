@@ -14,7 +14,7 @@ namespace BitBag\SyliusBonusPointsPlugin\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Sylius\Component\Core\Model\CustomerInterface;
+use Sylius\Component\Customer\Model\CustomerInterface;
 
 class CustomerBonusPoints implements CustomerBonusPointsInterface
 {

@@ -26,6 +26,7 @@ final class BonusPointsApplyValidator extends ConstraintValidator
     }
 
     /**
+     * @param mixed $bonusPoints
      * @param Constraint|BonusPointsApply $constraint
      */
     public function validate($bonusPoints, Constraint $constraint): void

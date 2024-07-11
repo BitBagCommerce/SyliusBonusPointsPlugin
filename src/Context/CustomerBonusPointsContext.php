@@ -35,6 +35,7 @@ final class CustomerBonusPointsContext implements CustomerBonusPointsContextInte
             return null;
         }
 
+        /** @var CustomerBonusPointsInterface|null $customerBonusPoints */
         $customerBonusPoints = $this->customerBonusPointsRepository->findOneBy([
             'customer' => $customer,
         ]);

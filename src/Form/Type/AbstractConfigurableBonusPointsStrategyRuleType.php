@@ -24,8 +24,8 @@ abstract class AbstractConfigurableBonusPointsStrategyRuleType extends AbstractR
 {
     public function __construct(
         string $dataClass,
-        array $validationGroups = [],
         private FormTypeRegistryInterface $formTypeRegistry,
+        array $validationGroups = [],
     ) {
         parent::__construct($dataClass, $validationGroups);
     }
