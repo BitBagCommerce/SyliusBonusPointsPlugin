@@ -15,12 +15,14 @@
         ];
     ```
 
-1. Import required config by adding  `config/packages/bitbag_sylius_bonus_points_plugin.yaml` file:
+1. Import resource in your `config/packages/_sylius.yaml`
 
     ```yaml
-    # config/packages/bitbag_sylius_bonus_points_plugin.yaml
+    # config/packages/_sylius.yaml
     
     imports:
+    ...
+   
        - { resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/config.yml" }
     ```    
 
@@ -40,34 +42,37 @@
     ```php
     <?php 
    
-   declare(strict_types=1);
-    
+   <?php
+
+    declare(strict_types=1);
+
     namespace App\Entity\Order;
-    
+
     use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
-    use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareTrait;
+    use Doctrine\ORM\Mapping as ORM;
     use Sylius\Component\Core\Model\Order as BaseOrder;
 
-    class Order extends BaseOrder implements BonusPointsAwareInterface
-    {
-        use BonusPointsAwareTrait;
-    }
-    ```
+    /**
+     * @ORM\Entity
+     * @ORM\Table(name="sylius_order")
+     */
+     #[ORM\Entity]
+     #[ORM\Table(name: 'sylius_order')]
+     class Order extends BaseOrder implements BonusPointsAwareInterface
+     {
+         #[ORM\Column(type: 'integer', nullable: true)]
+         protected ?int $bonusPoints = null;
 
-   Mapping (XML):
+         public function getBonusPoints(): ?int
+         {
+            return $this->bonusPoints;
+         }
 
-   ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                                         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
-   >
-         <entity repository-class="App\Doctrine\ORM\OrderRepository" name="App\Entity\Order\Order" table="sylius_order">
-               <field name="bonusPoints" type="integer" nullable="true" />
-         </entity>
-   </doctrine-mapping>
-   ```
+         public function setBonusPoints(?int $bonusPoints): void
+         {
+            $this->bonusPoints = $bonusPoints;
+         }
+     }
 
 1. Customize shop templates to include bonus points. For starter You may want copy to templates directory everything from plugin's tests/Application/templates
 
