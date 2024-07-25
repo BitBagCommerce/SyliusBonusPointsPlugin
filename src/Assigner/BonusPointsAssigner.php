@@ -1,10 +1,11 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -31,48 +32,16 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class BonusPointsAssigner implements BonusPointsAssignerInterface
 {
-    /** @var DelegatingBonusPointsStrategyCalculatorInterface */
-    private $delegatingBonusPointsStrategyCalculator;
-
-    /** @var BonusPointsStrategyEligibilityCheckerInterface */
-    private $bonusPointsStrategyEligibilityChecker;
-
-    /** @var BonusPointsStrategyRepositoryInterface */
-    private $bonusPointsStrategyRepository;
-
-    /** @var FactoryInterface */
-    private $bonusPointsFactory;
-
-    /** @var EntityManagerInterface */
-    private $bonusPointsEntityManager;
-
-    /** @var RepositoryInterface */
-    private $customerBonusPointsRepository;
-
-    /** @var FactoryInterface */
-    private $customerBonusPointsFactory;
-
-    /** @var ProportionalIntegerDistributorInterface */
-    private $proportionalIntegerDistributor;
-
     public function __construct(
-        DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
-        BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
-        BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
-        FactoryInterface $bonusPointsFactory,
-        EntityManagerInterface $bonusPointsEntityManager,
-        RepositoryInterface $customerBonusPointsRepository,
-        FactoryInterface $customerBonusPointsFactory,
-        ProportionalIntegerDistributorInterface $proportionalIntegerDistributor
+        private DelegatingBonusPointsStrategyCalculatorInterface $delegatingBonusPointsStrategyCalculator,
+        private BonusPointsStrategyEligibilityCheckerInterface $bonusPointsStrategyEligibilityChecker,
+        private BonusPointsStrategyRepositoryInterface $bonusPointsStrategyRepository,
+        private FactoryInterface $bonusPointsFactory,
+        private EntityManagerInterface $bonusPointsEntityManager,
+        private RepositoryInterface $customerBonusPointsRepository,
+        private FactoryInterface $customerBonusPointsFactory,
+        private ProportionalIntegerDistributorInterface $proportionalIntegerDistributor,
     ) {
-        $this->delegatingBonusPointsStrategyCalculator = $delegatingBonusPointsStrategyCalculator;
-        $this->bonusPointsStrategyEligibilityChecker = $bonusPointsStrategyEligibilityChecker;
-        $this->bonusPointsStrategyRepository = $bonusPointsStrategyRepository;
-        $this->bonusPointsFactory = $bonusPointsFactory;
-        $this->bonusPointsEntityManager = $bonusPointsEntityManager;
-        $this->customerBonusPointsRepository = $customerBonusPointsRepository;
-        $this->customerBonusPointsFactory = $customerBonusPointsFactory;
-        $this->proportionalIntegerDistributor = $proportionalIntegerDistributor;
     }
 
     public function assign(OrderInterface $order): void
@@ -111,6 +80,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
 
     private function getCustomerBonusPoints(?CustomerInterface $customer): CustomerBonusPointsInterface
     {
+        /** @var CustomerBonusPointsInterface $customerBonusPoints */
         $customerBonusPoints = $this->customerBonusPointsRepository->findOneBy([
                 'customer' => $customer,
             ]) ?? $this->customerBonusPointsFactory->createNew();
@@ -143,7 +113,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $totals[] = $item->getTotal();
         }
 
-        if (count($totals) === 0) {
+        if (0 === count($totals)) {
             return [];
         }
 
@@ -167,7 +137,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $splitAmountOrderItems = $this->getProportionalIntegerToDeduct(
                 $bonusPointsStrategy,
                 $order->getItems()->toArray(),
-                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
+                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT),
             );
         }
 
@@ -183,8 +153,8 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
                 $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                     $orderItem,
                     $bonusPointsStrategy,
-                    $bonusPointsStrategy->isDeductBonusPoints() && count($splitAmountOrderItems) > 0 ?
-                        $splitAmountOrderItems[$orderItem->getId()] : 0
+                    $bonusPointsStrategy->isDeductBonusPoints() && 0 < count($splitAmountOrderItems) ?
+                        $splitAmountOrderItems[$orderItem->getId()] : 0,
                 );
             }
         }
@@ -212,7 +182,7 @@ final class BonusPointsAssigner implements BonusPointsAssignerInterface
             $bonusPointsTotal += $this->delegatingBonusPointsStrategyCalculator->calculate(
                 $eligibleProduct,
                 $bonusPointsStrategy,
-                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT)
+                $order->getAdjustmentsTotal(AdjustmentInterface::ORDER_BONUS_POINTS_ADJUSTMENT),
             );
         }
 

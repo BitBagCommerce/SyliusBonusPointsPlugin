@@ -1,10 +1,11 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -20,12 +21,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConfigurationCollectionType extends AbstractType
 {
-    /** @var ServiceRegistryInterface */
-    protected $registry;
-
-    public function __construct(ServiceRegistryInterface $registry)
-    {
-        $this->registry = $registry;
+    public function __construct(
+        private ServiceRegistryInterface $registry,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -37,8 +35,8 @@ abstract class AbstractConfigurationCollectionType extends AbstractType
                 $options['entry_type'],
                 array_replace(
                     $options['entry_options'],
-                    ['configuration_type' => $type]
-                )
+                    ['configuration_type' => $type],
+                ),
             );
 
             $prototypes[$type] = $formBuilder->getForm();

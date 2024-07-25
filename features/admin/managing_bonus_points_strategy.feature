@@ -7,7 +7,7 @@ Feature: Managing a new bonus points strategy
     Background:
         Given the store operates on a single channel in "United States"
         And I am logged in as an administrator
-        And the store classifies its products as "T-Shirts", "Watches", "Belts" and "Wallets"
+        And the store classifies its products as "T-shirts", "Watches", "Belts" and "Wallets"
         And the "T-Shirts" taxon has children taxon "Men" and "Women"
         And there is bonus points strategy with code "bitbag-bonus-points-strategy" and name "BitBag Bonus Points Strategy" with rule "Has taxon" with "Watches" taxon
         And the bonus points strategy "bitbag-bonus-points-strategy" admits "2" points per one currency

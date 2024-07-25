@@ -11,7 +11,7 @@ Feature: Collecting bonus points
         And the store allows paying "Offline"
         And there is bonus points strategy with code "bitbag-bonus-points-strategy" and name "BitBag Bonus Points Strategy" with rule "Has Taxon" with "Watches" taxon
         And the bonus points strategy "bitbag-bonus-points-strategy" admits "2" points per one currency
-        And the store has a product "BitBag Watch" priced at "$2000.32"
+        And the store has a product "BitBag Watch" priced at "$2,000.32"
         And this product belongs to "Watches"
         And there is a customer "Francis Underwood" identified by an email "francis@underwood.com" and a password "whitehouse"
         And there is a customer "francis@underwood.com" that placed an order "#00000022"
