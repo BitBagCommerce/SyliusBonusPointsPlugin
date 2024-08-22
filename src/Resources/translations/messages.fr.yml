@@ -12,7 +12,7 @@ bitbag_sylius_bonus_points:
         point_amount: Nombre de points
         calculator_type: Mode de calcul
         percent_to_calculate_points: Pourcentage pour calculer les points
-        per_order_item_percentage: Poucentage par produit commandé
+        per_order_item_percentage: Pourcentage par produit commandé
         bonus_points: Points de fidélité
         apply_points: Appliquer les points
         bonus_points_total: Total des points de fidélité
