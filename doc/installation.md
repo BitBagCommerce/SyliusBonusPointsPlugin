@@ -40,8 +40,6 @@
 1. Extend `Order`(including Doctrine mapping):
 
     ```php
-    <?php 
-   
    <?php
 
     declare(strict_types=1);

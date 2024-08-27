@@ -11,13 +11,15 @@ After an installation, the user has access to the "Bonus points strategies" sect
     <img src="./images/bonus_panel.png"/>
 </div>
 
-Users can then create their own bonus points strategies through a special configuration form. 
+Users can then create their own bonus points strategies through a special configuration form.
 
 <div align="center">
     <img src="./images/bonus_create.png"/>
 </div>
 
-It is possible to set the name and code for the strategy, rules for how the points should be awarded and specify taxons that allow the user to gain new points.
+It is possible to set the name and code for the strategy, rules for how the points should be awarded and specify taxons that allow the user to gain new points. 
+
+`It is important to select individual taxons when setting the rules for awarding points. Thus, if points are to be credited for orders from any category, all taxons must be selected.`
 
 When acquired, points can be used at the cart stage.
 
