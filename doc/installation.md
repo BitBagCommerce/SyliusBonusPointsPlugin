@@ -1,85 +1,117 @@
+# Installation
 
-1. Require plugin with composer:
+## Overview:
+GENERAL
+- [Requirements](#requirements)
+- [Composer](#composer)
+- [Basic configuration](#basic-configuration)
+--- 
+BACKEND
+- [Entities](#entities)
+    - [Attribute mapping](#attribute-mapping)
+    - [XML mapping](#xml-mapping)
+---
+FRONTEND
+- [Templates](#templates)
+---
+ADDITIONAL
+- [Additional configuration](#additional-configuration)
+- [Known Issues](#known-issues)
+---
 
-    ```bash
-    composer require bitbag/bonus-points-plugin
-    ```
+## Requirements:
+We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 
-1. Add plugin dependencies to your `config/bundles.php` file:
+| Package       | Version         |
+|---------------|-----------------|
+| PHP           | \>8.0           |
+| sylius/sylius | 1.12.x - 1.13.x |
+| MySQL         | \>= 5.7         |
+| NodeJS        | \>= 18.x        |
 
-    ```php
-        return [
-         ...
-        
-            BitBag\SyliusBonusPointsPlugin\BitBagSyliusBonusPointsPlugin::class => ['all' => true],
-        ];
-    ```
+## Composer:
+```bash
+composer require bitbag/bonus-points-plugin
+```
 
-1. Import resource in your `config/packages/_sylius.yaml`
+## Basic configuration:
+Add plugin dependencies to your `config/bundles.php` file:
 
-    ```yaml
-    # config/packages/_sylius.yaml
-    
-    imports:
+```php
+# config/bundles.php
+
+return [
     ...
-   
-       - { resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/config.yml" }
-    ```    
+    BitBag\SyliusBonusPointsPlugin\BitBagSyliusBonusPointsPlugin::class => ['all' => true],
+];
+```
 
-1. Import routing in your `config/routes.yaml` file:
+Import required config in your `config/packages/_sylius.yaml` file:
 
-    ```yaml
-    
-    # config/routes.yaml
+```yaml
+# config/packages/_sylius.yaml
+
+imports:
     ...
-    
-    bitbag_sylius_bonus_points_plugin:
-        resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/routing.yml"
-    ```
+    - { resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/config.yml" }
+```
 
-1. Extend `Order`(including Doctrine mapping):
+Import routing in your `config/routes.yaml` file:
+```yaml
+# config/routes.yaml
 
-    ```php
-    <?php 
-   
-   <?php
+bitbag_sylius_bonus_points_plugin:
+    resource: "@BitBagSyliusBonusPointsPlugin/Resources/config/routing.yml"
+```
 
-    declare(strict_types=1);
+## Entities
+You can implement entity configuration by using both xml-mapping and attribute-mapping. Depending on your preference, choose either one or the other:
+### Attribute mapping
+- [Attribute mapping configuration](installation/attribute-mapping.md)
+### XML mapping
+- [XML mapping configuration](installation/xml-mapping.md)
 
-    namespace App\Entity\Order;
+### Update your database
+First, please run legacy-versioned migrations by using command:
+```bash
+bin/console doctrine:migrations:migrate
+```
 
-    use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
-    use Doctrine\ORM\Mapping as ORM;
-    use Sylius\Component\Core\Model\Order as BaseOrder;
+After migration, please create a new diff migration and update database:
+```bash
+bin/console doctrine:migrations:diff
+bin/console doctrine:migrations:migrate
+```
+**Note:** If you are running it on production, add the `-e prod` flag to this command.
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="sylius_order")
-     */
-     #[ORM\Entity]
-     #[ORM\Table(name: 'sylius_order')]
-     class Order extends BaseOrder implements BonusPointsAwareInterface
-     {
-         #[ORM\Column(type: 'integer', nullable: true)]
-         protected ?int $bonusPoints = null;
+### Clear application cache by using command:
+```bash
+bin/console cache:clear
+```
+**Note:** If you are running it on production, add the `-e prod` flag to this command.
 
-         public function getBonusPoints(): ?int
-         {
-            return $this->bonusPoints;
-         }
+## Templates
+Copy required templates into correct directories in your project.
 
-         public function setBonusPoints(?int $bonusPoints): void
-         {
-            $this->bonusPoints = $bonusPoints;
-         }
-     }
+**AdminBundle** (`templates/bundles/SyliusAdminBundle`):
+```
+vendor/bitbag/bonus-points-plugin/tests/Application/templates/bundles/SyliusAdminBundle/Order/Show/Summary/_totals.html.twig
+```
 
-1. Customize shop templates to include bonus points. For starter You may want copy to templates directory everything from plugin's tests/Application/templates
+**ShopBundle** (`templates/bundles/SyliusShopBundle`):
+```
+vendor/bitbag/bonus-points-plugin/tests/Application/templates/bundles/SyliusShopBundle/Cart/Summary/_items.html.twig
+vendor/bitbag/bonus-points-plugin/tests/Application/templates/bundles/SyliusShopBundle/Cart/Summary/_totals.html.twig
+vendor/bitbag/bonus-points-plugin/tests/Application/templates/bundles/SyliusShopBundle/Common/Order/Table/_totals.html.twig
+```
 
-1. Finish the installation by updating the database schema and installing assets:
+## Known issues
+### Translations not displaying correctly
+For incorrectly displayed translations, execute the command:
+```bash
+bin/console cache:clear
+```
+### Bonus points are not charged
+- When configuring the rules for accruing bonus points, select those categories to which the items are assigned directly.
 
-    ```
-    $ bin/console doctrine:migrations:diff
-    $ bin/console doctrine:migrations:migrate
-    ```
-
+- If you want the points to be credited for each item, select all available categories.
