@@ -37,6 +37,6 @@ use Sylius\Component\Core\Model\Order as BaseOrder;
      use BonusPointsAwareTrait;
 
      #[ORM\Column(type: 'integer', nullable: true)]
-     protected ?int $bonusPoints = null;
+     protected $bonusPoints = null;
  }
 ```

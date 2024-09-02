@@ -21,7 +21,7 @@ Extend entities with parameters and methods using attributes and traits:
 
 declare(strict_types=1);
 
-namespace App\Entity\Order;
+namespace App\Entity;
 
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareInterface;
 use BitBag\SyliusBonusPointsPlugin\Entity\BonusPointsAwareTrait;
