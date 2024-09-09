@@ -15,7 +15,6 @@ FRONTEND
 - [Templates](#templates)
 ---
 ADDITIONAL
-- [Additional configuration](#additional-configuration)
 - [Known Issues](#known-issues)
 ---
 
