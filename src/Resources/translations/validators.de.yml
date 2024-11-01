@@ -1,0 +1,17 @@
+bitbag_sylius_bonus_points:
+    order:
+        bonus_points:
+            not_available: 'Sie haben nicht genügend Bonuspunkte.'
+    bonus_points_strategy:
+        name:
+            not_blank: 'Name darf nicht leer sein.'
+            min_length: 'Name muss mindestens {{ limit }} Zeichen lang sein.'
+            max_length: 'Name darf nicht länger als {{ limit }} Zeichen sein.'
+        code:
+            not_blank: 'Code darf nicht leer sein.'
+            regex: 'Code darf nur aus Buchstaben, Zahlen, Bindestrichen und Unterstrichen bestehen.'
+            unique: 'Code muss eindeutig sein.'
+    cart:
+        bonus_points:
+            invalid_value: 'Dieser Wert sollte eine natürliche Zahl sein, die größer oder gleich 1 ist.'
+            exceed_order_items_total: 'Sie können nicht mehr Punkte verwenden als den Wert Ihrer Bestellpositionen.'
