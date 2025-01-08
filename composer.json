@@ -43,8 +43,7 @@
     "doctrine/persistence": "^3.0"
   },
   "conflict": {
-    "behat/mink-selenium2-driver": ">=1.7.0",
-    "doctrine/annotations": ">1.15"
+    "behat/mink-selenium2-driver": ">=1.7.0"
   },
   "prefer-stable": true,
   "autoload": {
