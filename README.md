@@ -2,6 +2,8 @@
 
 # BitBag SyliusBonusPointsPlugin
 
+**Deprecation note.** This repository is not maintained anymore. For an alternative please use the [Sylius Plus Loyalty Plugin](https://github.com/Sylius/LoyaltyPlugin).
+
 ----
 
 [ ![](https://img.shields.io/packagist/l/bitbag/bonus-points-plugin.svg) ](https://packagist.org/packages/bitbag/bonus-points-plugin "License") 
